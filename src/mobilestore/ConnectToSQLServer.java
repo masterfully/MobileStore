@@ -23,10 +23,8 @@ public class ConnectToSQLServer {
         // Attempt to establish a connection
         try (Connection conn = ds.getConnection()) {
             System.out.println("Connected to SQL Server successfully!");
-            // Print the name of the current database
             System.out.println("Connected to database: " + conn.getCatalog());
         } catch (SQLException ex) {
-            // Handle any potential SQL exceptions
             ex.printStackTrace();
         }
     }
