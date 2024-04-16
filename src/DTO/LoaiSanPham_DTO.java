@@ -1,11 +1,11 @@
-package mobilestore;
+package DTO;
 
-public class LoaiSanPham {
+public class LoaiSanPham_DTO {
     private String IDLoai;
     private String tenLoai;
     private int isDelete;
 
-    public LoaiSanPham(String IDLoai, String tenLoai, int isDelete) {
+    public LoaiSanPham_DTO(String IDLoai, String tenLoai, int isDelete) {
         this.IDLoai = IDLoai;
         this.tenLoai = tenLoai;
         this.isDelete = isDelete;

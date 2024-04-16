@@ -1,6 +1,7 @@
-package mobilestore;
+package DTO;
 
-public class SanPham {
+
+public class SanPham_DTO {
 
     private String IDSanPham;
     private String tenSanPham;
@@ -8,7 +9,7 @@ public class SanPham {
     private int soLuong;
     private String hinhAnh;
     private String mauSac;
-    private LoaiSanPham loaiSanPham;
+    private LoaiSanPham_DTO loaiSanPham;
     private String chip;
     private String pin;
     private String manHinh;
@@ -20,7 +21,7 @@ public class SanPham {
     private String rom;
     private int isDelete;
 
-    public SanPham(String IDSanPham, String tenSanPham, int donGia, int soLuong, String hinhAnh, String mauSac, LoaiSanPham loaiSanPham, String chip, String pin, String manHinh, String phienBanHDH, String cameraSau, String cameraTruoc, String baoHanh, String ram, String rom, int isDelete) {
+    public SanPham_DTO(String IDSanPham, String tenSanPham, int donGia, int soLuong, String hinhAnh, String mauSac, LoaiSanPham_DTO loaiSanPham, String chip, String pin, String manHinh, String phienBanHDH, String cameraSau, String cameraTruoc, String baoHanh, String ram, String rom, int isDelete) {
         this.IDSanPham = IDSanPham;
         this.tenSanPham = tenSanPham;
         this.donGia = donGia;
@@ -73,7 +74,7 @@ public class SanPham {
         return mauSac;
     }
 
-    public LoaiSanPham getLoaiSanPham() {
+    public LoaiSanPham_DTO getLoaiSanPham() {
         return loaiSanPham;
     }
 
@@ -137,7 +138,7 @@ public class SanPham {
         this.mauSac = mauSac;
     }
 
-    public void setLoaiSanPham(LoaiSanPham loaiSanPham) {
+    public void setLoaiSanPham(LoaiSanPham_DTO loaiSanPham) {
         this.loaiSanPham = loaiSanPham;
     }
 
@@ -182,6 +183,9 @@ public class SanPham {
         return "SanPham{" + "IDSanPham=" + IDSanPham + ", tenSanPham=" + tenSanPham + ", donGia=" + donGia + ", soLuong=" + soLuong + ", hinhAnh=" + hinhAnh + ", mauSac=" + mauSac + ", loaiSanPham=" + loaiSanPham + ", chip=" + chip + ", pin=" + pin + ", manHinh=" + manHinh + ", phienBanHDH=" + phienBanHDH + ", cameraSau=" + cameraSau + ", cameraTruoc=" + cameraTruoc + ", baoHanh=" + baoHanh + ", ram=" + ram + ", rom=" + rom + ", isDelete=" + isDelete + '}';
     }
 
+    public static void main(String[] args) {
+    	System.out.print("hello");
+    }
    
 
 }
