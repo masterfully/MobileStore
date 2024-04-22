@@ -3705,7 +3705,7 @@
 											},
 											"font": "Arial;13;1",
 											"left": 712,
-											"top": 805,
+											"top": 797,
 											"width": 136.65966796875,
 											"height": 13,
 											"text": "KHO"
@@ -3731,7 +3731,7 @@
 													},
 													"font": "Arial;13;0",
 													"left": 717,
-													"top": 828,
+													"top": 820,
 													"width": 126.65966796875,
 													"height": 13
 												},
@@ -3746,7 +3746,7 @@
 													},
 													"font": "Arial;13;0",
 													"left": 717,
-													"top": 843,
+													"top": 835,
 													"width": 126.65966796875,
 													"height": 13
 												},
@@ -3761,21 +3761,21 @@
 													},
 													"font": "Arial;13;0",
 													"left": 717,
-													"top": 858,
+													"top": 850,
 													"width": 126.65966796875,
 													"height": 13
 												}
 											],
 											"font": "Arial;13;0",
 											"left": 712,
-											"top": 823,
+											"top": 815,
 											"width": 136.65966796875,
 											"height": 53
 										}
 									],
 									"font": "Arial;13;0",
 									"left": 712,
-									"top": 800,
+									"top": 792,
 									"width": 136.65966796875,
 									"height": 76,
 									"nameLabel": {
@@ -3838,7 +3838,7 @@
 											},
 											"font": "Arial;13;0",
 											"left": 809,
-											"top": 895,
+											"top": 887,
 											"height": 13,
 											"alpha": -0.5235987755982988,
 											"distance": 30,
@@ -3855,7 +3855,7 @@
 										"$ref": "AAAAAAGGhG3VRQOlY0Y="
 									},
 									"lineStyle": 2,
-									"points": "1056:916;824:916;824:876",
+									"points": "1056:916;824:916;824:868",
 									"nameLabel": {
 										"$ref": "AAAAAAGO4jDvzAW8cqY="
 									},
@@ -3885,7 +3885,7 @@
 											"visible": false,
 											"font": "Arial;13;0",
 											"left": 745,
-											"top": 979,
+											"top": 975,
 											"height": 13,
 											"alpha": 1.5707963267948966,
 											"distance": 15,
@@ -3919,7 +3919,7 @@
 											},
 											"font": "Arial;13;0",
 											"left": 745,
-											"top": 895,
+											"top": 887,
 											"height": 13,
 											"alpha": -0.5235987755982988,
 											"distance": 30,
@@ -3936,7 +3936,7 @@
 										"$ref": "AAAAAAGGhG4K1gOyxwg="
 									},
 									"lineStyle": 2,
-									"points": "760:1096;760:876",
+									"points": "760:1096;760:868",
 									"nameLabel": {
 										"$ref": "AAAAAAGO4jEdKwXRo3E="
 									},
@@ -3983,7 +3983,7 @@
 											},
 											"font": "Arial;13;0",
 											"left": 769,
-											"top": 768,
+											"top": 760,
 											"height": 13,
 											"alpha": 0.5235987755982988,
 											"distance": 30,
@@ -4017,7 +4017,7 @@
 										"$ref": "AAAAAAGO4iUz9gVcstA="
 									},
 									"lineStyle": 2,
-									"points": "784:800;784:368;1656:368;1656:536",
+									"points": "784:792;784:368;1656:368;1656:536",
 									"nameLabel": {
 										"$ref": "AAAAAAGO4jTYogXuMd8="
 									},
@@ -7347,8 +7347,8 @@
 										"$ref": "AAAAAAGGkeH6y6ABYEQ="
 									},
 									"name": "manv",
-									"type": "INTEGER",
-									"length": 0,
+									"type": "nchar",
+									"length": "10",
 									"primaryKey": true
 								},
 								{
@@ -7358,8 +7358,8 @@
 										"$ref": "AAAAAAGGkeH6y6ABYEQ="
 									},
 									"name": "hoten",
-									"type": "VARCHAR",
-									"length": "255"
+									"type": "nvarchar",
+									"length": "50"
 								},
 								{
 									"_type": "ERDColumn",
@@ -7368,7 +7368,8 @@
 										"$ref": "AAAAAAGGkeH6y6ABYEQ="
 									},
 									"name": "gioitinh",
-									"length": 0
+									"type": "nvarchar",
+									"length": "50"
 								},
 								{
 									"_type": "ERDColumn",
@@ -7377,6 +7378,7 @@
 										"$ref": "AAAAAAGGkeH6y6ABYEQ="
 									},
 									"name": "ngaysinh",
+									"type": "date",
 									"length": 0
 								},
 								{
@@ -7386,7 +7388,8 @@
 										"$ref": "AAAAAAGGkeH6y6ABYEQ="
 									},
 									"name": "sodienthoai",
-									"length": 0
+									"type": "nvarchar",
+									"length": "50"
 								},
 								{
 									"_type": "ERDColumn",
@@ -7423,7 +7426,8 @@
 										"$ref": "AAAAAAGGkeH6y6ABYEQ="
 									},
 									"name": "chucvu",
-									"length": 0
+									"type": "nvarchar",
+									"length": "50"
 								}
 							]
 						},

@@ -211,3 +211,10 @@ VALUES
     ('NV009', N'Phạm Văn I', N'Nam', '1989-09-09', '0369852147'),
     ('NV010', N'Hoàng Thị K', N'Nữ', '1994-10-10', '0123456789');
 
+ALTER TABLE KhachHang
+ADD isDelete int;
+
+ALTER TABLE NhanVien
+ADD isDelete int;
+
+
