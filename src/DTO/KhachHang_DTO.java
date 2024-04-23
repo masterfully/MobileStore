@@ -5,13 +5,21 @@ public class KhachHang_DTO {
 	    private String tenKhachHang;
 	    private String diaChi;
 	    private String sdt;
-		public KhachHang_DTO(String iDKhachHang, String tenKhachHang, String diaChi, String sdt) {
+
+		private int isDelete;
+		public KhachHang_DTO(String iDKhachHang, String tenKhachHang, String diaChi, String sdt, int isDelete) {
 			IDKhachHang = iDKhachHang;
 			this.tenKhachHang = tenKhachHang;
 			this.diaChi = diaChi;
 			this.sdt = sdt;
+			this.isDelete = isDelete;
 		}
-		public String getIDKhachHang() {
+
+	public KhachHang_DTO(String t) {
+			this.IDKhachHang = t;
+	}
+
+	public String getIDKhachHang() {
 			return IDKhachHang;
 		}
 		public void setIDKhachHang(String iDKhachHang) {
@@ -35,6 +43,12 @@ public class KhachHang_DTO {
 		public void setSdt(String sdt) {
 			this.sdt = sdt;
 		}
-	    
 
+	public int getIsDelete() {
+		return isDelete;
+	}
+
+	public void setIsDelete(int isDelete) {
+		this.isDelete = isDelete;
+	}
 }

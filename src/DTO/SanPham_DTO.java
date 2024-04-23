@@ -39,7 +39,15 @@ public class SanPham_DTO {
 		this.isDelete = isDelete;
 	}
 
-	public String getIDSanPham() {
+	public SanPham_DTO(String iDSanPham) {
+		this.IDSanPham = iDSanPham;
+	}
+
+    public SanPham_DTO() {
+
+    }
+
+    public String getIDSanPham() {
 		return IDSanPham;
 	}
 
