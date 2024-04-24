@@ -24,7 +24,8 @@ public class NhanVien_DTO {
 		this.IDNhanVien = t;
 	}
 
-	public String getIDNhanVien() {
+
+    public String getIDNhanVien() {
 		return IDNhanVien;
 	}
 
