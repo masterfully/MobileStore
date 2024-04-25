@@ -10507,7 +10507,7 @@
 										"$ref": "AAAAAAGPCsI/AqTZNB0="
 									},
 									"name": "maIMEI",
-									"type": "varchar",
+									"type": "int",
 									"length": 0,
 									"primaryKey": true
 								},
@@ -10552,6 +10552,18 @@
 										"$ref": "AAAAAAGHkepDUjQ7EXE="
 									},
 									"subViews": [
+										{
+											"_type": "LabelView",
+											"_id": "AAAAAAGPE2bOVYE6fkU=",
+											"_parent": {
+												"$ref": "AAAAAAGHkepDUjQ9yT4="
+											},
+											"font": "Arial;13;0",
+											"left": 394,
+											"top": 229,
+											"width": 87.4326171875,
+											"height": 13
+										},
 										{
 											"_type": "LabelView",
 											"_id": "AAAAAAGPCeg3ZqLWd4o=",
@@ -10817,6 +10829,18 @@
 									"subViews": [
 										{
 											"_type": "LabelView",
+											"_id": "AAAAAAGPE2bOWIFS588=",
+											"_parent": {
+												"$ref": "AAAAAAGHkfKdAjRf8+M="
+											},
+											"font": "Arial;13;0",
+											"left": 1002,
+											"top": 229,
+											"width": 87.4326171875,
+											"height": 13
+										},
+										{
+											"_type": "LabelView",
 											"_id": "AAAAAAGPCeg3Z6Ltoag=",
 											"_parent": {
 												"$ref": "AAAAAAGHkfKdAjRf8+M="
@@ -11028,6 +11052,18 @@
 										"$ref": "AAAAAAGHkfL5oTRqxls="
 									},
 									"subViews": [
+										{
+											"_type": "LabelView",
+											"_id": "AAAAAAGPE2bOWIFlHLI=",
+											"_parent": {
+												"$ref": "AAAAAAGHkfL5oTRs13Y="
+											},
+											"font": "Arial;13;0",
+											"left": 706,
+											"top": 349,
+											"width": 87.4326171875,
+											"height": 13
+										},
 										{
 											"_type": "LabelView",
 											"_id": "AAAAAAGPCeg3Z6L/yL0=",
@@ -11516,6 +11552,18 @@
 										"$ref": "AAAAAAGHkfeHNzTGCjk="
 									},
 									"subViews": [
+										{
+											"_type": "LabelView",
+											"_id": "AAAAAAGPE2bOW4GKqE4=",
+											"_parent": {
+												"$ref": "AAAAAAGHkfeHODTInj0="
+											},
+											"font": "Arial;13;0",
+											"left": 706,
+											"top": 61,
+											"width": 87.4326171875,
+											"height": 13
+										},
 										{
 											"_type": "LabelView",
 											"_id": "AAAAAAGPCeg3aKMjkMs=",
@@ -12085,7 +12133,7 @@
 											"left": 1106,
 											"top": 713,
 											"width": 101,
-											"height": 26,
+											"height": 13,
 											"text": "Quản lý tài khoản",
 											"wordWrap": true
 										},
@@ -14043,6 +14091,18 @@
 									"subViews": [
 										{
 											"_type": "LabelView",
+											"_id": "AAAAAAGPE2bOZYJk0TQ=",
+											"_parent": {
+												"$ref": "AAAAAAGHkk+QgDuXQWs="
+											},
+											"font": "Arial;13;0",
+											"left": 834,
+											"top": 1333,
+											"width": 87.4326171875,
+											"height": 13
+										},
+										{
+											"_type": "LabelView",
 											"_id": "AAAAAAGPCeg3a6P8xTw=",
 											"_parent": {
 												"$ref": "AAAAAAGHkk+QgDuXQWs="
@@ -15004,6 +15064,18 @@
 										"$ref": "AAAAAAGHk9GPiT76iWw="
 									},
 									"subViews": [
+										{
+											"_type": "LabelView",
+											"_id": "AAAAAAGPE2bOZoKvsEA=",
+											"_parent": {
+												"$ref": "AAAAAAGHk9GPiT78ct0="
+											},
+											"font": "Arial;13;0",
+											"left": 834,
+											"top": 1885,
+											"width": 87.4326171875,
+											"height": 13
+										},
 										{
 											"_type": "LabelView",
 											"_id": "AAAAAAGPCeg3bKRGBCY=",
