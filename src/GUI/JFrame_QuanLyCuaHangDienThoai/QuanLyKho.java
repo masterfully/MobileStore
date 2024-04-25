@@ -1,19 +1,10 @@
-package GUI.JFrame_QuanLyKho;
+package GUI.JFrame_QuanLyCuaHangDienThoai;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
-
-import JPanel_QuanLyKho.KhachHang;
-import JPanel_QuanLyKho.NhanVien;
-import JPanel_QuanLyKho.PhieuNhap;
-import JPanel_QuanLyKho.PhieuXuat;
-import GUI.JPanel_QuanLyKho.SanPham;
-import JPanel_QuanLyKho.TaiKhoan;
-import JPanel_QuanLyKho.ThongKe;
-import JPanel_QuanLyKho.ThuocTinh;
-import JPanel_QuanLyKho.TrangChu;
+import GUI.JPanel_QuanLyCuaHangDienThoai.*;
 
 import javax.swing.GroupLayout;
 import javax.swing.ImageIcon;
@@ -23,7 +14,6 @@ import java.awt.Color;
 import javax.swing.JLabel;
 import java.awt.Font;
 import java.awt.Toolkit;
-import java.awt.CardLayout;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
@@ -35,15 +25,15 @@ public class QuanLyKho extends JFrame {
 	private JPanel panel_14;
 	private JPanel panel_15;
 	private JPanel panel_16;
-	private TrangChu trangChu;
-	private SanPham sanPham;
-	private ThuocTinh thuocTinh;
-	private PhieuNhap phieuNhap;
-	private PhieuXuat phieuXuat;
-	private KhachHang khachHang;
-	private NhanVien nhanVien;
-	private TaiKhoan taiKhoan;
-	private ThongKe thongKe;
+	private TrangChu_GUI trangChu;
+	private SanPham_GUI sanPham;
+	private JPanel_QuanLyKho.ThuocTinh_GUI thuocTinh;
+	private PhieuNhap_GUI phieuNhap;
+	private PhieuXuat_GUI phieuXuat;
+	private KhachHang_GUI khachHang;
+	private NhanVien_GUI nhanVien;
+	private TaiKhoan_GUI taiKhoan;
+	private ThongKe_GUI thongKe;
 
 
 	/**
@@ -53,7 +43,7 @@ public class QuanLyKho extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					QuanLyKho frame = new QuanLyKho();
+					JFrame frame = new QuanLyKho();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -470,55 +460,55 @@ public class QuanLyKho extends JFrame {
 		contentPane.add(panel_12);
 		panel_12.setLayout(null);
 		
-		trangChu = new TrangChu();
+		trangChu = new TrangChu_GUI();
         trangChu.setBounds(0, 0, 706, 763);
 		panel_12.add(trangChu);
 		revalidate();
         repaint();
 
-        sanPham = new SanPham();
+        sanPham = new SanPham_GUI();
         sanPham.setBounds(0, 0, 706, 763);
 		panel_12.add(sanPham);
 		revalidate();
         repaint();
 
-        thuocTinh = new ThuocTinh();
+        thuocTinh = new JPanel_QuanLyKho.ThuocTinh_GUI();
         thuocTinh.setBounds(0, 0, 706, 763);
 		panel_12.add(thuocTinh);
 		revalidate();
         repaint();
         
-        phieuNhap = new PhieuNhap();
+        phieuNhap = new PhieuNhap_GUI();
         phieuNhap.setBounds(0, 0, 706, 763);
 		panel_12.add(phieuNhap);
 		revalidate();
         repaint();
         
-        phieuXuat = new PhieuXuat();
+        phieuXuat = new PhieuXuat_GUI();
         phieuXuat.setBounds(0, 0, 706, 763);
 		panel_12.add(phieuXuat);
 		revalidate();
         repaint();
         
-        khachHang = new KhachHang();
+        khachHang = new KhachHang_GUI();
         khachHang.setBounds(0, 0, 706, 763);
 		panel_12.add(khachHang);
 		revalidate();
         repaint();
         
-        nhanVien = new NhanVien();
+        nhanVien = new NhanVien_GUI();
         nhanVien.setBounds(0, 0, 706, 763);
 		panel_12.add(nhanVien);
 		revalidate();
         repaint();
         
-        taiKhoan = new TaiKhoan();
+        taiKhoan = new TaiKhoan_GUI();
         taiKhoan.setBounds(0, 0, 706, 763);
 		panel_12.add(taiKhoan);
 		revalidate();
         repaint();
         
-        thongKe = new ThongKe();
+        thongKe = new ThongKe_GUI();
         thongKe.setBounds(0, 0, 706, 763);
 		panel_12.add(thongKe);
 		revalidate();
