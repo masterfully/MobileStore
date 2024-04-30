@@ -5,14 +5,14 @@ public class TaiKhoan_DTO {
     private String password;
     private String trangThai;
     private String chucVu;
-    private NhanVien_DTO nhanVien;
+    private int idNV;
 
-    public TaiKhoan_DTO(String username, String password, String trangThai, String chucVu, NhanVien_DTO nhanVien) {
+    public TaiKhoan_DTO(String username, String password, String trangThai, String chucVu, int idNV) {
         this.username = username;
         this.password = password;
         this.trangThai = trangThai;
         this.chucVu = chucVu;
-        this.nhanVien = nhanVien;
+        this.idNV = idNV;
     }
 
     public String getUsername() {
@@ -47,11 +47,12 @@ public class TaiKhoan_DTO {
         this.chucVu = chucVu;
     }
 
-    public NhanVien_DTO getNhanVien() {
-        return nhanVien;
+
+    public void setIdNV(int IDNhanVien) {
+        this.idNV = IDNhanVien;
     }
 
-    public void setNhanVien(NhanVien_DTO nhanVien) {
-        this.nhanVien = nhanVien;
+    public int getIdNV() {
+        return idNV;
     }
 }

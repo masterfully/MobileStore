@@ -19,24 +19,16 @@ public class SanPham_DAO implements DAOInterface<SanPham_DTO> {
         int ketQua = 0;
         try {
             Connection con = JDBCUtil.getConnection();
-            String sql = "INSERT INTO SanPham (IDSanPham, tenSanPham, giaBan, giaNhap, soLuong, hinhAnh, mauSac, chip, pin, manHinh, phienBanHDH, cameraSau, cameraTruoc, ram, rom, isDelete) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+            String sql = "INSERT INTO SanPham (idSP, tenSP, giaNhap, giaBan, soLuong, hinhAnh, mauSac, isDelete) VALUES (?,?,?,?,?,?,?,?)";
             PreparedStatement pst = con.prepareStatement(sql);
-            pst.setString(1, t.getIDSanPham());
-            pst.setString(2, t.getTenSanPham());
-            pst.setInt(3, t.getGiaBan());
-            pst.setInt(4, t.getGiaNhap());
+            pst.setInt(1, t.getIdSP());
+            pst.setString(2, t.getTenSP());
+            pst.setFloat(3, t.getGiaNhap());
+            pst.setFloat(4, t.getGiaBan());
             pst.setInt(5, t.getSoLuong());
             pst.setString(6, t.getHinhAnh());
             pst.setString(7, t.getMauSac());
-            pst.setString(8, t.getChip());
-            pst.setString(9, t.getPin());
-            pst.setString(10, t.getManHinh());
-            pst.setString(11, t.getPhienBanHDH());
-            pst.setString(12, t.getCameraSau());
-            pst.setString(13, t.getCameraTruoc());
-            pst.setString(14, t.getRam());
-            pst.setString(15, t.getRom());
-            pst.setInt(16, t.getIsDelete());
+            pst.setInt(8, t.getIsDelete());
             ketQua = pst.executeUpdate();
             System.out.println("Đã thực thi: " + sql);
             System.out.println("Đã thay đổi " + ketQua + " dòng");
@@ -54,39 +46,23 @@ public class SanPham_DAO implements DAOInterface<SanPham_DTO> {
         try {
             Connection con = JDBCUtil.getConnection();
             String sql = "UPDATE SanPham " +
-                    "SET tenSanPham = ?, " +
-                    "giaBan = ?, " +
+                    "SET tenSP = ?, " +
                     "giaNhap = ?, " +
+                    "giaBan = ?, " +
                     "soLuong = ?, " +
                     "hinhAnh = ?, " +
                     "mauSac = ?, " +
-                    "chip = ?, " +
-                    "pin = ?, " +
-                    "manHinh = ?, " +
-                    "phienBanHDH = ?, " +
-                    "cameraSau = ?, " +
-                    "cameraTruoc = ?, " +
-                    "ram = ?, " +
-                    "rom = ?, " +
                     "isDelete = ? " +
-                    "WHERE IDSanPham = ?";
+                    "WHERE idSP = ?";
             PreparedStatement pst = con.prepareStatement(sql);
-            pst.setString(1, t.getTenSanPham());
-            pst.setInt(2, t.getGiaBan());
-            pst.setInt(3, t.getGiaNhap());
+            pst.setString(1, t.getTenSP());
+            pst.setFloat(2, t.getGiaBan());
+            pst.setFloat(3, t.getGiaNhap());
             pst.setInt(4, t.getSoLuong());
             pst.setString(5, t.getHinhAnh());
             pst.setString(6, t.getMauSac());
-            pst.setString(7, t.getChip());
-            pst.setString(8, t.getPin());
-            pst.setString(9, t.getManHinh());
-            pst.setString(10, t.getPhienBanHDH());
-            pst.setString(11, t.getCameraSau());
-            pst.setString(12, t.getCameraTruoc());
-            pst.setString(13, t.getRam());
-            pst.setString(14, t.getRom());
-            pst.setInt(15, t.getIsDelete());
-            pst.setString(16, t.getIDSanPham()); // Assuming IDSanPham is the primary key
+            pst.setInt(7, t.getIsDelete());
+            pst.setInt(8, t.getIdSP());
             ketQua = pst.executeUpdate();
             System.out.println("Đã thực thi: " + sql);
             System.out.println("Đã thay đổi " + ketQua + " dòng");
@@ -105,7 +81,7 @@ public class SanPham_DAO implements DAOInterface<SanPham_DTO> {
             Connection con = JDBCUtil.getConnection();
             String sql = "UPDATE SanPham " +
                     "SET isDelete = 1 " +
-                    "WHERE IDSanPham = ?";
+                    "WHERE idSP = ?";
             PreparedStatement pst = con.prepareStatement(sql);
             pst.setString(1, idSanPham);
             ketQua = pst.executeUpdate();
@@ -130,21 +106,13 @@ public class SanPham_DAO implements DAOInterface<SanPham_DTO> {
 
             while (rs.next()) {
                 SanPham_DTO sanPham = new SanPham_DTO();
-                sanPham.setIDSanPham(rs.getString("IDSanPham"));
-                sanPham.setTenSanPham(rs.getString("tenSanPham"));
-                sanPham.setGiaBan(rs.getInt("giaBan"));
-                sanPham.setGiaNhap(rs.getInt("giaNhap"));
+                sanPham.setIdSP(rs.getInt("idSP"));
+                sanPham.setTenSP(rs.getString("tenSP"));
+                sanPham.setGiaBan(rs.getInt("giaNhap"));
+                sanPham.setGiaNhap(rs.getInt("giaBan"));
                 sanPham.setSoLuong(rs.getInt("soLuong"));
                 sanPham.setHinhAnh(rs.getString("hinhAnh"));
                 sanPham.setMauSac(rs.getString("mauSac"));
-                sanPham.setChip(rs.getString("chip"));
-                sanPham.setPin(rs.getString("pin"));
-                sanPham.setManHinh(rs.getString("manHinh"));
-                sanPham.setPhienBanHDH(rs.getString("phienBanHDH"));
-                sanPham.setCameraSau(rs.getString("cameraSau"));
-                sanPham.setCameraTruoc(rs.getString("cameraTruoc"));
-                sanPham.setRam(rs.getString("ram"));
-                sanPham.setRom(rs.getString("rom"));
                 sanPham.setIsDelete(rs.getInt("isDelete"));
                 sanPhamList.add(sanPham);
             }
@@ -167,21 +135,13 @@ public class SanPham_DAO implements DAOInterface<SanPham_DTO> {
 
             while (rs.next()) {
                 SanPham_DTO sanPham = new SanPham_DTO();
-                sanPham.setIDSanPham(rs.getString("IDSanPham"));
-                sanPham.setTenSanPham(rs.getString("tenSanPham"));
-                sanPham.setGiaBan(rs.getInt("giaBan"));
-                sanPham.setGiaNhap(rs.getInt("giaNhap"));
+                sanPham.setIdSP(rs.getInt("idSP"));
+                sanPham.setTenSP(rs.getString("tenSP"));
+                sanPham.setGiaBan(rs.getInt("giaNhap"));
+                sanPham.setGiaNhap(rs.getInt("giaBan"));
                 sanPham.setSoLuong(rs.getInt("soLuong"));
                 sanPham.setHinhAnh(rs.getString("hinhAnh"));
                 sanPham.setMauSac(rs.getString("mauSac"));
-                sanPham.setChip(rs.getString("chip"));
-                sanPham.setPin(rs.getString("pin"));
-                sanPham.setManHinh(rs.getString("manHinh"));
-                sanPham.setPhienBanHDH(rs.getString("phienBanHDH"));
-                sanPham.setCameraSau(rs.getString("cameraSau"));
-                sanPham.setCameraTruoc(rs.getString("cameraTruoc"));
-                sanPham.setRam(rs.getString("ram"));
-                sanPham.setRom(rs.getString("rom"));
                 sanPham.setIsDelete(rs.getInt("isDelete"));
                 sanPhamList.add(sanPham);
             }
@@ -194,32 +154,24 @@ public class SanPham_DAO implements DAOInterface<SanPham_DTO> {
 
 
     @Override
-    public SanPham_DTO selectById(String id) {
+    public SanPham_DTO selectById(int id) {
         SanPham_DTO sanPham = null;
         try {
             Connection con = JDBCUtil.getConnection();
-            String sql = "SELECT * FROM SanPham WHERE IDSanPham = ?";
+            String sql = "SELECT * FROM SanPham WHERE idSP = ?";
             PreparedStatement pst = con.prepareStatement(sql);
-            pst.setString(1, id);
+            pst.setInt(1, id);
             ResultSet rs = pst.executeQuery();
 
             if (rs.next()) {
                 sanPham = new SanPham_DTO();
-                sanPham.setIDSanPham(rs.getString("IDSanPham"));
-                sanPham.setTenSanPham(rs.getString("tenSanPham"));
-                sanPham.setGiaBan(rs.getInt("giaBan"));
-                sanPham.setGiaNhap(rs.getInt("giaNhap"));
+                sanPham.setIdSP(rs.getInt("idSP"));
+                sanPham.setTenSP(rs.getString("tenSP"));
+                sanPham.setGiaBan(rs.getInt("giaNhap"));
+                sanPham.setGiaNhap(rs.getInt("giaBan"));
                 sanPham.setSoLuong(rs.getInt("soLuong"));
                 sanPham.setHinhAnh(rs.getString("hinhAnh"));
                 sanPham.setMauSac(rs.getString("mauSac"));
-                sanPham.setChip(rs.getString("chip"));
-                sanPham.setPin(rs.getString("pin"));
-                sanPham.setManHinh(rs.getString("manHinh"));
-                sanPham.setPhienBanHDH(rs.getString("phienBanHDH"));
-                sanPham.setCameraSau(rs.getString("cameraSau"));
-                sanPham.setCameraTruoc(rs.getString("cameraTruoc"));
-                sanPham.setRam(rs.getString("ram"));
-                sanPham.setRom(rs.getString("rom"));
                 sanPham.setIsDelete(rs.getInt("isDelete"));
             }
             JDBCUtil.closeConnection(con);
@@ -230,7 +182,7 @@ public class SanPham_DAO implements DAOInterface<SanPham_DTO> {
     }
 
 
-    public int updateSoLuongTon(String masp, int soluong) {
+    public int updateSoLuongTon(int masp, int soluong) {
         int quantity_current = this.selectById(masp).getSoLuong();
         int ketQua = 0;
         int quantity_change = quantity_current + soluong;
@@ -239,7 +191,7 @@ public class SanPham_DAO implements DAOInterface<SanPham_DTO> {
             String sql = "UPDATE SanPham SET soLuong = ? WHERE IDSanPham = ?";
             PreparedStatement pst = con.prepareStatement(sql);
             pst.setInt(1, quantity_change);
-            pst.setString(2, masp);
+            pst.setInt(2, masp);
             ketQua = pst.executeUpdate();
             System.out.println("Đã thực thi: " + sql);
             System.out.println("Đã thay đổi " + ketQua + " dòng");

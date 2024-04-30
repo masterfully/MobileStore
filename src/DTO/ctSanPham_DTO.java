@@ -10,9 +10,9 @@ public class ctSanPham_DTO {
     private String cameraTruoc;
     private String ram;
     private String rom;
-    private SanPham_DTO sanpham;
+    private int SANPHAM_idSP;
 
-    public ctSanPham_DTO(int maIMEI, String chip, String pin, String manHinh, String phienBanHDH, String cameraSau, String cameraTruoc, String ram, String rom, SanPham_DTO sanpham) {
+    public ctSanPham_DTO(int maIMEI, String chip, String pin, String manHinh, String phienBanHDH, String cameraSau, String cameraTruoc, String ram, String rom, int SANPHAM_idSP) {
         this.maIMEI = maIMEI;
         this.chip = chip;
         this.pin = pin;
@@ -22,8 +22,13 @@ public class ctSanPham_DTO {
         this.cameraTruoc = cameraTruoc;
         this.ram = ram;
         this.rom = rom;
-        this.sanpham = sanpham;
+        this.SANPHAM_idSP = SANPHAM_idSP;
     }
+
+    public ctSanPham_DTO(int maIMEI) {
+        this.maIMEI=maIMEI;
+    }
+
 
     public int getMaIMEI() {
         return maIMEI;
@@ -97,11 +102,15 @@ public class ctSanPham_DTO {
         this.rom = rom;
     }
 
-    public SanPham_DTO getSanpham() {
-        return sanpham;
+    public int getSANPHAM_idSP() {
+        return SANPHAM_idSP;
     }
 
-    public void setSanpham(SanPham_DTO sanpham) {
-        this.sanpham = sanpham;
+    public void setSANPHAM_idSP(int idSP) {
+        this.SANPHAM_idSP = idSP;
     }
+
+    public ctSanPham_DTO() {
+    }
+
 }

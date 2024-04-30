@@ -10,7 +10,7 @@ public class JDBCUtil {
 		Connection con = null;
 		try {
 			DriverManager.registerDriver(new com.mysql.jdbc.Driver());
-			String url = "jdbc:mysql://localhost:3306/mobilestore";
+			String url = "jdbc:mysql://localhost:3306/quanlycuahang";
 			String username = "root";
 			String password = "";
 			con = DriverManager.getConnection(url, username, password);

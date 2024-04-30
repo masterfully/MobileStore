@@ -1,4 +1,4 @@
-package JPanel_QuanLyKho;
+package GUI.JPanel_QuanLyCuaHangDienThoai;
 
 import javax.swing.JPanel;
 import javax.swing.JLabel;

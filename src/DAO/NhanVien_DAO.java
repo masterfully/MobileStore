@@ -134,13 +134,13 @@ public class NhanVien_DAO implements DAOInterface<NhanVien_DTO> {
     }
 
     @Override
-    public NhanVien_DTO selectById(String idNhanVien) {
+    public NhanVien_DTO selectById(int idNhanVien) {
         NhanVien_DTO nhanVien = null;
         try {
             Connection con = JDBCUtil.getConnection();
             String sql = "SELECT * FROM NhanVien WHERE IDNhanVien = ?";
             PreparedStatement pst = con.prepareStatement(sql);
-            pst.setString(1, idNhanVien);
+            pst.setInt(1, idNhanVien);
             ResultSet rs = pst.executeQuery();
             if (rs.next()) {
                 nhanVien = new NhanVien_DTO(

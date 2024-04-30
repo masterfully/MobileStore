@@ -19,13 +19,13 @@ public class TaiKhoan_DAO implements DAOInterface<TaiKhoan_DTO>{
         int ketQua = 0;
         try {
             Connection con = JDBCUtil.getConnection();
-            String sql = "INSERT INTO TaiKhoan (IDNhanVien, username, password, maNhomQuyen, trangThai) VALUES (?, ?, ?, ?, ?)";
+            String sql = "INSERT INTO TaiKhoan (username, password, maNhomQuyen, trangThai, idNV) VALUES (?, ?, ?, ?, ?)";
             PreparedStatement pst = con.prepareStatement(sql);
-            pst.setString(1, taiKhoan_dto.getIDNhanVien());
-            pst.setString(2, taiKhoan_dto.getUsername());
-            pst.setString(3, taiKhoan_dto.getPassword());
-            pst.setString(4, taiKhoan_dto.getMaNhomQuyen());
-            pst.setString(5, taiKhoan_dto.getTrangThai());
+            pst.setString(1, taiKhoan_dto.getUsername());
+            pst.setString(2, taiKhoan_dto.getPassword());
+            pst.setString(3, taiKhoan_dto.getTrangThai());
+            pst.setString(4, taiKhoan_dto.getChucVu());
+            pst.setInt(5, taiKhoan_dto.getIdNV());
             ketQua = pst.executeUpdate();
             System.out.println("Đã thực thi: " + sql);
             System.out.println("Đã thay đổi " + ketQua + " dòng");
@@ -43,11 +43,11 @@ public class TaiKhoan_DAO implements DAOInterface<TaiKhoan_DTO>{
             Connection con = JDBCUtil.getConnection();
             String sql = "UPDATE NhanVien SET IDNhanVien = ?, username = ?, password = ?, maNhomQuyen = ?, trangThai = ? WHERE IDNhanVien = ?";
             PreparedStatement pst = con.prepareStatement(sql);
-            pst.setString(1, taiKhoanDto.getIDNhanVien());
-            pst.setString(2, taiKhoanDto.getUsername());
+            pst.setString(1, taiKhoanDto.getUsername());
             pst.setString(3, taiKhoanDto.getPassword());
-            pst.setString(4, taiKhoanDto.getMaNhomQuyen());
-            pst.setString(5, taiKhoanDto.getTrangThai());
+            pst.setString(4, taiKhoanDto.getTrangThai());
+            pst.setString(4, taiKhoanDto.getChucVu());
+            pst.setInt(5, taiKhoanDto.getIdNV());
             ketQua = pst.executeUpdate();
             System.out.println("Đã thực thi: " + sql);
             System.out.println("Đã thay đổi " + ketQua + " dòng");
@@ -65,7 +65,7 @@ public class TaiKhoan_DAO implements DAOInterface<TaiKhoan_DTO>{
             Connection con = JDBCUtil.getConnection();
             String sql = "UPDATE TaiKhoan " +
                     "SET trangThai = -1 " +
-                    "WHERE IDNhanVien = ?";
+                    "WHERE NHANVIEN_idNV = ?";
             PreparedStatement pst = con.prepareStatement(sql);
             pst.setString(1, idNhanVien);
             ketQua = pst.executeUpdate();
@@ -88,11 +88,11 @@ public class TaiKhoan_DAO implements DAOInterface<TaiKhoan_DTO>{
             ResultSet rs = pst.executeQuery();
             while (rs.next()) {
                 TaiKhoan_DTO taikhoan = new TaiKhoan_DTO(
-                        rs.getString("IDNhanVien"),
                         rs.getString("username"),
                         rs.getString("password"),
-                        rs.getString("maNhomQuyen"),
-                        rs.getString("trangThai")
+                        rs.getString("trangThai"),
+                        rs.getString("chucVu"),
+                        rs.getInt("idNV")
                 );
                 taikhoans.add(taikhoan);
             }
@@ -113,11 +113,11 @@ public class TaiKhoan_DAO implements DAOInterface<TaiKhoan_DTO>{
             ResultSet rs = pst.executeQuery();
             while (rs.next()) {
                 TaiKhoan_DTO taikhoan = new TaiKhoan_DTO(
-                        rs.getString("IDNhanVien"),
                         rs.getString("username"),
                         rs.getString("password"),
-                        rs.getString("maNhomQuyen"),
-                        rs.getString("trangThai")
+                        rs.getString("trangThai"),
+                        rs.getString("chucVu"),
+                        rs.getInt("idNV")
                 );
                 taikhoans.add(taikhoan);
             }
@@ -129,21 +129,21 @@ public class TaiKhoan_DAO implements DAOInterface<TaiKhoan_DTO>{
     }
 
     @Override
-    public TaiKhoan_DTO selectById(String idNhanVien) {
+    public TaiKhoan_DTO selectById(int idNhanVien) {
         TaiKhoan_DTO taikhoan = null;
         try {
             Connection con = JDBCUtil.getConnection();
             String sql = "SELECT * FROM TaiKhoan WHERE IDNhanVien = ?";
             PreparedStatement pst = con.prepareStatement(sql);
-            pst.setString(1, idNhanVien);
+            pst.setInt(1, idNhanVien);
             ResultSet rs = pst.executeQuery();
             if (rs.next()) {
                 taikhoan = new TaiKhoan_DTO(
-                        rs.getString("IDNhanVien"),
                         rs.getString("username"),
                         rs.getString("password"),
-                        rs.getString("maNhomQuyen"),
-                        rs.getString("trangThai")
+                        rs.getString("trangThai"),
+                        rs.getString("chucVu"),
+                        rs.getInt("idNV")
                 );
             }
             JDBCUtil.closeConnection(con);

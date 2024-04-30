@@ -137,13 +137,13 @@ public class KhachHang_DAO implements DAOInterface<KhachHang_DTO> {
 
 
     @Override
-    public KhachHang_DTO selectById(String idKhachHang) {
+    public KhachHang_DTO selectById(int idKhachHang) {
         KhachHang_DTO khachHang = null;
         try {
             Connection con = JDBCUtil.getConnection();
             String sql = "SELECT * FROM KhachHang WHERE IDKhachHang = ?";
             PreparedStatement pst = con.prepareStatement(sql);
-            pst.setString(1, idKhachHang);
+            pst.setInt(1, idKhachHang);
             ResultSet rs = pst.executeQuery();
 
             if (rs.next()) {

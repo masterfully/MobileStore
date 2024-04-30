@@ -1,13 +1,12 @@
 package DAO;
 
-import DTO.KhachHang_DTO;
-import DTO.NhanVien_DTO;
-import DTO.SanPham_DTO;
-import DTO.TaiKhoan_DTO;
+import DTO.*;
+import com.mysql.cj.log.NullLogger;
 
 public class test {
     public static void main(String[] args) {
-        TaiKhoan_DTO sp1 = new TaiKhoan_DTO("NV011", "quanlykho3", "123", "Quản lý kho", "Ngưng hoạt động");
-        System.out.println(TaiKhoan_DAO.getInstance().insert(sp1));
+//        ctSanPham_DTO sp1 = new ctSanPham_DTO(113114032,null, null, null, null, null, null, null, null, 1001);
+        ctSanPham_DTO sp1 = new ctSanPham_DTO();
+        System.out.println(ctSanPham_DAO.getInstance().selectById(113114031));
     }
 }

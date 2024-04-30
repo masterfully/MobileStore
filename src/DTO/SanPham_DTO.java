@@ -21,6 +21,14 @@ public class SanPham_DTO {
 		this.isDelete = isDelete;
 	}
 
+	public SanPham_DTO() {
+
+	}
+
+	public SanPham_DTO(int id) {
+		this.idSP = id;
+	}
+
 	public int getIdSP() {
 		return idSP;
 	}
