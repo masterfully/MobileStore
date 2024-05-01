@@ -10,6 +10,8 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.awt.event.ActionEvent;
 import javax.swing.JComboBox;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.table.DefaultTableModel;
@@ -17,10 +19,14 @@ import javax.swing.table.DefaultTableModel;
 import BUS.SanPham_BUS;
 import DAO.SanPham_DAO;
 import DTO.SanPham_DTO;
-import GUI.Dialog.SanPham_Dialog;
-
+import GUI.Dialog.suaSanPham_Dialog;
+import GUI.Dialog.themSanPham_Dialog;
+import GUI.Dialog.xemDanhSachImeiSanPham_Dialog;
+import GUI.Dialog.xemthongtinSanPham_Dialog;
+import GUI.Dialog.xoaSanPham_Dialog;
+import java.text.Normalizer;
 import javax.swing.JTextField;
-
+import java.util.regex.Pattern;
 public class SanPham_GUI extends JPanel {
 
     private static final long serialVersionUID = 1L;
@@ -30,13 +36,16 @@ public class SanPham_GUI extends JPanel {
     public SanPham_BUS spBUS = new SanPham_BUS();
     public ArrayList<SanPham_DTO> listSP = spBUS.getAll();
     public SanPham_DAO spDAO = new SanPham_DAO();
-    public SanPham_Dialog spDialog = new SanPham_Dialog();
-    /**
-     * Create the panel.
-     */
+    public themSanPham_Dialog spDialog = new themSanPham_Dialog();
+    
 
+    public static String removeDiacriticsAndSpaces(String str) {
+        str = Normalizer.normalize(str, Normalizer.Form.NFD);
+        str = str.replaceAll("\\p{InCombiningDiacriticalMarks}+", "");
+        str = str.replaceAll("\\s+", ""); // Loại bỏ các khoảng trắng
+        return str;
+    }
     public void loadDataTalbe() {
-        System.out.println("Loading data...");
         ArrayList<SanPham_DTO> result = spDAO.selectAll();
         System.out.println("Number of records retrieved: " + result.size());
         tblModel.setRowCount(0); // Clear existing data
@@ -44,14 +53,33 @@ public class SanPham_GUI extends JPanel {
             tblModel.addRow(new Object[]{sp.getIdSP(), sp.getTenSP(), sp.getSoLuong(), sp.getMauSac()});
         }
     }
-
+    
+    public void loadDataTalbe(String t) {
+    	String str = removeDiacriticsAndSpaces(t.toLowerCase());
+    	if (str.equalsIgnoreCase("tatca")) {
+    		ArrayList<SanPham_DTO> result = spDAO.selectByCondition("tenSP LIKE '%%'");
+            System.out.println("Number of records retrieved: " + result.size());
+            tblModel.setRowCount(0); // Clear existing data
+            for (SanPham_DTO sp : result) {
+                tblModel.addRow(new Object[]{sp.getIdSP(), sp.getTenSP(), sp.getSoLuong(), sp.getMauSac()});
+            }
+    	}
+        ArrayList<SanPham_DTO> result = spDAO.selectByCondition("tenSP = '" + t + "'");
+        System.out.println("Number of records retrieved: " + result.size());
+        tblModel.setRowCount(0); // Clear existing data
+        for (SanPham_DTO sp : result) {
+            tblModel.addRow(new Object[]{sp.getIdSP(), sp.getTenSP(), sp.getSoLuong(), sp.getMauSac()});
+        }
+        System.out.println("tatca".equalsIgnoreCase(str));
+    }
+    
     public SanPham_GUI() {
-//        setLayout(new BorderLayout());
         String[] columnNames = {"Mã SP", "Tên sản phẩm", "Số lượng tồn", "Màu sắc"};
         tblModel = new DefaultTableModel(columnNames, 0);
+        setLayout(null);
         loadDataTalbe();
-        setLayout(new GridLayout(0, 1, 0, 0));
         JPanel panel_SanPham = new JPanel();
+        panel_SanPham.setBounds(0, 0, 1027, 587);
         add(panel_SanPham, BorderLayout.NORTH);
         panel_SanPham.setLayout(new FlowLayout(FlowLayout.LEFT, 5, 5));
         add(panel_SanPham);
@@ -65,9 +93,20 @@ public class SanPham_GUI extends JPanel {
         JButton btn_them = new JButton("Thêm");
         btn_them.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-            	SanPham_Dialog spdialog = new SanPham_Dialog();
-            	spdialog.setSize(1000,500);
-            	spdialog.setVisible(true);
+            	int selectedRow = table_SP.getSelectedRow();
+                if (selectedRow != -1) {
+                    DefaultTableModel model = (DefaultTableModel) table_SP.getModel();
+                    int idSP = (int) model.getValueAt(selectedRow, 0);
+                    themSanPham_Dialog spdialog = new themSanPham_Dialog(idSP);
+                    spdialog.setSize(1000,500);
+                    spdialog.setVisible(true);
+                }
+                else {
+                	themSanPham_Dialog spdialog = new themSanPham_Dialog();
+                	spdialog.setSize(1000,500);
+                	spdialog.setVisible(true);
+                }
+            	
             }
         });
         btn_them.setForeground(new Color(0, 0, 0));
@@ -82,6 +121,21 @@ public class SanPham_GUI extends JPanel {
 
 
         JButton btn_sua = new JButton("Sửa");
+        btn_sua.addActionListener(new ActionListener() {
+        	public void actionPerformed(ActionEvent e) {
+        		int selectedRow = table_SP.getSelectedRow();
+                if (selectedRow != -1) {
+                    DefaultTableModel model = (DefaultTableModel) table_SP.getModel();
+                    int idSP = (int) model.getValueAt(selectedRow, 0);
+                    suaSanPham_Dialog spdialog = new suaSanPham_Dialog(idSP);
+                    spdialog.setSize(650,500);
+                    spdialog.setVisible(true);
+                }
+                else {
+                    JOptionPane.showMessageDialog(null, "Vui lòng chọn sản phẩm cần sửa!", "Cảnh báo", JOptionPane.WARNING_MESSAGE);
+                }
+        	}
+        });
         GridBagConstraints gbc_btn_sua = new GridBagConstraints();
         gbc_btn_sua.fill = GridBagConstraints.HORIZONTAL;
         gbc_btn_sua.insets = new Insets(0, 0, 5, 5);
@@ -92,6 +146,21 @@ public class SanPham_GUI extends JPanel {
 
 
         JButton btn_xoa = new JButton("Xóa");
+        btn_xoa.addActionListener(new ActionListener() {
+        	public void actionPerformed(ActionEvent e) {
+        		int selectedRow = table_SP.getSelectedRow();
+                if (selectedRow != -1) {
+                    DefaultTableModel model = (DefaultTableModel) table_SP.getModel();
+                    int idSP = (int) model.getValueAt(selectedRow, 0);
+                    xoaSanPham_Dialog spdialog = new xoaSanPham_Dialog(idSP);
+                    spdialog.setSize(500,300);
+                    spdialog.setVisible(true);
+                }
+                else {
+                    JOptionPane.showMessageDialog(null, "Vui lòng chọn sản phẩm cần xóa!", "Cảnh báo", JOptionPane.WARNING_MESSAGE);
+                }
+        	}
+        });
         GridBagConstraints gbc_btn_xoa = new GridBagConstraints();
         gbc_btn_xoa.fill = GridBagConstraints.HORIZONTAL;
         gbc_btn_xoa.insets = new Insets(0, 0, 5, 5);
@@ -101,6 +170,21 @@ public class SanPham_GUI extends JPanel {
         btn_xoa.setIcon(new ImageIcon(Toolkit.getDefaultToolkit().createImage(SanPham_GUI.class.getResource("icon_xoa.png"))));
 
         JButton btn_chitiet = new JButton("Chi tiết");
+        btn_chitiet.addActionListener(new ActionListener() {
+        	public void actionPerformed(ActionEvent e) {
+        		int selectedRow = table_SP.getSelectedRow();
+                if (selectedRow != -1) {
+                    DefaultTableModel model = (DefaultTableModel) table_SP.getModel();
+                    int idSP = (int) model.getValueAt(selectedRow, 0);
+                    xemthongtinSanPham_Dialog spdialog = new xemthongtinSanPham_Dialog(idSP);
+                    spdialog.setSize(650,500);
+                    spdialog.setVisible(true);
+                }
+                else {
+                    JOptionPane.showMessageDialog(null, "Vui lòng chọn sản phẩm cần xem!", "Cảnh báo", JOptionPane.WARNING_MESSAGE);
+                }
+        	}
+        });
         btn_chitiet.setIcon(new ImageIcon(SanPham_GUI.class.getResource("/GUI/JPanel_QuanLyCuaHangDienThoai/icon_info.png")));
         GridBagConstraints gbc_btn_chitiet = new GridBagConstraints();
         gbc_btn_chitiet.fill = GridBagConstraints.HORIZONTAL;
@@ -110,6 +194,21 @@ public class SanPham_GUI extends JPanel {
         panel_SanPham.add(btn_chitiet, gbc_btn_chitiet);
 
         JButton btn_xemDS = new JButton("Xem DS");
+        btn_xemDS.addActionListener(new ActionListener() {
+        	public void actionPerformed(ActionEvent e) {
+        		int selectedRow = table_SP.getSelectedRow();
+                if (selectedRow != -1) {
+                    DefaultTableModel model = (DefaultTableModel) table_SP.getModel();
+                    int idSP = (int) model.getValueAt(selectedRow, 0);
+                    xemDanhSachImeiSanPham_Dialog spdialog = new xemDanhSachImeiSanPham_Dialog(idSP);
+                    spdialog.setSize(800,600);
+                    spdialog.setVisible(true);
+                }
+                else {
+                    JOptionPane.showMessageDialog(null, "Vui lòng chọn sản phẩm cần xem!", "Cảnh báo", JOptionPane.WARNING_MESSAGE);
+                }
+        	}
+        });
         btn_xemDS.setIcon(new ImageIcon(SanPham_GUI.class.getResource("/GUI/JPanel_QuanLyCuaHangDienThoai/icon_xemDS.png")));
         GridBagConstraints gbc_btn_xemDS = new GridBagConstraints();
         gbc_btn_xemDS.fill = GridBagConstraints.HORIZONTAL;
@@ -118,16 +217,33 @@ public class SanPham_GUI extends JPanel {
         gbc_btn_xemDS.gridy = 0;
         panel_SanPham.add(btn_xemDS, gbc_btn_xemDS);
 
-        JComboBox comboBox_timkiem = new JComboBox();
-        comboBox_timkiem.setModel(new DefaultComboBoxModel(new String[]{"Tất cả", "IPhone 11", "IPhone 12"}));
-        GridBagConstraints gbc_comboBox_timkiem = new GridBagConstraints();
-        gbc_comboBox_timkiem.insets = new Insets(0, 0, 5, 5);
-        gbc_comboBox_timkiem.fill = GridBagConstraints.HORIZONTAL;
-        gbc_comboBox_timkiem.gridx = 5;
-        gbc_comboBox_timkiem.gridy = 0;
-        panel_SanPham.add(comboBox_timkiem, gbc_comboBox_timkiem);
-
+        JComboBox comboBox_loc = new JComboBox();
+        comboBox_loc.addActionListener(new ActionListener() {
+        	public void actionPerformed(ActionEvent e) {
+        		String selectedValue = (String) comboBox_loc.getSelectedItem();
+        		loadDataTalbe(selectedValue);
+        	}
+        });
+        comboBox_loc.setModel(new DefaultComboBoxModel(new String[]{"Tất cả", "IPhone X", "IPhone XR", "IPhone XS", "IPhone XS Max", "IPhone 11", "IPhone 11 Pro", "IPhone 11 Pro Max", "IPhone 12", "IPhone 12 Pro", "IPhone 12 Pro Max"}));
+        GridBagConstraints gbc_comboBox_loc = new GridBagConstraints();
+        gbc_comboBox_loc.insets = new Insets(0, 0, 5, 5);
+        gbc_comboBox_loc.fill = GridBagConstraints.HORIZONTAL;
+        gbc_comboBox_loc.gridx = 5;
+        gbc_comboBox_loc.gridy = 0;
+        panel_SanPham.add(comboBox_loc, gbc_comboBox_loc);
+        
         textField_timkiem = new JTextField();
+        textField_timkiem.addActionListener(new ActionListener() {
+        	public void actionPerformed(ActionEvent e) {
+        		String t = textField_timkiem.getText();
+        		ArrayList<SanPham_DTO> result = spDAO.selectByCondition("tenSP LIKE '%" + t +"%'");
+                System.out.println("Number of records retrieved: " + result.size());
+                tblModel.setRowCount(0); // Clear existing data
+                for (SanPham_DTO sp : result) {
+                    tblModel.addRow(new Object[]{sp.getIdSP(), sp.getTenSP(), sp.getSoLuong(), sp.getMauSac()});
+                }
+        	}
+        });
         GridBagConstraints gbc_textField_timkiem = new GridBagConstraints();
         gbc_textField_timkiem.insets = new Insets(0, 0, 5, 0);
         gbc_textField_timkiem.fill = GridBagConstraints.HORIZONTAL;
@@ -135,9 +251,11 @@ public class SanPham_GUI extends JPanel {
         gbc_textField_timkiem.gridy = 0;
         panel_SanPham.add(textField_timkiem, gbc_textField_timkiem);
         textField_timkiem.setColumns(10);
+        
         table_SP = new JTable(tblModel);
         JScrollPane scrollPane = new JScrollPane(table_SP); // Tạo JScrollPane và đặt table_SP vào đó
         table_SP.getTableHeader().setBackground(Color.LIGHT_GRAY); // Đặt màu nền cho thanh tiêu đề
+        
         GridBagConstraints gbc_scrollPane = new GridBagConstraints();
         gbc_scrollPane.gridwidth = 7;
         gbc_scrollPane.insets = new Insets(0, 0, 0, 5);
@@ -145,6 +263,14 @@ public class SanPham_GUI extends JPanel {
         gbc_scrollPane.gridx = 0;
         gbc_scrollPane.gridy = 1;
         panel_SanPham.add(scrollPane, gbc_scrollPane); // Thêm JScrollPane chứa table_SP vào panel_SanPham
+        
+        JButton btn_tailai = new JButton("Tải lại");
+        btn_tailai.addActionListener(new ActionListener() {
+        	public void actionPerformed(ActionEvent e) {
+        		refreshTable();
+        	}
+        });
+        scrollPane.setRowHeaderView(btn_tailai);
 
 
     }
@@ -165,6 +291,23 @@ public class SanPham_GUI extends JPanel {
      */
     private void $$$setupUI$$$() {
         final JPanel panel1 = new JPanel();
-//        panel1.setLayout(new com.intellij.uiDesigner.core.GridLayoutManager(1, 1, new Insets(0, 0, 0, 0), -1, -1));
     }
+
+	public void refreshTable() {
+		loadDataTalbe();
+	}
+	public static void main(String[] args) {
+		JFrame frame = new JFrame("Test SanPham_GUI");
+	    frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	    frame.setSize(1000, 600);
+
+	    // Tạo một instance của SanPham_GUI
+	    SanPham_GUI sanPhamGUI = new SanPham_GUI();
+
+	    // Thêm SanPham_GUI vào JFrame
+	    frame.getContentPane().add(sanPhamGUI);
+
+	    // Hiển thị JFrame
+	    frame.setVisible(true);
+	}
 }

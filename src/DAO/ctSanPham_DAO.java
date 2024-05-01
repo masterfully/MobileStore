@@ -129,7 +129,7 @@ public class ctSanPham_DAO implements DAOInterface<ctSanPham_DTO> {
         ArrayList<ctSanPham_DTO> ctSanPhamList = new ArrayList<>();
         try {
             Connection con = JDBCUtil.getConnection();
-            String sql = "SELECT * FROM ctSanPham WHERE " + condition;
+            String sql = "SELECT * FROM ctsanpham WHERE " + condition;
             Statement stmt = con.createStatement();
             ResultSet rs = stmt.executeQuery(sql);
 
@@ -144,7 +144,7 @@ public class ctSanPham_DAO implements DAOInterface<ctSanPham_DTO> {
                 ctSanPham.setCameraTruoc(rs.getString("cameraTruoc"));
                 ctSanPham.setRam(rs.getString("ram"));
                 ctSanPham.setRom(rs.getString("rom"));
-                ctSanPham.setSANPHAM_idSP(rs.getInt("idSP"));
+                ctSanPham.setSANPHAM_idSP(rs.getInt("SANPHAM_idSP"));
                 ctSanPhamList.add(ctSanPham);
             }
             JDBCUtil.closeConnection(con);

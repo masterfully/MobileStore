@@ -468,7 +468,7 @@ public class QuanLyKho extends JFrame {
         repaint();
 
         sanPham = new SanPham_GUI();
-        sanPham.setBounds(0, 0, 958, 705);
+        sanPham.setBounds(0, 0, 1040, 684);
 		panel_12.add(sanPham);
 		revalidate();
         repaint();

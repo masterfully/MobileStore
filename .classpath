@@ -5,7 +5,7 @@
 			<attribute name="module" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="src" path="src"/>
+	<classpathentry excluding="Image/" kind="src" path="src"/>
 	<classpathentry kind="lib" path="C:/Users/Smile/Downloads/sqljdbc_12.6/enu/jars/mssql-jdbc-12.6.1.jre11.jar"/>
 	<classpathentry kind="lib" path="C:/Users/Smile/Downloads/mysql-connector-j-8.3.0/mysql-connector-j-8.3.0.jar"/>
 	<classpathentry kind="lib" path="C:/Users/Smile/Downloads/ae-database-community-233.15026.9-sources.jar"/>
