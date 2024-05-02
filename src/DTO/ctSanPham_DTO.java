@@ -1,7 +1,6 @@
 package DTO;
 
 public class ctSanPham_DTO {
-    private int maIMEI;
     private String chip;
     private String pin;
     private String manHinh;
@@ -12,8 +11,7 @@ public class ctSanPham_DTO {
     private String rom;
     private int SANPHAM_idSP;
 
-    public ctSanPham_DTO(int maIMEI, String chip, String pin, String manHinh, String phienBanHDH, String cameraSau, String cameraTruoc, String ram, String rom, int SANPHAM_idSP) {
-        this.maIMEI = maIMEI;
+    public ctSanPham_DTO(String chip, String pin, String manHinh, String phienBanHDH, String cameraSau, String cameraTruoc, String ram, String rom, int SANPHAM_idSP) {
         this.chip = chip;
         this.pin = pin;
         this.manHinh = manHinh;
@@ -25,19 +23,7 @@ public class ctSanPham_DTO {
         this.SANPHAM_idSP = SANPHAM_idSP;
     }
 
-    public ctSanPham_DTO(int maIMEI) {
-        this.maIMEI=maIMEI;
-    }
-
-
-    public int getMaIMEI() {
-        return maIMEI;
-    }
-
-    public void setMaIMEI(int maIMEI) {
-        this.maIMEI = maIMEI;
-    }
-
+ 
     public String getChip() {
         return chip;
     }

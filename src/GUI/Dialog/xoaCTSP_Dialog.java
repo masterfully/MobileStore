@@ -12,8 +12,10 @@ import javax.swing.SwingUtilities;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.DefaultTableModel;
 
+import DAO.IMEI_DAO;
 import DAO.SanPham_DAO;
 import DAO.ctSanPham_DAO;
+import DTO.IMEI_DTO;
 import DTO.SanPham_DTO;
 import DTO.ctSanPham_DTO;
 import GUI.JPanel_QuanLyCuaHangDienThoai.SanPham_GUI;
@@ -32,9 +34,9 @@ import java.awt.event.ActionEvent;
 public class xoaCTSP_Dialog extends JDialog{
 	
 	public xoaCTSP_Dialog(int maIMEI) {
-		ctSanPham_DTO ctspdto = ctSanPham_DAO.getInstance().selectById(maIMEI);
+		IMEI_DTO ctspdto = IMEI_DAO.getInstance().selectById(maIMEI);
 		getContentPane().setLayout(null);
-		JLabel lbl_suasp = new JLabel("XÓA IMEI SẢN PHẨM " + String.valueOf(maIMEI));
+		JLabel lbl_suasp = new JLabel("XÓA IMEI " + String.valueOf(maIMEI));
 		lbl_suasp.setBounds(0, 0, 468, 17);
 		lbl_suasp.setBackground(new Color(128, 255, 255));
 		lbl_suasp.setHorizontalAlignment(SwingConstants.CENTER);
@@ -46,7 +48,7 @@ public class xoaCTSP_Dialog extends JDialog{
 		getContentPane().add(btn_xoa);
 		btn_xoa.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				ctSanPham_DAO.getInstance().delete(Integer.toString(maIMEI));
+				IMEI_DAO.getInstance().delete(Integer.toString(maIMEI));
 			}
 		});
 		

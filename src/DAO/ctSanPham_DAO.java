@@ -17,18 +17,17 @@ public class ctSanPham_DAO implements DAOInterface<ctSanPham_DTO> {
         int ketQua = 0;
         try {
             Connection con = JDBCUtil.getConnection();
-            String sql = "INSERT INTO ctSanPham (maIMEI, chip, pin, manHinh, phienBanHDH, cameraSau, cameraTruoc, ram, rom, SANPHAM_idSP) VALUES (?,?,?,?,?,?,?,?,?,?)";
+            String sql = "INSERT INTO ctSanPham (chip, pin, manHinh, phienBanHDH, cameraSau, cameraTruoc, ram, rom, SANPHAM_idSP) VALUES (?,?,?,?,?,?,?,?,?)";
             PreparedStatement pst = con.prepareStatement(sql);
-            pst.setInt(1, t.getMaIMEI());
-            pst.setString(2, t.getChip());
-            pst.setString(3, t.getPin());
-            pst.setString(4, t.getManHinh());
-            pst.setString(5, t.getPhienBanHDH());
-            pst.setString(6, t.getCameraSau());
-            pst.setString(7, t.getCameraTruoc());
-            pst.setString(8, t.getRam());
-            pst.setString(9, t.getRom());
-            pst.setInt(10, t.getSANPHAM_idSP());
+            pst.setString(1, t.getChip());
+            pst.setString(2, t.getPin());
+            pst.setString(3, t.getManHinh());
+            pst.setString(4, t.getPhienBanHDH());
+            pst.setString(5, t.getCameraSau());
+            pst.setString(6, t.getCameraTruoc());
+            pst.setString(7, t.getRam());
+            pst.setString(8, t.getRom());
+            pst.setInt(9, t.getSANPHAM_idSP());
             ketQua = pst.executeUpdate();
             System.out.println("Đã thực thi: " + sql);
             System.out.println("Đã thay đổi " + ketQua + " dòng");
@@ -52,9 +51,8 @@ public class ctSanPham_DAO implements DAOInterface<ctSanPham_DTO> {
                     "cameraSau = ?, " +
                     "cameraTruoc = ?, " +
                     "ram = ?, " +
-                    "rom = ?, " +
-                    "SANPHAM_idSP = ? " +
-                    "WHERE maIMEI = ?";
+                    "rom = ? " +
+                    "WHERE SANPHAM_idSP = ?";
             PreparedStatement pst = con.prepareStatement(sql);
             pst.setString(1, t.getChip());
             pst.setString(2, t.getPin());
@@ -65,7 +63,6 @@ public class ctSanPham_DAO implements DAOInterface<ctSanPham_DTO> {
             pst.setString(7, t.getRam());
             pst.setString(8, t.getRom());
             pst.setInt(9, t.getSANPHAM_idSP());
-            pst.setInt(10, t.getMaIMEI());
             ketQua = pst.executeUpdate();
             System.out.println("Đã thực thi: " + sql);
             System.out.println("Đã thay đổi " + ketQua + " dòng");
@@ -77,13 +74,13 @@ public class ctSanPham_DAO implements DAOInterface<ctSanPham_DTO> {
     }
 
     @Override
-    public int delete(String maIMEI) {
+    public int delete(String masp) {
         int ketQua = 0;
         try {
             Connection con = JDBCUtil.getConnection();
-            String sql = "DELETE FROM ctSanPham WHERE maIMEI = ?";
+            String sql = "DELETE FROM ctSanPham WHERE SANPHAM_idSP = ?";
             PreparedStatement pst = con.prepareStatement(sql);
-            pst.setString(1, maIMEI);
+            pst.setString(1, masp);
             ketQua = pst.executeUpdate();
             System.out.println("Đã thực thi: " + sql);
             System.out.println("Đã thay đổi " + ketQua + " dòng");
@@ -105,7 +102,6 @@ public class ctSanPham_DAO implements DAOInterface<ctSanPham_DTO> {
 
             while (rs.next()) {
                 ctSanPham_DTO ctSanPham = new ctSanPham_DTO();
-                ctSanPham.setMaIMEI(rs.getInt("maIMEI"));
                 ctSanPham.setChip(rs.getString("chip"));
                 ctSanPham.setPin(rs.getString("pin"));
                 ctSanPham.setManHinh(rs.getString("manHinh"));
@@ -135,7 +131,6 @@ public class ctSanPham_DAO implements DAOInterface<ctSanPham_DTO> {
 
             while (rs.next()) {
                 ctSanPham_DTO ctSanPham = new ctSanPham_DTO();
-                ctSanPham.setMaIMEI(rs.getInt("maIMEI"));
                 ctSanPham.setChip(rs.getString("chip"));
                 ctSanPham.setPin(rs.getString("pin"));
                 ctSanPham.setManHinh(rs.getString("manHinh"));
@@ -155,18 +150,17 @@ public class ctSanPham_DAO implements DAOInterface<ctSanPham_DTO> {
     }
 
     @Override
-    public ctSanPham_DTO selectById(int maIMEI) {
+    public ctSanPham_DTO selectById(int idsp) {
         ctSanPham_DTO ctSanPham = null;
         try {
             Connection con = JDBCUtil.getConnection();
-            String sql = "SELECT * FROM ctSanPham WHERE maIMEI = ?";
+            String sql = "SELECT * FROM ctSanPham WHERE SANPHAM_idSP = ?";
             PreparedStatement pst = con.prepareStatement(sql);
-            pst.setInt(1, maIMEI);
+            pst.setInt(1, idsp);
             ResultSet rs = pst.executeQuery();
 
             if (rs.next()) {
                 ctSanPham = new ctSanPham_DTO();
-                ctSanPham.setMaIMEI(rs.getInt("maIMEI"));
                 ctSanPham.setChip(rs.getString("chip"));
                 ctSanPham.setPin(rs.getString("pin"));
                 ctSanPham.setManHinh(rs.getString("manHinh"));

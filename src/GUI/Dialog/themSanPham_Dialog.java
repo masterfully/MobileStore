@@ -11,11 +11,14 @@ import javax.swing.SwingConstants;
 import javax.swing.SwingUtilities;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
+import DAO.IMEI_DAO;
 import DAO.SanPham_DAO;
 import DAO.ctSanPham_DAO;
+import DTO.IMEI_DTO;
 import DTO.SanPham_DTO;
 import DTO.ctSanPham_DTO;
 import GUI.JPanel_QuanLyCuaHangDienThoai.SanPham_GUI;
+import helper.ExtractString;
 
 import java.awt.Color;
 import javax.swing.JButton;
@@ -42,6 +45,7 @@ public class themSanPham_Dialog extends JDialog{
 	private int idSP;
 	
 	public themSanPham_Dialog() {
+		ExtractString extractString = new ExtractString();
 		getContentPane().setLayout(null);
 		JLabel lbl_hinhAnh = new JLabel("");
 		lbl_hinhAnh.setIcon(new ImageIcon(imagePath));
@@ -211,14 +215,12 @@ public class themSanPham_Dialog extends JDialog{
 				int giaNhap = Integer.parseInt(txt_gianhap.getText());
 				int giaBan = Integer.parseInt(txt_giaban.getText());
 				int soLuong = Integer.parseInt(txt_soluong.getText());
-				String hinhAnh =  imagePath;
+				String hinhAnh =  extractString.catLinkAnh(imagePath);
 				String mauSac = (String) cbb_mausac.getSelectedItem();
 				SanPham_DTO spdto = new SanPham_DTO(idsp, tensp, giaNhap, giaBan, soLuong, hinhAnh, mauSac, 0);
 				SanPham_DAO.getInstance().insert(spdto);
 				
 				
-				ctSanPham_DAO ctspdao = new ctSanPham_DAO();
-				int maIMEI = ctspdao.getInstance().selectAll().get(ctspdao.getInstance().selectAll().size()-1).getMaIMEI() +1;
 				String chip = txt_chip.getText();
 				String pin = txt_pin.getText();
 				String manHinh = (String) cbb_manhinh.getSelectedItem();
@@ -228,7 +230,7 @@ public class themSanPham_Dialog extends JDialog{
 				String ram = (String) cbb_ram.getSelectedItem();
 				String rom = (String) cbb_rom.getSelectedItem();
 				int SANPHAM_idSP = idsp;
-				ctSanPham_DTO ctspdto = new ctSanPham_DTO(maIMEI, chip, pin, manHinh, hdh, cameraSau, cameraTruoc, ram, rom, SANPHAM_idSP);
+				ctSanPham_DTO ctspdto = new ctSanPham_DTO(chip, pin, manHinh, hdh, cameraSau, cameraTruoc, ram, rom, SANPHAM_idSP);
 				ctSanPham_DAO.getInstance().insert(ctspdto);
 			}
 		});
@@ -248,6 +250,7 @@ public class themSanPham_Dialog extends JDialog{
 	
 	public themSanPham_Dialog(int idSP) {
 		SanPham_DTO spdto = SanPham_DAO.getInstance().selectById(idSP);
+		ctSanPham_DTO ctspdto = ctSanPham_DAO.getInstance().selectById(idSP);
 		getContentPane().setLayout(null);
 		JLabel lbl_hinhAnh = new JLabel("");
 		lbl_hinhAnh.setIcon(new ImageIcon("C:\\Users\\Smile\\eclipse-workspace\\MobileStore\\" + spdto.getHinhAnh()));
@@ -294,7 +297,7 @@ public class themSanPham_Dialog extends JDialog{
 		lbl_gianhap.setBounds(384, 141, 93, 14);
 		getContentPane().add(lbl_gianhap);
 		
-		txt_gianhap = new JTextField(String.format("%.0f", spdto.getGiaNhap()));
+		txt_gianhap = new JTextField(String.format("%.0f", spdto.getGiaBan()));
 		txt_gianhap.setColumns(10);
 		txt_gianhap.setBounds(384, 166, 129, 30);
 		getContentPane().add(txt_gianhap);
@@ -305,7 +308,7 @@ public class themSanPham_Dialog extends JDialog{
 		lbl_giaban.setBounds(384, 221, 93, 14);
 		getContentPane().add(lbl_giaban);
 		
-		txt_giaban = new JTextField(String.format("%.0f", spdto.getGiaBan()));
+		txt_giaban = new JTextField(String.format("%.0f", spdto.getGiaNhap()));
 		txt_giaban.setColumns(10);
 		txt_giaban.setBounds(384, 246, 129, 30);
 		getContentPane().add(txt_giaban);
@@ -338,20 +341,22 @@ public class themSanPham_Dialog extends JDialog{
 		lbl_chip.setBounds(607, 142, 93, 14);
 		getContentPane().add(lbl_chip);
 		
-		txt_chip = new JTextField();
+		txt_chip = new JTextField(String.valueOf(ctspdto.getChip()));
 		txt_chip.setColumns(10);
 		txt_chip.setBounds(607, 166, 129, 30);
 		getContentPane().add(txt_chip);
+		txt_chip.setEnabled(false);
 		
 		JLabel lbl_pin = new JLabel("Dung lượng pin");
 		lbl_pin.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		lbl_pin.setBounds(607, 222, 115, 14);
 		getContentPane().add(lbl_pin);
 		
-		txt_pin = new JTextField();
+		txt_pin = new JTextField(String.valueOf(ctspdto.getPin()));
 		txt_pin.setColumns(10);
 		txt_pin.setBounds(607, 246, 129, 30);
 		getContentPane().add(txt_pin);
+		txt_pin.setEnabled(false);
 		
 		JLabel lbl_manhinh = new JLabel("Kích thước màn hình");
 		lbl_manhinh.setFont(new Font("Tahoma", Font.PLAIN, 12));
@@ -362,36 +367,41 @@ public class themSanPham_Dialog extends JDialog{
 		cbb_manhinh.setModel(new DefaultComboBoxModel(new String[] {"6.1 Inch", "6.7 Inch"}));
 		cbb_manhinh.setBounds(607, 331, 93, 30);
 		getContentPane().add(cbb_manhinh);
+		cbb_manhinh.setSelectedItem(String.valueOf(ctspdto.getManHinh()));
+		cbb_manhinh.setEnabled(false);
 		
 		JLabel lbl_hdh = new JLabel("Hệ điều hành");
 		lbl_hdh.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		lbl_hdh.setBounds(828, 59, 93, 14);
 		getContentPane().add(lbl_hdh);
 		
-		txt_hdh = new JTextField();
+		txt_hdh = new JTextField(String.valueOf(ctspdto.getPhienBanHDH()));
 		txt_hdh.setColumns(10);
 		txt_hdh.setBounds(828, 83, 129, 30);
 		getContentPane().add(txt_hdh);
+		txt_hdh.setEnabled(false);
 		
 		JLabel lbl_camerasau = new JLabel("Camera sau");
 		lbl_camerasau.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		lbl_camerasau.setBounds(828, 142, 93, 14);
 		getContentPane().add(lbl_camerasau);
 		
-		txt_camerasau = new JTextField();
+		txt_camerasau = new JTextField(String.valueOf(ctspdto.getCameraSau()));
 		txt_camerasau.setColumns(10);
 		txt_camerasau.setBounds(828, 166, 129, 30);
 		getContentPane().add(txt_camerasau);
+		txt_camerasau.setEnabled(false);
 		
 		JLabel lbl_cameratruoc = new JLabel("Camera trước");
 		lbl_cameratruoc.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		lbl_cameratruoc.setBounds(828, 222, 93, 14);
 		getContentPane().add(lbl_cameratruoc);
 		
-		txt_cameratruoc = new JTextField();
+		txt_cameratruoc = new JTextField(String.valueOf(ctspdto.getCameraTruoc()));
 		txt_cameratruoc.setColumns(10);
 		txt_cameratruoc.setBounds(828, 246, 129, 30);
 		getContentPane().add(txt_cameratruoc);
+		txt_cameratruoc.setEnabled(false);
 		
 		JLabel lbl_ram = new JLabel("Ram");
 		lbl_ram.setFont(new Font("Tahoma", Font.PLAIN, 12));
@@ -407,29 +417,24 @@ public class themSanPham_Dialog extends JDialog{
 		cbb_rom.setModel(new DefaultComboBoxModel(new String[] {"64GB", "128GB", "512GB", "1TB"}));
 		cbb_rom.setBounds(916, 331, 93, 30);
 		getContentPane().add(cbb_rom);
+		cbb_rom.setSelectedItem(String.valueOf(ctspdto.getRom()));
+		cbb_rom.setEnabled(false);
 		
 		JComboBox cbb_ram = new JComboBox();
 		cbb_ram.setModel(new DefaultComboBoxModel(new String[] {"2GB", "3GB", "4GB", "6GB"}));
 		cbb_ram.setBounds(765, 331, 93, 30);
 		getContentPane().add(cbb_ram);
+		cbb_ram.setSelectedItem(String.valueOf(ctspdto.getRam()));
+		cbb_ram.setEnabled(false);
 		
 		JButton btn_them = new JButton("Thêm");
 		btn_them.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				int idsp = idSP;
-				ctSanPham_DAO ctspdao = new ctSanPham_DAO();
-				int maIMEI = ctspdao.getInstance().selectAll().get(ctspdao.getInstance().selectAll().size()-1).getMaIMEI() +1;
-				String chip = txt_chip.getText();
-				String pin = txt_pin.getText();
-				String manHinh = (String) cbb_manhinh.getSelectedItem();
-				String hdh = txt_hdh.getText();
-				String cameraSau = txt_camerasau.getText();
-				String cameraTruoc = txt_cameratruoc.getText();
-				String ram = (String) cbb_ram.getSelectedItem();
-				String rom = (String) cbb_rom.getSelectedItem();
-				int SANPHAM_idSP = idsp;
-				ctSanPham_DTO ctspdto = new ctSanPham_DTO(maIMEI, chip, pin, manHinh, hdh, cameraSau, cameraTruoc, ram, rom, SANPHAM_idSP);
-				ctSanPham_DAO.getInstance().insert(ctspdto);
+//				thêm mới vô bảng IMEI
+				IMEI_DAO IMEIDAO = new IMEI_DAO();
+				int maIMEI = IMEIDAO.getInstance().selectAll().get(IMEIDAO.getInstance().selectAll().size()-1).getMaIMEI() +1;
+				IMEI_DTO IMEI = new IMEI_DTO(maIMEI, idSP, 0);
+				IMEIDAO.getInstance().insert(IMEI);
 			}
 		});
 		btn_them.setBounds(469, 400, 129, 23);

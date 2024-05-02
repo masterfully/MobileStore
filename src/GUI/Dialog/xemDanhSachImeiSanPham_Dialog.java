@@ -17,8 +17,10 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.DefaultTableModel;
 
 import BUS.SanPham_BUS;
+import DAO.IMEI_DAO;
 import DAO.SanPham_DAO;
 import DAO.ctSanPham_DAO;
+import DTO.IMEI_DTO;
 import DTO.SanPham_DTO;
 import DTO.ctSanPham_DTO;
 import GUI.JPanel_QuanLyCuaHangDienThoai.SanPham_GUI;
@@ -42,15 +44,15 @@ public class xemDanhSachImeiSanPham_Dialog extends JDialog{
 	
 	
 	public void loadDataTalbe(int idSP) {
-        ArrayList<ctSanPham_DTO> result = ctSanPham_DAO.getInstance().selectByCondition("SANPHAM_idSP = " + idSP);
+        ArrayList<IMEI_DTO> result = IMEI_DAO.getInstance().selectByCondition("SANPHAM_idSP = " + idSP);
         tblModel.setRowCount(0);
-        for (ctSanPham_DTO sp : result) {
-            tblModel.addRow(new Object[]{sp.getMaIMEI(), sp.getChip(), sp.getPin(), sp.getManHinh(), sp.getCameraSau(), sp.getCameraTruoc(), sp.getRam(), sp.getRom()});
+        for (IMEI_DTO sp : result) {
+            tblModel.addRow(new Object[]{sp.getMaIMEI(), sp.getIdPhieuNhap(), sp.getIdPhieuXuat(), sp.getSANPHAM_idSP(), sp.getTrangThai()});
         }
     }
 	
 	public xemDanhSachImeiSanPham_Dialog(int idSP) {
-		String[] columnNames = {"Mã IMEI", "Chip", "Pin", "Màn hình", "Camera sau", "Camera trước", "Ram", "Rom"};
+		String[] columnNames = {"Mã IMEI", "Mã phiếu nhập", "Mã phiếu xuất", "Mã sản phẩm", "Trạng thái"};
         tblModel = new DefaultTableModel(columnNames, 0);
 		loadDataTalbe(idSP);
 		getContentPane().setLayout(null);
@@ -103,7 +105,7 @@ public class xemDanhSachImeiSanPham_Dialog extends JDialog{
                     spdialog.setVisible(true);
                 }
                 else {
-                    JOptionPane.showMessageDialog(null, "Vui lòng chọn sản phẩm cần xóa!", "Cảnh báo", JOptionPane.WARNING_MESSAGE);
+                    JOptionPane.showMessageDialog(null, "Vui lòng chọn IMEI cần xóa!", "Cảnh báo", JOptionPane.WARNING_MESSAGE);
                 }
 			}
 		});
