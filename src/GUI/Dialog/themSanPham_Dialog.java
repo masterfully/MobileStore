@@ -44,11 +44,11 @@ public class themSanPham_Dialog extends JDialog{
 	public themSanPham_Dialog() {
 		getContentPane().setLayout(null);
 		JLabel lbl_hinhAnh = new JLabel("");
-		lbl_hinhAnh.setIcon(new ImageIcon(themSanPham_Dialog.class.getResource("/GUI/JFrame_QuanLyCuaHangDienThoai/icon_taolo.png")));
-		lbl_hinhAnh.setBounds(60, 89, 148, 231);
+		lbl_hinhAnh.setIcon(new ImageIcon(imagePath));
+		lbl_hinhAnh.setBounds(60, 89, 240, 272);
 		getContentPane().add(lbl_hinhAnh);
 		JLabel lbl_themsp = new JLabel("THÊM SẢN PHẨM MỚI");
-		lbl_themsp.setBounds(0, 0, 963, 17);
+		lbl_themsp.setBounds(0, 0, 1084, 17);
 		lbl_themsp.setBackground(new Color(128, 255, 255));
 		lbl_themsp.setHorizontalAlignment(SwingConstants.CENTER);
 		lbl_themsp.setFont(new Font("Tahoma", Font.BOLD, 14));
@@ -68,138 +68,138 @@ public class themSanPham_Dialog extends JDialog{
                 }
 			}
 		});
-		btn_hinhAnh.setBounds(68, 55, 129, 23);
+		btn_hinhAnh.setBounds(115, 55, 129, 23);
 		getContentPane().add(btn_hinhAnh);
 		
 		
 		JLabel lbl_tensp = new JLabel("Tên sản phẩm");
 		lbl_tensp.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		lbl_tensp.setBounds(257, 58, 93, 14);
+		lbl_tensp.setBounds(383, 58, 93, 14);
 		getContentPane().add(lbl_tensp);
 		
 		txt_tensp = new JTextField();
-		txt_tensp.setBounds(258, 83, 129, 30);
+		txt_tensp.setBounds(384, 83, 129, 30);
 		getContentPane().add(txt_tensp);
 		txt_tensp.setColumns(10);
 		
 		JLabel lbl_gianhap = new JLabel("Giá nhập");
 		lbl_gianhap.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		lbl_gianhap.setBounds(258, 141, 93, 14);
+		lbl_gianhap.setBounds(384, 141, 93, 14);
 		getContentPane().add(lbl_gianhap);
 		
 		txt_gianhap = new JTextField();
 		txt_gianhap.setColumns(10);
-		txt_gianhap.setBounds(258, 166, 129, 30);
+		txt_gianhap.setBounds(384, 166, 129, 30);
 		getContentPane().add(txt_gianhap);
 		
 		JLabel lbl_giaban = new JLabel("Giá bán");
 		lbl_giaban.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		lbl_giaban.setBounds(258, 221, 93, 14);
+		lbl_giaban.setBounds(384, 221, 93, 14);
 		getContentPane().add(lbl_giaban);
 		
 		txt_giaban = new JTextField();
 		txt_giaban.setColumns(10);
-		txt_giaban.setBounds(258, 246, 129, 30);
+		txt_giaban.setBounds(384, 246, 129, 30);
 		getContentPane().add(txt_giaban);
 		
 		JLabel lbl_soluong = new JLabel("Số lượng");
 		lbl_soluong.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		lbl_soluong.setBounds(257, 306, 93, 14);
+		lbl_soluong.setBounds(383, 306, 93, 14);
 		getContentPane().add(lbl_soluong);
 		
 		txt_soluong = new JTextField();
 		txt_soluong.setColumns(10);
-		txt_soluong.setBounds(257, 331, 129, 30);
+		txt_soluong.setBounds(383, 331, 129, 30);
 		getContentPane().add(txt_soluong);
 		
 		JLabel lbl_mausac = new JLabel("Màu sắc");
 		lbl_mausac.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		lbl_mausac.setBounds(481, 59, 93, 14);
+		lbl_mausac.setBounds(607, 59, 93, 14);
 		getContentPane().add(lbl_mausac);
 		
 		JComboBox cbb_mausac = new JComboBox();
 		cbb_mausac.setModel(new DefaultComboBoxModel(new String[] {"Trắng", "Đen", "Vàng", "Xanh", "Xanh lá", "Hồng", "Tím"}));
-		cbb_mausac.setBounds(481, 83, 93, 30);
+		cbb_mausac.setBounds(607, 83, 93, 30);
 		getContentPane().add(cbb_mausac);
 		
 		JLabel lbl_chip = new JLabel("Chip xử lý");
 		lbl_chip.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		lbl_chip.setBounds(481, 142, 93, 14);
+		lbl_chip.setBounds(607, 142, 93, 14);
 		getContentPane().add(lbl_chip);
 		
 		txt_chip = new JTextField();
 		txt_chip.setColumns(10);
-		txt_chip.setBounds(481, 166, 129, 30);
+		txt_chip.setBounds(607, 166, 129, 30);
 		getContentPane().add(txt_chip);
 		
 		JLabel lbl_pin = new JLabel("Dung lượng pin");
 		lbl_pin.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		lbl_pin.setBounds(481, 222, 115, 14);
+		lbl_pin.setBounds(607, 222, 115, 14);
 		getContentPane().add(lbl_pin);
 		
 		txt_pin = new JTextField();
 		txt_pin.setColumns(10);
-		txt_pin.setBounds(481, 246, 129, 30);
+		txt_pin.setBounds(607, 246, 129, 30);
 		getContentPane().add(txt_pin);
 		
 		JLabel lbl_manhinh = new JLabel("Kích thước màn hình");
 		lbl_manhinh.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		lbl_manhinh.setBounds(481, 307, 148, 14);
+		lbl_manhinh.setBounds(607, 307, 148, 14);
 		getContentPane().add(lbl_manhinh);
 		
 		JComboBox cbb_manhinh = new JComboBox();
 		cbb_manhinh.setModel(new DefaultComboBoxModel(new String[] {"6.1 Inch", "6.7 Inch"}));
-		cbb_manhinh.setBounds(481, 331, 93, 30);
+		cbb_manhinh.setBounds(607, 331, 93, 30);
 		getContentPane().add(cbb_manhinh);
 		
 		JLabel lbl_hdh = new JLabel("Hệ điều hành");
 		lbl_hdh.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		lbl_hdh.setBounds(702, 59, 93, 14);
+		lbl_hdh.setBounds(828, 59, 93, 14);
 		getContentPane().add(lbl_hdh);
 		
 		txt_hdh = new JTextField();
 		txt_hdh.setColumns(10);
-		txt_hdh.setBounds(702, 83, 129, 30);
+		txt_hdh.setBounds(828, 83, 129, 30);
 		getContentPane().add(txt_hdh);
 		
 		JLabel lbl_camerasau = new JLabel("Camera sau");
 		lbl_camerasau.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		lbl_camerasau.setBounds(702, 142, 93, 14);
+		lbl_camerasau.setBounds(828, 142, 93, 14);
 		getContentPane().add(lbl_camerasau);
 		
 		txt_camerasau = new JTextField();
 		txt_camerasau.setColumns(10);
-		txt_camerasau.setBounds(702, 166, 129, 30);
+		txt_camerasau.setBounds(828, 166, 129, 30);
 		getContentPane().add(txt_camerasau);
 		
 		JLabel lbl_cameratruoc = new JLabel("Camera trước");
 		lbl_cameratruoc.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		lbl_cameratruoc.setBounds(702, 222, 93, 14);
+		lbl_cameratruoc.setBounds(828, 222, 93, 14);
 		getContentPane().add(lbl_cameratruoc);
 		
 		txt_cameratruoc = new JTextField();
 		txt_cameratruoc.setColumns(10);
-		txt_cameratruoc.setBounds(702, 246, 129, 30);
+		txt_cameratruoc.setBounds(828, 246, 129, 30);
 		getContentPane().add(txt_cameratruoc);
 		
 		JLabel lbl_ram = new JLabel("Ram");
 		lbl_ram.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		lbl_ram.setBounds(639, 307, 93, 14);
+		lbl_ram.setBounds(765, 307, 93, 14);
 		getContentPane().add(lbl_ram);
 		
 		JLabel lbl_rom = new JLabel("Rom");
 		lbl_rom.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		lbl_rom.setBounds(790, 307, 93, 14);
+		lbl_rom.setBounds(916, 307, 93, 14);
 		getContentPane().add(lbl_rom);
 		
 		JComboBox cbb_rom = new JComboBox();
 		cbb_rom.setModel(new DefaultComboBoxModel(new String[] {"64GB", "128GB", "512GB", "1TB"}));
-		cbb_rom.setBounds(790, 331, 93, 30);
+		cbb_rom.setBounds(916, 331, 93, 30);
 		getContentPane().add(cbb_rom);
 		
 		JComboBox cbb_ram = new JComboBox();
 		cbb_ram.setModel(new DefaultComboBoxModel(new String[] {"2GB", "3GB", "4GB", "6GB"}));
-		cbb_ram.setBounds(639, 331, 93, 30);
+		cbb_ram.setBounds(765, 331, 93, 30);
 		getContentPane().add(cbb_ram);
 		
 		JButton btn_them = new JButton("Thêm");
@@ -232,7 +232,7 @@ public class themSanPham_Dialog extends JDialog{
 				ctSanPham_DAO.getInstance().insert(ctspdto);
 			}
 		});
-		btn_them.setBounds(374, 402, 129, 23);
+		btn_them.setBounds(469, 400, 129, 23);
 		getContentPane().add(btn_them);
 		
 		JButton btn_huybo = new JButton("Hủy bỏ");
@@ -241,7 +241,7 @@ public class themSanPham_Dialog extends JDialog{
 				setVisible(false);
 			}
 		});
-		btn_huybo.setBounds(542, 402, 129, 23);
+		btn_huybo.setBounds(637, 400, 129, 23);
 		getContentPane().add(btn_huybo);
 	}
 	
@@ -250,11 +250,11 @@ public class themSanPham_Dialog extends JDialog{
 		SanPham_DTO spdto = SanPham_DAO.getInstance().selectById(idSP);
 		getContentPane().setLayout(null);
 		JLabel lbl_hinhAnh = new JLabel("");
-		lbl_hinhAnh.setIcon(new ImageIcon(themSanPham_Dialog.class.getResource("/GUI/JFrame_QuanLyCuaHangDienThoai/icon_taolo.png")));
-		lbl_hinhAnh.setBounds(60, 89, 148, 231);
+		lbl_hinhAnh.setIcon(new ImageIcon("C:\\Users\\Smile\\eclipse-workspace\\MobileStore\\" + spdto.getHinhAnh()));
+		lbl_hinhAnh.setBounds(60, 89, 240, 272);
 		getContentPane().add(lbl_hinhAnh);
 		JLabel lbl_themsp = new JLabel("THÊM IMEI MỚI VÀO SẢN PHẨM " + String.valueOf(idSP));
-		lbl_themsp.setBounds(0, 0, 963, 17);
+		lbl_themsp.setBounds(0, 0, 1084, 17);
 		lbl_themsp.setBackground(new Color(128, 255, 255));
 		lbl_themsp.setHorizontalAlignment(SwingConstants.CENTER);
 		lbl_themsp.setFont(new Font("Tahoma", Font.BOLD, 14));
@@ -274,139 +274,143 @@ public class themSanPham_Dialog extends JDialog{
                 }
 			}
 		});
-		btn_hinhAnh.setBounds(68, 55, 129, 23);
+		btn_hinhAnh.setBounds(115, 55, 129, 23);
 		getContentPane().add(btn_hinhAnh);
-		
+		btn_hinhAnh.setEnabled(false);
 		
 		JLabel lbl_tensp = new JLabel("Tên sản phẩm");
 		lbl_tensp.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		lbl_tensp.setBounds(257, 58, 93, 14);
+		lbl_tensp.setBounds(383, 58, 93, 14);
 		getContentPane().add(lbl_tensp);
 		
 		txt_tensp = new JTextField(spdto.getTenSP());
-		txt_tensp.setBounds(258, 83, 129, 30);
+		txt_tensp.setBounds(384, 83, 129, 30);
 		getContentPane().add(txt_tensp);
 		txt_tensp.setColumns(10);
+		txt_tensp.setEnabled(false);
 		
 		JLabel lbl_gianhap = new JLabel("Giá nhập");
 		lbl_gianhap.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		lbl_gianhap.setBounds(258, 141, 93, 14);
+		lbl_gianhap.setBounds(384, 141, 93, 14);
 		getContentPane().add(lbl_gianhap);
 		
 		txt_gianhap = new JTextField(String.format("%.0f", spdto.getGiaNhap()));
 		txt_gianhap.setColumns(10);
-		txt_gianhap.setBounds(258, 166, 129, 30);
+		txt_gianhap.setBounds(384, 166, 129, 30);
 		getContentPane().add(txt_gianhap);
+		txt_gianhap.setEnabled(false);
 		
 		JLabel lbl_giaban = new JLabel("Giá bán");
 		lbl_giaban.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		lbl_giaban.setBounds(258, 221, 93, 14);
+		lbl_giaban.setBounds(384, 221, 93, 14);
 		getContentPane().add(lbl_giaban);
 		
 		txt_giaban = new JTextField(String.format("%.0f", spdto.getGiaBan()));
 		txt_giaban.setColumns(10);
-		txt_giaban.setBounds(258, 246, 129, 30);
+		txt_giaban.setBounds(384, 246, 129, 30);
 		getContentPane().add(txt_giaban);
+		txt_giaban.setEnabled(false);
 		
 		JLabel lbl_soluong = new JLabel("Số lượng");
 		lbl_soluong.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		lbl_soluong.setBounds(257, 306, 93, 14);
+		lbl_soluong.setBounds(383, 306, 93, 14);
 		getContentPane().add(lbl_soluong);
 		
 		txt_soluong = new JTextField(String.valueOf(spdto.getSoLuong()));
 		txt_soluong.setColumns(10);
-		txt_soluong.setBounds(257, 331, 129, 30);
+		txt_soluong.setBounds(383, 331, 129, 30);
 		getContentPane().add(txt_soluong);
+		txt_soluong.setEnabled(false);
 		
 		JLabel lbl_mausac = new JLabel("Màu sắc");
 		lbl_mausac.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		lbl_mausac.setBounds(481, 59, 93, 14);
+		lbl_mausac.setBounds(607, 59, 93, 14);
 		getContentPane().add(lbl_mausac);
 		
 		JComboBox cbb_mausac = new JComboBox();
 		cbb_mausac.setModel(new DefaultComboBoxModel(new String[] {"Trắng", "Đen", "Vàng", "Xanh", "Xanh lá", "Hồng", "Tím", "Xám", "Đỏ"}));
-		cbb_mausac.setBounds(481, 83, 93, 30);
+		cbb_mausac.setBounds(607, 83, 93, 30);
 		getContentPane().add(cbb_mausac);
 		cbb_mausac.setSelectedItem(spdto.getMauSac());
-		
+		cbb_mausac.setEnabled(false);
 		JLabel lbl_chip = new JLabel("Chip xử lý");
 		lbl_chip.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		lbl_chip.setBounds(481, 142, 93, 14);
+		lbl_chip.setBounds(607, 142, 93, 14);
 		getContentPane().add(lbl_chip);
 		
 		txt_chip = new JTextField();
 		txt_chip.setColumns(10);
-		txt_chip.setBounds(481, 166, 129, 30);
+		txt_chip.setBounds(607, 166, 129, 30);
 		getContentPane().add(txt_chip);
 		
 		JLabel lbl_pin = new JLabel("Dung lượng pin");
 		lbl_pin.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		lbl_pin.setBounds(481, 222, 115, 14);
+		lbl_pin.setBounds(607, 222, 115, 14);
 		getContentPane().add(lbl_pin);
 		
 		txt_pin = new JTextField();
 		txt_pin.setColumns(10);
-		txt_pin.setBounds(481, 246, 129, 30);
+		txt_pin.setBounds(607, 246, 129, 30);
 		getContentPane().add(txt_pin);
 		
 		JLabel lbl_manhinh = new JLabel("Kích thước màn hình");
 		lbl_manhinh.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		lbl_manhinh.setBounds(481, 307, 148, 14);
+		lbl_manhinh.setBounds(607, 307, 148, 14);
 		getContentPane().add(lbl_manhinh);
 		
 		JComboBox cbb_manhinh = new JComboBox();
 		cbb_manhinh.setModel(new DefaultComboBoxModel(new String[] {"6.1 Inch", "6.7 Inch"}));
-		cbb_manhinh.setBounds(481, 331, 93, 30);
+		cbb_manhinh.setBounds(607, 331, 93, 30);
 		getContentPane().add(cbb_manhinh);
 		
 		JLabel lbl_hdh = new JLabel("Hệ điều hành");
 		lbl_hdh.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		lbl_hdh.setBounds(702, 59, 93, 14);
+		lbl_hdh.setBounds(828, 59, 93, 14);
 		getContentPane().add(lbl_hdh);
 		
 		txt_hdh = new JTextField();
 		txt_hdh.setColumns(10);
-		txt_hdh.setBounds(702, 83, 129, 30);
+		txt_hdh.setBounds(828, 83, 129, 30);
 		getContentPane().add(txt_hdh);
 		
 		JLabel lbl_camerasau = new JLabel("Camera sau");
 		lbl_camerasau.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		lbl_camerasau.setBounds(702, 142, 93, 14);
+		lbl_camerasau.setBounds(828, 142, 93, 14);
 		getContentPane().add(lbl_camerasau);
 		
 		txt_camerasau = new JTextField();
 		txt_camerasau.setColumns(10);
-		txt_camerasau.setBounds(702, 166, 129, 30);
+		txt_camerasau.setBounds(828, 166, 129, 30);
 		getContentPane().add(txt_camerasau);
 		
 		JLabel lbl_cameratruoc = new JLabel("Camera trước");
 		lbl_cameratruoc.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		lbl_cameratruoc.setBounds(702, 222, 93, 14);
+		lbl_cameratruoc.setBounds(828, 222, 93, 14);
 		getContentPane().add(lbl_cameratruoc);
 		
 		txt_cameratruoc = new JTextField();
 		txt_cameratruoc.setColumns(10);
-		txt_cameratruoc.setBounds(702, 246, 129, 30);
+		txt_cameratruoc.setBounds(828, 246, 129, 30);
 		getContentPane().add(txt_cameratruoc);
 		
 		JLabel lbl_ram = new JLabel("Ram");
 		lbl_ram.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		lbl_ram.setBounds(639, 307, 93, 14);
+		lbl_ram.setBounds(765, 307, 93, 14);
 		getContentPane().add(lbl_ram);
 		
 		JLabel lbl_rom = new JLabel("Rom");
 		lbl_rom.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		lbl_rom.setBounds(790, 307, 93, 14);
+		lbl_rom.setBounds(916, 307, 93, 14);
 		getContentPane().add(lbl_rom);
 		
 		JComboBox cbb_rom = new JComboBox();
 		cbb_rom.setModel(new DefaultComboBoxModel(new String[] {"64GB", "128GB", "512GB", "1TB"}));
-		cbb_rom.setBounds(790, 331, 93, 30);
+		cbb_rom.setBounds(916, 331, 93, 30);
 		getContentPane().add(cbb_rom);
 		
 		JComboBox cbb_ram = new JComboBox();
 		cbb_ram.setModel(new DefaultComboBoxModel(new String[] {"2GB", "3GB", "4GB", "6GB"}));
-		cbb_ram.setBounds(639, 331, 93, 30);
+		cbb_ram.setBounds(765, 331, 93, 30);
 		getContentPane().add(cbb_ram);
 		
 		JButton btn_them = new JButton("Thêm");
@@ -428,7 +432,7 @@ public class themSanPham_Dialog extends JDialog{
 				ctSanPham_DAO.getInstance().insert(ctspdto);
 			}
 		});
-		btn_them.setBounds(374, 402, 129, 23);
+		btn_them.setBounds(469, 400, 129, 23);
 		getContentPane().add(btn_them);
 		
 		JButton btn_huybo = new JButton("Hủy bỏ");
@@ -437,7 +441,7 @@ public class themSanPham_Dialog extends JDialog{
 				setVisible(false);
 			}
 		});
-		btn_huybo.setBounds(542, 402, 129, 23);
+		btn_huybo.setBounds(637, 400, 129, 23);
 		getContentPane().add(btn_huybo);
 	}
 	
