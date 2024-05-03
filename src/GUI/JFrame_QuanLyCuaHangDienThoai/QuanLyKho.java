@@ -26,15 +26,15 @@ public class QuanLyKho extends JFrame {
 	private JPanel panel_14;
 	private JPanel panel_15;
 	private JPanel panel_16;
-	private TrangChu_GUI trangChu;
-	private SanPham_GUI sanPham;
-	private ThuocTinh_GUI thuocTinh;
-	private PhieuNhap_GUI phieuNhap;
-	private PhieuXuat_GUI phieuXuat;
-	private KhachHang_GUI khachHang;
-	private NhanVien_GUI nhanVien;
+	private TrangChuGUI trangChu;
+	private SanPhamGUI sanPham;
+	private ThuocTinhGUI thuocTinh;
+	private PhieuNhapGUI phieuNhap;
+	private PhieuXuatGUI phieuXuat;
+	private KhachHangGUI khachHang;
+	private NhanVienGUI nhanVien;
 	private TaiKhoan_GUI taiKhoan;
-	private ThongKe_GUI thongKe;
+	private ThongKeGUI thongKe;
 
 
 	/**
@@ -461,43 +461,43 @@ public class QuanLyKho extends JFrame {
 		contentPane.add(panel_12);
 		panel_12.setLayout(null);
 		
-		trangChu = new TrangChu_GUI();
+		trangChu = new TrangChuGUI();
         trangChu.setBounds(0, 0, 958, 763);
 		panel_12.add(trangChu);
 		revalidate();
         repaint();
 
-        sanPham = new SanPham_GUI();
+        sanPham = new SanPhamGUI();
         sanPham.setBounds(0, 0, 1040, 684);
 		panel_12.add(sanPham);
 		revalidate();
         repaint();
 
-        thuocTinh = new ThuocTinh_GUI();
+        thuocTinh = new ThuocTinhGUI();
         thuocTinh.setBounds(0, 0, 958, 763);
 		panel_12.add(thuocTinh);
 		revalidate();
         repaint();
         
-        phieuNhap = new PhieuNhap_GUI();
+        phieuNhap = new PhieuNhapGUI();
         phieuNhap.setBounds(0, 0, 958, 705);
 		panel_12.add(phieuNhap);
 		revalidate();
         repaint();
         
-        phieuXuat = new PhieuXuat_GUI();
+        phieuXuat = new PhieuXuatGUI();
         phieuXuat.setBounds(0, 0, 958, 705);
 		panel_12.add(phieuXuat);
 		revalidate();
         repaint();
         
-        khachHang = new KhachHang_GUI();
+        khachHang = new KhachHangGUI();
         khachHang.setBounds(0, 0, 958, 705);
 		panel_12.add(khachHang);
 		revalidate();
         repaint();
         
-        nhanVien = new NhanVien_GUI();
+        nhanVien = new NhanVienGUI();
         nhanVien.setBounds(0, 0, 958, 705);
 		panel_12.add(nhanVien);
 		revalidate();
@@ -509,7 +509,7 @@ public class QuanLyKho extends JFrame {
 		revalidate();
         repaint();
         
-        thongKe = new ThongKe_GUI();
+        thongKe = new ThongKeGUI();
         thongKe.setBounds(0, 0, 958, 705);
 		panel_12.add(thongKe);
 		revalidate();

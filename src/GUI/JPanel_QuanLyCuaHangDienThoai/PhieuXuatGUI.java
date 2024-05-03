@@ -3,17 +3,17 @@ package GUI.JPanel_QuanLyCuaHangDienThoai;
 import javax.swing.JPanel;
 import javax.swing.JLabel;
 
-public class TrangChu_GUI extends JPanel {
+public class PhieuXuatGUI extends JPanel {
 
 	private static final long serialVersionUID = 1L;
 
 	/**
 	 * Create the panel.
 	 */
-	public TrangChu_GUI() {
+	public PhieuXuatGUI() {
 		
-		JLabel jL = new JLabel("ĐÂY LÀ TRANG CHỦ");
-		add(jL);
+		JLabel lblNewLabel = new JLabel("ĐÂY LÀ PHIẾU XUẤT");
+		add(lblNewLabel);
 
 	}
 

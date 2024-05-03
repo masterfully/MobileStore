@@ -1,6 +1,6 @@
 package DTO;
 
-public class SanPham_DTO {
+public class SanPhamDTO {
 	private int idSP;
 	private String tenSP;
 	private float giaNhap;
@@ -10,7 +10,7 @@ public class SanPham_DTO {
 	private String mauSac;
 	private int isDelete;
 
-	public SanPham_DTO(int idSP, String tenSP, float giaNhap, float giaBan, int soLuong, String hinhAnh, String mauSac, int isDelete) {
+	public SanPhamDTO(int idSP, String tenSP, float giaNhap, float giaBan, int soLuong, String hinhAnh, String mauSac, int isDelete) {
 		this.idSP = idSP;
 		this.tenSP = tenSP;
 		this.giaNhap = giaNhap;
@@ -21,11 +21,11 @@ public class SanPham_DTO {
 		this.isDelete = isDelete;
 	}
 
-	public SanPham_DTO() {
+	public SanPhamDTO() {
 
 	}
 
-	public SanPham_DTO(int id) {
+	public SanPhamDTO(int id) {
 		this.idSP = id;
 	}
 

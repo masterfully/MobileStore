@@ -5,17 +5,17 @@ import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import DTO.IMEI_DTO;
+import DTO.IMEIDTO;
 import config.JDBCUtil;
 
-public class IMEI_DAO implements DAOInterface<IMEI_DTO> {
+public class IMEIDAO implements DAOInterface<IMEIDTO> {
 
-    public static IMEI_DAO getInstance() {
-        return new IMEI_DAO();
+    public static IMEIDAO getInstance() {
+        return new IMEIDAO();
     }
 
     @Override
-    public int insert(IMEI_DTO t) {
+    public int insert(IMEIDTO t) {
         int ketQua = 0;
         try {
             Connection con = JDBCUtil.getConnection();
@@ -31,14 +31,14 @@ public class IMEI_DAO implements DAOInterface<IMEI_DTO> {
             System.out.println("Đã thay đổi " + ketQua + " dòng");
             JDBCUtil.closeConnection(con);
         } catch (SQLException e) {
-            Logger.getLogger(IMEI_DAO.class.getName()).log(Level.SEVERE, null, e);
+            Logger.getLogger(IMEIDAO.class.getName()).log(Level.SEVERE, null, e);
         }
         return ketQua;
     }
 
 
     @Override
-    public int update(IMEI_DTO t) {
+    public int update(IMEIDTO t) {
         int ketQua = 0;
         try {
             Connection con = JDBCUtil.getConnection();
@@ -59,7 +59,7 @@ public class IMEI_DAO implements DAOInterface<IMEI_DTO> {
             System.out.println("Đã thay đổi " + ketQua + " dòng");
             JDBCUtil.closeConnection(con);
         } catch (SQLException e) {
-            Logger.getLogger(IMEI_DAO.class.getName()).log(Level.SEVERE, null, e);
+            Logger.getLogger(IMEIDAO.class.getName()).log(Level.SEVERE, null, e);
         }
         return ketQua;
     }
@@ -79,7 +79,7 @@ public class IMEI_DAO implements DAOInterface<IMEI_DTO> {
             System.out.println("Đã xóa " + rowsAffected + " dòng");
             JDBCUtil.closeConnection(con);
         } catch (SQLException e) {
-            Logger.getLogger(IMEI_DAO.class.getName()).log(Level.SEVERE, null, e);
+            Logger.getLogger(IMEIDAO.class.getName()).log(Level.SEVERE, null, e);
         }
         return rowsAffected;
     }
@@ -87,8 +87,8 @@ public class IMEI_DAO implements DAOInterface<IMEI_DTO> {
 
 
     @Override
-    public ArrayList<IMEI_DTO> selectAll() {
-        ArrayList<IMEI_DTO> ctsanPhamList = new ArrayList<>();
+    public ArrayList<IMEIDTO> selectAll() {
+        ArrayList<IMEIDTO> ctsanPhamList = new ArrayList<>();
         try {
             Connection con = JDBCUtil.getConnection();
             String sql = "SELECT * FROM IMEI";
@@ -96,7 +96,7 @@ public class IMEI_DAO implements DAOInterface<IMEI_DTO> {
             ResultSet rs = stmt.executeQuery(sql);
 
             while (rs.next()) {
-                IMEI_DTO sanPham = new IMEI_DTO();
+                IMEIDTO sanPham = new IMEIDTO();
                 sanPham.setMaIMEI(rs.getInt("maIMEI"));
                 sanPham.setSANPHAM_idSP(rs.getInt("SANPHAM_idSP"));
                 sanPham.setIdPhieuNhap(rs.getInt("idPhieuNhap"));
@@ -106,15 +106,15 @@ public class IMEI_DAO implements DAOInterface<IMEI_DTO> {
             }
             JDBCUtil.closeConnection(con);
         } catch (SQLException e) {
-            Logger.getLogger(IMEI_DAO.class.getName()).log(Level.SEVERE, null, e);
+            Logger.getLogger(IMEIDAO.class.getName()).log(Level.SEVERE, null, e);
         }
         return ctsanPhamList;
     }
 
 
     @Override
-    public ArrayList<IMEI_DTO> selectByCondition(String condition) {
-        ArrayList<IMEI_DTO> ctsanPhamList = new ArrayList<>();
+    public ArrayList<IMEIDTO> selectByCondition(String condition) {
+        ArrayList<IMEIDTO> ctsanPhamList = new ArrayList<>();
         try {
             Connection con = JDBCUtil.getConnection();
             String sql = "SELECT * FROM IMEI WHERE " + condition;
@@ -122,7 +122,7 @@ public class IMEI_DAO implements DAOInterface<IMEI_DTO> {
             ResultSet rs = stmt.executeQuery(sql);
 
             while (rs.next()) {
-            	IMEI_DTO sanPham = new IMEI_DTO();
+            	IMEIDTO sanPham = new IMEIDTO();
                 sanPham.setMaIMEI(rs.getInt("maIMEI"));
                 sanPham.setSANPHAM_idSP(rs.getInt("SANPHAM_idSP"));
                 sanPham.setIdPhieuNhap(rs.getInt("idPhieuNhap"));
@@ -132,15 +132,15 @@ public class IMEI_DAO implements DAOInterface<IMEI_DTO> {
             }
             JDBCUtil.closeConnection(con);
         } catch (SQLException e) {
-            Logger.getLogger(IMEI_DAO.class.getName()).log(Level.SEVERE, null, e);
+            Logger.getLogger(IMEIDAO.class.getName()).log(Level.SEVERE, null, e);
         }
         return ctsanPhamList;
     }
 
 
     @Override
-    public IMEI_DTO selectById(int id) {
-        IMEI_DTO sanPham = null;
+    public IMEIDTO selectById(int id) {
+        IMEIDTO sanPham = null;
         try {
             Connection con = JDBCUtil.getConnection();
             String sql = "SELECT * FROM IMEI WHERE maIMEI = ?";
@@ -149,7 +149,7 @@ public class IMEI_DAO implements DAOInterface<IMEI_DTO> {
             ResultSet rs = pst.executeQuery();
 
             if (rs.next()) {
-            	sanPham = new IMEI_DTO();
+            	sanPham = new IMEIDTO();
                 sanPham.setMaIMEI(rs.getInt("maIMEI"));
                 sanPham.setSANPHAM_idSP(rs.getInt("SANPHAM_idSP"));
                 sanPham.setIdPhieuNhap(rs.getInt("idPhieuNhap"));
@@ -158,7 +158,7 @@ public class IMEI_DAO implements DAOInterface<IMEI_DTO> {
             }
             JDBCUtil.closeConnection(con);
         } catch (SQLException e) {
-            Logger.getLogger(IMEI_DAO.class.getName()).log(Level.SEVERE, null, e);
+            Logger.getLogger(IMEIDAO.class.getName()).log(Level.SEVERE, null, e);
         }
         return sanPham;
     }

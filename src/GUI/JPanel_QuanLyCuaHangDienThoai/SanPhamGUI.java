@@ -17,8 +17,8 @@ import javax.swing.DefaultComboBoxModel;
 import javax.swing.table.DefaultTableModel;
 
 import BUS.SanPham_BUS;
-import DAO.SanPham_DAO;
-import DTO.SanPham_DTO;
+import DAO.SanPhamDAO;
+import DTO.SanPhamDTO;
 import GUI.Dialog.suaSanPham_Dialog;
 import GUI.Dialog.themSanPham_Dialog;
 import GUI.Dialog.xemDanhSachImeiSanPham_Dialog;
@@ -28,15 +28,15 @@ import java.text.Normalizer;
 import javax.swing.JTextField;
 import java.util.regex.Pattern;
 
-public class SanPham_GUI extends JPanel {
+public class SanPhamGUI extends JPanel {
 
     private static final long serialVersionUID = 1L;
     private JTable table_SP;
     private JTextField textField_timkiem;
     DefaultTableModel tblModel;
     public SanPham_BUS spBUS = new SanPham_BUS();
-    public ArrayList<SanPham_DTO> listSP = spBUS.getAll();
-    public SanPham_DAO spDAO = new SanPham_DAO();
+    public ArrayList<SanPhamDTO> listSP = spBUS.getAll();
+    public SanPhamDAO spDAO = new SanPhamDAO();
     public themSanPham_Dialog spDialog = new themSanPham_Dialog();
 
 
@@ -48,10 +48,10 @@ public class SanPham_GUI extends JPanel {
     }
 
     public void loadDataTalbe() {
-        ArrayList<SanPham_DTO> result = spDAO.selectAll();
+        ArrayList<SanPhamDTO> result = spDAO.selectAll();
         System.out.println("Number of records retrieved: " + result.size());
         tblModel.setRowCount(0); // Clear existing data
-        for (SanPham_DTO sp : result) {
+        for (SanPhamDTO sp : result) {
             tblModel.addRow(new Object[]{sp.getIdSP(), sp.getTenSP(), sp.getSoLuong(), sp.getMauSac()});
         }
     }
@@ -59,23 +59,23 @@ public class SanPham_GUI extends JPanel {
     public void loadDataTalbe(String t) {
         String str = removeDiacriticsAndSpaces(t.toLowerCase());
         if (str.equalsIgnoreCase("tatca")) {
-            ArrayList<SanPham_DTO> result = spDAO.selectByCondition("tenSP LIKE '%%'");
+            ArrayList<SanPhamDTO> result = spDAO.selectByCondition("tenSP LIKE '%%'");
             System.out.println("Number of records retrieved: " + result.size());
             tblModel.setRowCount(0); // Clear existing data
-            for (SanPham_DTO sp : result) {
+            for (SanPhamDTO sp : result) {
                 tblModel.addRow(new Object[]{sp.getIdSP(), sp.getTenSP(), sp.getSoLuong(), sp.getMauSac()});
             }
         }
-        ArrayList<SanPham_DTO> result = spDAO.selectByCondition("tenSP = '" + t + "'");
+        ArrayList<SanPhamDTO> result = spDAO.selectByCondition("tenSP = '" + t + "'");
         System.out.println("Number of records retrieved: " + result.size());
         tblModel.setRowCount(0); // Clear existing data
-        for (SanPham_DTO sp : result) {
+        for (SanPhamDTO sp : result) {
             tblModel.addRow(new Object[]{sp.getIdSP(), sp.getTenSP(), sp.getSoLuong(), sp.getMauSac()});
         }
         System.out.println("tatca".equalsIgnoreCase(str));
     }
 
-    public SanPham_GUI() {
+    public SanPhamGUI() {
         String[] columnNames = {"Mã SP", "Tên sản phẩm", "Số lượng tồn", "Màu sắc"};
         tblModel = new DefaultTableModel(columnNames, 0);
         setLayout(null);
@@ -118,7 +118,7 @@ public class SanPham_GUI extends JPanel {
         gbc_btn_them.gridx = 0;
         gbc_btn_them.gridy = 0;
         panel_SanPham.add(btn_them, gbc_btn_them);
-        btn_them.setIcon(new ImageIcon(Toolkit.getDefaultToolkit().createImage(SanPham_GUI.class.getResource("icon_them.png"))));
+        btn_them.setIcon(new ImageIcon(Toolkit.getDefaultToolkit().createImage(SanPhamGUI.class.getResource("icon_them.png"))));
 
 
         JButton btn_sua = new JButton("Sửa");
@@ -142,7 +142,7 @@ public class SanPham_GUI extends JPanel {
         gbc_btn_sua.gridx = 1;
         gbc_btn_sua.gridy = 0;
         panel_SanPham.add(btn_sua, gbc_btn_sua);
-        btn_sua.setIcon(new ImageIcon(Toolkit.getDefaultToolkit().createImage(SanPham_GUI.class.getResource("icon_sua.png"))));
+        btn_sua.setIcon(new ImageIcon(Toolkit.getDefaultToolkit().createImage(SanPhamGUI.class.getResource("icon_sua.png"))));
 
 
         JButton btn_xoa = new JButton("Xóa");
@@ -166,7 +166,7 @@ public class SanPham_GUI extends JPanel {
         gbc_btn_xoa.gridx = 2;
         gbc_btn_xoa.gridy = 0;
         panel_SanPham.add(btn_xoa, gbc_btn_xoa);
-        btn_xoa.setIcon(new ImageIcon(Toolkit.getDefaultToolkit().createImage(SanPham_GUI.class.getResource("icon_xoa.png"))));
+        btn_xoa.setIcon(new ImageIcon(Toolkit.getDefaultToolkit().createImage(SanPhamGUI.class.getResource("icon_xoa.png"))));
 
         JButton btn_chitiet = new JButton("Chi tiết");
         btn_chitiet.addActionListener(new ActionListener() {
@@ -183,7 +183,7 @@ public class SanPham_GUI extends JPanel {
                 }
             }
         });
-        btn_chitiet.setIcon(new ImageIcon(SanPham_GUI.class.getResource("/GUI/JPanel_QuanLyCuaHangDienThoai/icon_info.png")));
+        btn_chitiet.setIcon(new ImageIcon(SanPhamGUI.class.getResource("/GUI/JPanel_QuanLyCuaHangDienThoai/icon_info.png")));
         GridBagConstraints gbc_btn_chitiet = new GridBagConstraints();
         gbc_btn_chitiet.fill = GridBagConstraints.HORIZONTAL;
         gbc_btn_chitiet.insets = new Insets(0, 0, 5, 5);
@@ -206,7 +206,7 @@ public class SanPham_GUI extends JPanel {
                 }
             }
         });
-        btn_xemDS.setIcon(new ImageIcon(SanPham_GUI.class.getResource("/GUI/JPanel_QuanLyCuaHangDienThoai/icon_xemDS.png")));
+        btn_xemDS.setIcon(new ImageIcon(SanPhamGUI.class.getResource("/GUI/JPanel_QuanLyCuaHangDienThoai/icon_xemDS.png")));
         GridBagConstraints gbc_btn_xemDS = new GridBagConstraints();
         gbc_btn_xemDS.fill = GridBagConstraints.HORIZONTAL;
         gbc_btn_xemDS.insets = new Insets(0, 0, 5, 5);
@@ -233,10 +233,10 @@ public class SanPham_GUI extends JPanel {
         textField_timkiem.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 String t = textField_timkiem.getText();
-                ArrayList<SanPham_DTO> result = spDAO.selectByCondition("tenSP LIKE '%" + t + "%'");
+                ArrayList<SanPhamDTO> result = spDAO.selectByCondition("tenSP LIKE '%" + t + "%'");
                 System.out.println("Number of records retrieved: " + result.size());
                 tblModel.setRowCount(0); // Clear existing data
-                for (SanPham_DTO sp : result) {
+                for (SanPhamDTO sp : result) {
                     tblModel.addRow(new Object[]{sp.getIdSP(), sp.getTenSP(), sp.getSoLuong(), sp.getMauSac()});
                 }
             }
@@ -288,7 +288,7 @@ public class SanPham_GUI extends JPanel {
      */
     private void $$$setupUI$$$() {
         final JPanel panel1 = new JPanel();
-//        panel1.setLayout(new com.intellij.uiDesigner.core.GridLayoutManager(1, 1, new Insets(0, 0, 0, 0), -1, -1));
+        panel1.setLayout(new com.intellij.uiDesigner.core.GridLayoutManager(1, 1, new Insets(0, 0, 0, 0), -1, -1));
     }
 
     public void refreshTable() {
@@ -301,7 +301,7 @@ public class SanPham_GUI extends JPanel {
         frame.setSize(1000, 600);
 
         // Tạo một instance của SanPham_GUI
-        SanPham_GUI sanPhamGUI = new SanPham_GUI();
+        SanPhamGUI sanPhamGUI = new SanPhamGUI();
 
         // Thêm SanPham_GUI vào JFrame
         frame.getContentPane().add(sanPhamGUI);

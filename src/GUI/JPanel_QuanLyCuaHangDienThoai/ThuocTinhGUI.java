@@ -3,16 +3,19 @@ package GUI.JPanel_QuanLyCuaHangDienThoai;
 import javax.swing.JPanel;
 import javax.swing.JLabel;
 
-public class ThongKe_GUI extends JPanel {
+public class ThuocTinhGUI extends JPanel {
 
 	private static final long serialVersionUID = 1L;
 
 	/**
 	 * Create the panel.
 	 */
-	public ThongKe_GUI() {
+	public ThuocTinhGUI() {
 		
-		JLabel lblNewLabel = new JLabel("ĐÂY LÀ THỐNG KÊ");
+		JLabel lblNewLabel_1 = new JLabel("ĐÂY LÀ THUỘC TÍNH");
+		add(lblNewLabel_1);
+		
+		JLabel lblNewLabel = new JLabel("hoho");
 		add(lblNewLabel);
 
 	}

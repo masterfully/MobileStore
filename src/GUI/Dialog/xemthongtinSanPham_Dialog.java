@@ -12,11 +12,11 @@ import javax.swing.SwingUtilities;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.DefaultTableModel;
 
-import DAO.SanPham_DAO;
-import DAO.ctSanPham_DAO;
-import DTO.SanPham_DTO;
-import DTO.ctSanPham_DTO;
-import GUI.JPanel_QuanLyCuaHangDienThoai.SanPham_GUI;
+import DAO.SanPhamDAO;
+import DAO.ctSanPhamDAO;
+import DTO.SanPhamDTO;
+import DTO.ctSanPhamDTO;
+import GUI.JPanel_QuanLyCuaHangDienThoai.SanPhamGUI;
 
 import java.awt.Color;
 import javax.swing.JButton;
@@ -43,8 +43,8 @@ public class xemthongtinSanPham_Dialog extends JDialog{
 	private int idSP;
 	
 	public xemthongtinSanPham_Dialog(int idSP) {
-		SanPham_DTO spdto = SanPham_DAO.getInstance().selectById(idSP);
-		ctSanPham_DTO ctspdto = ctSanPham_DAO.getInstance().selectById(idSP);
+		SanPhamDTO spdto = SanPhamDAO.getInstance().selectById(idSP);
+		ctSanPhamDTO ctspdto = ctSanPhamDAO.getInstance().selectById(idSP);
 		getContentPane().setLayout(null);
 		JLabel lbl_hinhAnh = new JLabel("");
 		lbl_hinhAnh.setIcon(new ImageIcon("C:\\Users\\Smile\\eclipse-workspace\\MobileStore\\" + spdto.getHinhAnh()));

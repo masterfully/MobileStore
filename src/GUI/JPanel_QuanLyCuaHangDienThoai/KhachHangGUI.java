@@ -2,17 +2,19 @@ package GUI.JPanel_QuanLyCuaHangDienThoai;
 
 import javax.swing.JPanel;
 import javax.swing.JLabel;
+import java.io.Serial;
 
-public class TaiKhoan_GUI extends JPanel {
+public class KhachHangGUI extends JPanel {
 
+	@Serial
 	private static final long serialVersionUID = 1L;
 
 	/**
 	 * Create the panel.
 	 */
-	public TaiKhoan_GUI() {
+	public KhachHangGUI() {
 		
-		JLabel lblNewLabel = new JLabel("ĐÂY LÀ TÀI KHOẢN");
+		JLabel lblNewLabel = new JLabel("ĐÂY LÀ KHÁCH HÀNG");
 		add(lblNewLabel);
 
 	}

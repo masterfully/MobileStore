@@ -12,10 +12,10 @@ import javax.swing.SwingUtilities;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.DefaultTableModel;
 
-import DAO.SanPham_DAO;
-import DAO.ctSanPham_DAO;
-import DTO.SanPham_DTO;
-import GUI.JPanel_QuanLyCuaHangDienThoai.SanPham_GUI;
+import DAO.SanPhamDAO;
+import DAO.ctSanPhamDAO;
+import DTO.SanPhamDTO;
+import GUI.JPanel_QuanLyCuaHangDienThoai.SanPhamGUI;
 
 import java.awt.Color;
 import javax.swing.JButton;
@@ -33,7 +33,7 @@ public class xoaSanPham_Dialog extends JDialog{
 	private int idSP;
 	
 	public xoaSanPham_Dialog(int idSP) {
-		SanPham_DTO spdto = SanPham_DAO.getInstance().selectById(idSP);
+		SanPhamDTO spdto = SanPhamDAO.getInstance().selectById(idSP);
 		getContentPane().setLayout(null);
 		JLabel lbl_suasp = new JLabel("XÓA SẢN PHẨM" + String.valueOf(idSP));
 		lbl_suasp.setBounds(0, 0, 478, 17);
@@ -47,7 +47,7 @@ public class xoaSanPham_Dialog extends JDialog{
 		getContentPane().add(btn_xoa);
 		btn_xoa.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				SanPham_DAO.getInstance().delete(Integer.toString(idSP));
+				SanPhamDAO.getInstance().delete(Integer.toString(idSP));
 			}
 		});
 		

@@ -1,13 +1,13 @@
 package DTO;
 
-public class KhachHang_DTO {
+public class KhachHangDTO {
 	    private String IDKhachHang;
 	    private String tenKhachHang;
 	    private String diaChi;
 	    private String sdt;
 
 		private int isDelete;
-		public KhachHang_DTO(String iDKhachHang, String tenKhachHang, String diaChi, String sdt, int isDelete) {
+		public KhachHangDTO(String iDKhachHang, String tenKhachHang, String diaChi, String sdt, int isDelete) {
 			IDKhachHang = iDKhachHang;
 			this.tenKhachHang = tenKhachHang;
 			this.diaChi = diaChi;
@@ -15,7 +15,7 @@ public class KhachHang_DTO {
 			this.isDelete = isDelete;
 		}
 
-	public KhachHang_DTO(String t) {
+	public KhachHangDTO(String t) {
 			this.IDKhachHang = t;
 	}
 

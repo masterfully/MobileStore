@@ -1,7 +1,7 @@
 package DAO;
 
-import DTO.NhanVien_DTO;
-import DTO.TaiKhoan_DTO;
+import DTO.NhanVienDTO;
+import DTO.TaiKhoanDTO;
 import config.JDBCUtil;
 
 import java.sql.Connection;
@@ -12,10 +12,10 @@ import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class TaiKhoan_DAO implements DAOInterface<TaiKhoan_DTO>{
-    public static TaiKhoan_DAO getInstance(){return new TaiKhoan_DAO();}
+public class TaiKhoanDAO implements DAOInterface<TaiKhoanDTO>{
+    public static TaiKhoanDAO getInstance(){return new TaiKhoanDAO();}
     @Override
-    public int insert(TaiKhoan_DTO taiKhoan_dto) {
+    public int insert(TaiKhoanDTO taiKhoan_dto) {
         int ketQua = 0;
         try {
             Connection con = JDBCUtil.getConnection();
@@ -31,13 +31,13 @@ public class TaiKhoan_DAO implements DAOInterface<TaiKhoan_DTO>{
             System.out.println("Đã thay đổi " + ketQua + " dòng");
             JDBCUtil.closeConnection(con);
         } catch (SQLException e) {
-            Logger.getLogger(NhanVien_DAO.class.getName()).log(Level.SEVERE, null, e);
+            Logger.getLogger(NhanVienDAO.class.getName()).log(Level.SEVERE, null, e);
         }
         return ketQua;
     }
 
     @Override
-    public int update(TaiKhoan_DTO taiKhoanDto) {
+    public int update(TaiKhoanDTO taiKhoanDto) {
         int ketQua = 0;
         try {
             Connection con = JDBCUtil.getConnection();
@@ -53,7 +53,7 @@ public class TaiKhoan_DAO implements DAOInterface<TaiKhoan_DTO>{
             System.out.println("Đã thay đổi " + ketQua + " dòng");
             JDBCUtil.closeConnection(con);
         } catch (SQLException e) {
-            Logger.getLogger(TaiKhoan_DAO.class.getName()).log(Level.SEVERE, null, e);
+            Logger.getLogger(TaiKhoanDAO.class.getName()).log(Level.SEVERE, null, e);
         }
         return ketQua;
     }
@@ -73,21 +73,21 @@ public class TaiKhoan_DAO implements DAOInterface<TaiKhoan_DTO>{
             System.out.println("Đã thay đổi " + ketQua + " dòng");
             JDBCUtil.closeConnection(con);
         } catch (SQLException e) {
-            Logger.getLogger(TaiKhoan_DAO.class.getName()).log(Level.SEVERE, null, e);
+            Logger.getLogger(TaiKhoanDAO.class.getName()).log(Level.SEVERE, null, e);
         }
         return ketQua;
     }
 
     @Override
-    public ArrayList<TaiKhoan_DTO> selectAll() {
-        ArrayList<TaiKhoan_DTO> taikhoans = new ArrayList<>();
+    public ArrayList<TaiKhoanDTO> selectAll() {
+        ArrayList<TaiKhoanDTO> taikhoans = new ArrayList<>();
         try {
             Connection con = JDBCUtil.getConnection();
             String sql = "SELECT * FROM TaiKhoan WHERE isDelete=0";
             PreparedStatement pst = con.prepareStatement(sql);
             ResultSet rs = pst.executeQuery();
             while (rs.next()) {
-                TaiKhoan_DTO taikhoan = new TaiKhoan_DTO(
+                TaiKhoanDTO taikhoan = new TaiKhoanDTO(
                         rs.getString("username"),
                         rs.getString("password"),
                         rs.getString("trangThai"),
@@ -98,21 +98,21 @@ public class TaiKhoan_DAO implements DAOInterface<TaiKhoan_DTO>{
             }
             JDBCUtil.closeConnection(con);
         } catch (SQLException e) {
-            Logger.getLogger(NhanVien_DAO.class.getName()).log(Level.SEVERE, null, e);
+            Logger.getLogger(NhanVienDAO.class.getName()).log(Level.SEVERE, null, e);
         }
         return taikhoans;
     }
 
     @Override
-    public ArrayList<TaiKhoan_DTO> selectByCondition(String condition) {
-        ArrayList<TaiKhoan_DTO> taikhoans = new ArrayList<>();
+    public ArrayList<TaiKhoanDTO> selectByCondition(String condition) {
+        ArrayList<TaiKhoanDTO> taikhoans = new ArrayList<>();
         try {
             Connection con = JDBCUtil.getConnection();
             String sql = "SELECT * FROM TaiKhoan WHERE " + condition;
             PreparedStatement pst = con.prepareStatement(sql);
             ResultSet rs = pst.executeQuery();
             while (rs.next()) {
-                TaiKhoan_DTO taikhoan = new TaiKhoan_DTO(
+                TaiKhoanDTO taikhoan = new TaiKhoanDTO(
                         rs.getString("username"),
                         rs.getString("password"),
                         rs.getString("trangThai"),
@@ -123,14 +123,14 @@ public class TaiKhoan_DAO implements DAOInterface<TaiKhoan_DTO>{
             }
             JDBCUtil.closeConnection(con);
         } catch (SQLException e) {
-            Logger.getLogger(NhanVien_DAO.class.getName()).log(Level.SEVERE, null, e);
+            Logger.getLogger(NhanVienDAO.class.getName()).log(Level.SEVERE, null, e);
         }
         return taikhoans;
     }
 
     @Override
-    public TaiKhoan_DTO selectById(int idNhanVien) {
-        TaiKhoan_DTO taikhoan = null;
+    public TaiKhoanDTO selectById(int idNhanVien) {
+        TaiKhoanDTO taikhoan = null;
         try {
             Connection con = JDBCUtil.getConnection();
             String sql = "SELECT * FROM TaiKhoan WHERE IDNhanVien = ?";
@@ -138,7 +138,7 @@ public class TaiKhoan_DAO implements DAOInterface<TaiKhoan_DTO>{
             pst.setInt(1, idNhanVien);
             ResultSet rs = pst.executeQuery();
             if (rs.next()) {
-                taikhoan = new TaiKhoan_DTO(
+                taikhoan = new TaiKhoanDTO(
                         rs.getString("username"),
                         rs.getString("password"),
                         rs.getString("trangThai"),
@@ -148,7 +148,7 @@ public class TaiKhoan_DAO implements DAOInterface<TaiKhoan_DTO>{
             }
             JDBCUtil.closeConnection(con);
         } catch (SQLException e) {
-            Logger.getLogger(NhanVien_DAO.class.getName()).log(Level.SEVERE, null, e);
+            Logger.getLogger(NhanVienDAO.class.getName()).log(Level.SEVERE, null, e);
         }
         return taikhoan;
     }

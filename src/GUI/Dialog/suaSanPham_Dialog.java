@@ -12,11 +12,11 @@ import javax.swing.SwingUtilities;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.DefaultTableModel;
 
-import DAO.SanPham_DAO;
-import DAO.ctSanPham_DAO;
-import DTO.SanPham_DTO;
-import DTO.ctSanPham_DTO;
-import GUI.JPanel_QuanLyCuaHangDienThoai.SanPham_GUI;
+import DAO.SanPhamDAO;
+import DAO.ctSanPhamDAO;
+import DTO.SanPhamDTO;
+import DTO.ctSanPhamDTO;
+import GUI.JPanel_QuanLyCuaHangDienThoai.SanPhamGUI;
 import helper.ExtractString;
 
 import java.awt.Color;
@@ -45,8 +45,8 @@ public class suaSanPham_Dialog extends JDialog{
 	
 	public suaSanPham_Dialog(int idSP) {
 		ExtractString extractString = new ExtractString();
-		SanPham_DTO spdto = SanPham_DAO.getInstance().selectById(idSP);
-		ctSanPham_DTO ctspdto = ctSanPham_DAO.getInstance().selectById(idSP);
+		SanPhamDTO spdto = SanPhamDAO.getInstance().selectById(idSP);
+		ctSanPhamDTO ctspdto = ctSanPhamDAO.getInstance().selectById(idSP);
 		getContentPane().setLayout(null);
 		JLabel lbl_hinhAnh = new JLabel("");
 		lbl_hinhAnh.setIcon(new ImageIcon("C:\\Users\\Smile\\eclipse-workspace\\MobileStore\\" + spdto.getHinhAnh()));
@@ -234,8 +234,8 @@ public class suaSanPham_Dialog extends JDialog{
 					hinhAnh = extractString.catLinkAnh(imagePath);
 				}
 				String mauSac = (String) cbb_mausac.getSelectedItem();
-				SanPham_DTO spdto = new SanPham_DTO(idsp, tensp, giaNhap, giaBan, soLuong, hinhAnh, mauSac, 0);
-				SanPham_DAO.getInstance().update(spdto);
+				SanPhamDTO spdto = new SanPhamDTO(idsp, tensp, giaNhap, giaBan, soLuong, hinhAnh, mauSac, 0);
+				SanPhamDAO.getInstance().update(spdto);
 				
 				String chip = txt_chip.getText();
 				String pin = txt_chip.getText();
@@ -245,8 +245,8 @@ public class suaSanPham_Dialog extends JDialog{
 				String truoc = txt_cameratruoc.getText();
 				String ram = (String) cbb_ram.getSelectedItem();
 				String rom = (String) cbb_rom.getSelectedItem();
-				ctSanPham_DTO ctsp = new ctSanPham_DTO(chip, pin, manHinh, hdh, sau, truoc, ram, rom, idsp);
-				ctSanPham_DAO.getInstance().update(ctsp);
+				ctSanPhamDTO ctsp = new ctSanPhamDTO(chip, pin, manHinh, hdh, sau, truoc, ram, rom, idsp);
+				ctSanPhamDAO.getInstance().update(ctsp);
 			}
 		});
 		

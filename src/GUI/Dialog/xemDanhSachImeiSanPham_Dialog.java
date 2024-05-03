@@ -17,13 +17,13 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.DefaultTableModel;
 
 import BUS.SanPham_BUS;
-import DAO.IMEI_DAO;
-import DAO.SanPham_DAO;
-import DAO.ctSanPham_DAO;
-import DTO.IMEI_DTO;
-import DTO.SanPham_DTO;
-import DTO.ctSanPham_DTO;
-import GUI.JPanel_QuanLyCuaHangDienThoai.SanPham_GUI;
+import DAO.IMEIDAO;
+import DAO.SanPhamDAO;
+import DAO.ctSanPhamDAO;
+import DTO.IMEIDTO;
+import DTO.SanPhamDTO;
+import DTO.ctSanPhamDTO;
+import GUI.JPanel_QuanLyCuaHangDienThoai.SanPhamGUI;
 
 import java.awt.Color;
 import javax.swing.JButton;
@@ -44,9 +44,9 @@ public class xemDanhSachImeiSanPham_Dialog extends JDialog{
 	
 	
 	public void loadDataTalbe(int idSP) {
-        ArrayList<IMEI_DTO> result = IMEI_DAO.getInstance().selectByCondition("SANPHAM_idSP = " + idSP);
+        ArrayList<IMEIDTO> result = IMEIDAO.getInstance().selectByCondition("SANPHAM_idSP = " + idSP);
         tblModel.setRowCount(0);
-        for (IMEI_DTO sp : result) {
+        for (IMEIDTO sp : result) {
             tblModel.addRow(new Object[]{sp.getMaIMEI(), sp.getIdPhieuNhap(), sp.getIdPhieuXuat(), sp.getSANPHAM_idSP(), sp.getTrangThai()});
         }
     }

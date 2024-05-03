@@ -1,6 +1,6 @@
 package DTO;
 
-public class ctSanPham_DTO {
+public class ctSanPhamDTO {
     private String chip;
     private String pin;
     private String manHinh;
@@ -11,7 +11,7 @@ public class ctSanPham_DTO {
     private String rom;
     private int SANPHAM_idSP;
 
-    public ctSanPham_DTO(String chip, String pin, String manHinh, String phienBanHDH, String cameraSau, String cameraTruoc, String ram, String rom, int SANPHAM_idSP) {
+    public ctSanPhamDTO(String chip, String pin, String manHinh, String phienBanHDH, String cameraSau, String cameraTruoc, String ram, String rom, int SANPHAM_idSP) {
         this.chip = chip;
         this.pin = pin;
         this.manHinh = manHinh;
@@ -96,7 +96,7 @@ public class ctSanPham_DTO {
         this.SANPHAM_idSP = idSP;
     }
 
-    public ctSanPham_DTO() {
+    public ctSanPhamDTO() {
     }
 
 }

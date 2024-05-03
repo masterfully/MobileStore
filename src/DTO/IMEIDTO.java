@@ -1,6 +1,6 @@
 package DTO;
 
-public class IMEI_DTO {
+public class IMEIDTO {
 	private int maIMEI;
 	private int SANPHAM_idSP;
 	private int idPhieuNhap;
@@ -36,7 +36,7 @@ public class IMEI_DTO {
 	public void setIdPhieuXuat(int idPhieuXuat) {
 		this.idPhieuXuat = idPhieuXuat;
 	}
-	public IMEI_DTO(int maIMEI, int sANPHAM_idSP, int idPhieuNhap, int idPhieuXuat, int trangThai) {
+	public IMEIDTO(int maIMEI, int sANPHAM_idSP, int idPhieuNhap, int idPhieuXuat, int trangThai) {
 		super();
 		this.maIMEI = maIMEI;
 		SANPHAM_idSP = sANPHAM_idSP;
@@ -44,9 +44,9 @@ public class IMEI_DTO {
 		this.idPhieuXuat = idPhieuXuat;
 		this.trangThai = trangThai;
 	}
-	public IMEI_DTO() {
+	public IMEIDTO() {
 	}
-	public IMEI_DTO(int maIMEI2, int idSP, int trangThai) {
+	public IMEIDTO(int maIMEI2, int idSP, int trangThai) {
 		this.maIMEI = maIMEI2;
 		this.SANPHAM_idSP = idSP;
 		this.trangThai = trangThai;

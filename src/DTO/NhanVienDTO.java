@@ -2,7 +2,7 @@ package DTO;
 
 import java.util.Date;
 
-public class NhanVien_DTO {
+public class NhanVienDTO {
 	private String IDNhanVien;
 	private String tenNhanVien;
 	private String gioiTinh;
@@ -11,7 +11,7 @@ public class NhanVien_DTO {
 
 	private int isDelete;
 
-	public NhanVien_DTO(String iDNhanVien, String tenNhanVien, String gioiTinh, Date ngaySinh, String sdt, int isDelete) {
+	public NhanVienDTO(String iDNhanVien, String tenNhanVien, String gioiTinh, Date ngaySinh, String sdt, int isDelete) {
 		IDNhanVien = iDNhanVien;
 		this.tenNhanVien = tenNhanVien;
 		this.gioiTinh = gioiTinh;
@@ -20,7 +20,7 @@ public class NhanVien_DTO {
 		this.isDelete = isDelete;
 	}
 
-	public NhanVien_DTO(String t) {
+	public NhanVienDTO(String t) {
 		this.IDNhanVien = t;
 	}
 

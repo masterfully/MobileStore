@@ -11,13 +11,13 @@ import javax.swing.SwingConstants;
 import javax.swing.SwingUtilities;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
-import DAO.IMEI_DAO;
-import DAO.SanPham_DAO;
-import DAO.ctSanPham_DAO;
-import DTO.IMEI_DTO;
-import DTO.SanPham_DTO;
-import DTO.ctSanPham_DTO;
-import GUI.JPanel_QuanLyCuaHangDienThoai.SanPham_GUI;
+import DAO.IMEIDAO;
+import DAO.SanPhamDAO;
+import DAO.ctSanPhamDAO;
+import DTO.IMEIDTO;
+import DTO.SanPhamDTO;
+import DTO.ctSanPhamDTO;
+import GUI.JPanel_QuanLyCuaHangDienThoai.SanPhamGUI;
 import helper.ExtractString;
 
 import java.awt.Color;
@@ -209,7 +209,7 @@ public class themSanPham_Dialog extends JDialog{
 		JButton btn_them = new JButton("Thêm");
 		btn_them.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				SanPham_DAO spdao = new SanPham_DAO();
+				SanPhamDAO spdao = new SanPhamDAO();
 				int idsp = spdao.getInstance().selectAll().get(spdao.getInstance().selectAll().size()-1).getIdSP() +1;
 				String tensp = txt_tensp.getText();
 				int giaNhap = Integer.parseInt(txt_gianhap.getText());
@@ -217,8 +217,8 @@ public class themSanPham_Dialog extends JDialog{
 				int soLuong = Integer.parseInt(txt_soluong.getText());
 				String hinhAnh =  extractString.catLinkAnh(imagePath);
 				String mauSac = (String) cbb_mausac.getSelectedItem();
-				SanPham_DTO spdto = new SanPham_DTO(idsp, tensp, giaNhap, giaBan, soLuong, hinhAnh, mauSac, 0);
-				SanPham_DAO.getInstance().insert(spdto);
+				SanPhamDTO spdto = new SanPhamDTO(idsp, tensp, giaNhap, giaBan, soLuong, hinhAnh, mauSac, 0);
+				SanPhamDAO.getInstance().insert(spdto);
 				
 				
 				String chip = txt_chip.getText();
@@ -230,8 +230,8 @@ public class themSanPham_Dialog extends JDialog{
 				String ram = (String) cbb_ram.getSelectedItem();
 				String rom = (String) cbb_rom.getSelectedItem();
 				int SANPHAM_idSP = idsp;
-				ctSanPham_DTO ctspdto = new ctSanPham_DTO(chip, pin, manHinh, hdh, cameraSau, cameraTruoc, ram, rom, SANPHAM_idSP);
-				ctSanPham_DAO.getInstance().insert(ctspdto);
+				ctSanPhamDTO ctspdto = new ctSanPhamDTO(chip, pin, manHinh, hdh, cameraSau, cameraTruoc, ram, rom, SANPHAM_idSP);
+				ctSanPhamDAO.getInstance().insert(ctspdto);
 			}
 		});
 		btn_them.setBounds(469, 400, 129, 23);
@@ -249,8 +249,8 @@ public class themSanPham_Dialog extends JDialog{
 	
 	
 	public themSanPham_Dialog(int idSP) {
-		SanPham_DTO spdto = SanPham_DAO.getInstance().selectById(idSP);
-		ctSanPham_DTO ctspdto = ctSanPham_DAO.getInstance().selectById(idSP);
+		SanPhamDTO spdto = SanPhamDAO.getInstance().selectById(idSP);
+		ctSanPhamDTO ctspdto = ctSanPhamDAO.getInstance().selectById(idSP);
 		getContentPane().setLayout(null);
 		JLabel lbl_hinhAnh = new JLabel("");
 		lbl_hinhAnh.setIcon(new ImageIcon("C:\\Users\\Smile\\eclipse-workspace\\MobileStore\\" + spdto.getHinhAnh()));
@@ -431,9 +431,9 @@ public class themSanPham_Dialog extends JDialog{
 		btn_them.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 //				thêm mới vô bảng IMEI
-				IMEI_DAO IMEIDAO = new IMEI_DAO();
+				IMEIDAO IMEIDAO = new IMEIDAO();
 				int maIMEI = IMEIDAO.getInstance().selectAll().get(IMEIDAO.getInstance().selectAll().size()-1).getMaIMEI() +1;
-				IMEI_DTO IMEI = new IMEI_DTO(maIMEI, idSP, 0);
+				IMEIDTO IMEI = new IMEIDTO(maIMEI, idSP, 0);
 				IMEIDAO.getInstance().insert(IMEI);
 			}
 		});

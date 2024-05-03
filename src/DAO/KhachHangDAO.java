@@ -1,6 +1,6 @@
 package DAO;
 
-import DTO.KhachHang_DTO;
+import DTO.KhachHangDTO;
 import config.JDBCUtil;
 
 import java.sql.*;
@@ -8,18 +8,18 @@ import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class KhachHang_DAO implements DAOInterface<KhachHang_DTO> {
+public class KhachHangDAO implements DAOInterface<KhachHangDTO> {
 
-    public static KhachHang_DAO getInstance() {
-        return new KhachHang_DAO();
+    public static KhachHangDAO getInstance() {
+        return new KhachHangDAO();
     }
 
-    private KhachHang_DAO() {
+    private KhachHangDAO() {
     }
 
 
     @Override
-    public int insert(KhachHang_DTO khachHangDto) {
+    public int insert(KhachHangDTO khachHangDto) {
         int ketQua = 0;
         try {
             Connection con = JDBCUtil.getConnection();
@@ -35,13 +35,13 @@ public class KhachHang_DAO implements DAOInterface<KhachHang_DTO> {
             System.out.println("Đã thay đổi " + ketQua + " dòng");
             JDBCUtil.closeConnection(con);
         } catch (SQLException e) {
-            Logger.getLogger(KhachHang_DAO.class.getName()).log(Level.SEVERE, null, e);
+            Logger.getLogger(KhachHangDAO.class.getName()).log(Level.SEVERE, null, e);
         }
         return ketQua;
     }
 
     @Override
-    public int update(KhachHang_DTO khachHangDto) {
+    public int update(KhachHangDTO khachHangDto) {
         int ketQua = 0;
         try {
             Connection con = JDBCUtil.getConnection();
@@ -57,7 +57,7 @@ public class KhachHang_DAO implements DAOInterface<KhachHang_DTO> {
             System.out.println("Đã thay đổi " + ketQua + " dòng");
             JDBCUtil.closeConnection(con);
         } catch (SQLException e) {
-            Logger.getLogger(KhachHang_DAO.class.getName()).log(Level.SEVERE, null, e);
+            Logger.getLogger(KhachHangDAO.class.getName()).log(Level.SEVERE, null, e);
         }
         return ketQua;
     }
@@ -76,15 +76,15 @@ public class KhachHang_DAO implements DAOInterface<KhachHang_DTO> {
             System.out.println("Đã thay đổi " + ketQua + " dòng");
             JDBCUtil.closeConnection(con);
         } catch (SQLException e) {
-            Logger.getLogger(KhachHang_DAO.class.getName()).log(Level.SEVERE, null, e);
+            Logger.getLogger(KhachHangDAO.class.getName()).log(Level.SEVERE, null, e);
         }
         return ketQua;
     }
 
 
     @Override
-    public ArrayList<KhachHang_DTO> selectAll() {
-        ArrayList<KhachHang_DTO> khachHangList = new ArrayList<>();
+    public ArrayList<KhachHangDTO> selectAll() {
+        ArrayList<KhachHangDTO> khachHangList = new ArrayList<>();
         try {
             Connection con = JDBCUtil.getConnection();
             String sql = "SELECT * FROM KhachHang WHERE isDelete=0";
@@ -92,7 +92,7 @@ public class KhachHang_DAO implements DAOInterface<KhachHang_DTO> {
             ResultSet rs = stmt.executeQuery(sql);
 
             while (rs.next()) {
-                KhachHang_DTO khachHang = new KhachHang_DTO(
+                KhachHangDTO khachHang = new KhachHangDTO(
                         rs.getString("IDKhachHang"),
                         rs.getString("tenKhachHang"),
                         rs.getString("diaChi"),
@@ -103,15 +103,15 @@ public class KhachHang_DAO implements DAOInterface<KhachHang_DTO> {
             }
             JDBCUtil.closeConnection(con);
         } catch (SQLException e) {
-            Logger.getLogger(KhachHang_DAO.class.getName()).log(Level.SEVERE, null, e);
+            Logger.getLogger(KhachHangDAO.class.getName()).log(Level.SEVERE, null, e);
         }
         return khachHangList;
     }
 
 
     @Override
-    public ArrayList<KhachHang_DTO> selectByCondition(String condition) {
-        ArrayList<KhachHang_DTO> khachHangList = new ArrayList<>();
+    public ArrayList<KhachHangDTO> selectByCondition(String condition) {
+        ArrayList<KhachHangDTO> khachHangList = new ArrayList<>();
         try {
             Connection con = JDBCUtil.getConnection();
             String sql = "SELECT * FROM KhachHang WHERE " + condition;
@@ -119,7 +119,7 @@ public class KhachHang_DAO implements DAOInterface<KhachHang_DTO> {
             ResultSet rs = stmt.executeQuery(sql);
 
             while (rs.next()) {
-                KhachHang_DTO khachHang = new KhachHang_DTO(
+                KhachHangDTO khachHang = new KhachHangDTO(
                         rs.getString("IDKhachHang"),
                         rs.getString("tenKhachHang"),
                         rs.getString("diaChi"),
@@ -130,15 +130,15 @@ public class KhachHang_DAO implements DAOInterface<KhachHang_DTO> {
             }
             JDBCUtil.closeConnection(con);
         } catch (SQLException e) {
-            Logger.getLogger(KhachHang_DAO.class.getName()).log(Level.SEVERE, null, e);
+            Logger.getLogger(KhachHangDAO.class.getName()).log(Level.SEVERE, null, e);
         }
         return khachHangList;
     }
 
 
     @Override
-    public KhachHang_DTO selectById(int idKhachHang) {
-        KhachHang_DTO khachHang = null;
+    public KhachHangDTO selectById(int idKhachHang) {
+        KhachHangDTO khachHang = null;
         try {
             Connection con = JDBCUtil.getConnection();
             String sql = "SELECT * FROM KhachHang WHERE IDKhachHang = ?";
@@ -147,7 +147,7 @@ public class KhachHang_DAO implements DAOInterface<KhachHang_DTO> {
             ResultSet rs = pst.executeQuery();
 
             if (rs.next()) {
-                khachHang = new KhachHang_DTO(
+                khachHang = new KhachHangDTO(
                         rs.getString("IDKhachHang"),
                         rs.getString("tenKhachHang"),
                         rs.getString("diaChi"),
@@ -157,7 +157,7 @@ public class KhachHang_DAO implements DAOInterface<KhachHang_DTO> {
             }
             JDBCUtil.closeConnection(con);
         } catch (SQLException e) {
-            Logger.getLogger(KhachHang_DAO.class.getName()).log(Level.SEVERE, null, e);
+            Logger.getLogger(KhachHangDAO.class.getName()).log(Level.SEVERE, null, e);
         }
         return khachHang;
     }

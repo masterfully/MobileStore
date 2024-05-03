@@ -5,15 +5,15 @@ import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import DTO.ctSanPham_DTO;
+import DTO.ctSanPhamDTO;
 import config.JDBCUtil;
 
-public class ctSanPham_DAO implements DAOInterface<ctSanPham_DTO> {
-    public static ctSanPham_DAO getInstance() {
-        return new ctSanPham_DAO();
+public class ctSanPhamDAO implements DAOInterface<ctSanPhamDTO> {
+    public static ctSanPhamDAO getInstance() {
+        return new ctSanPhamDAO();
     }
     @Override
-    public int insert(ctSanPham_DTO t) {
+    public int insert(ctSanPhamDTO t) {
         int ketQua = 0;
         try {
             Connection con = JDBCUtil.getConnection();
@@ -33,13 +33,13 @@ public class ctSanPham_DAO implements DAOInterface<ctSanPham_DTO> {
             System.out.println("Đã thay đổi " + ketQua + " dòng");
             JDBCUtil.closeConnection(con);
         } catch (SQLException e) {
-            Logger.getLogger(ctSanPham_DAO.class.getName()).log(Level.SEVERE, null, e);
+            Logger.getLogger(ctSanPhamDAO.class.getName()).log(Level.SEVERE, null, e);
         }
         return ketQua;
     }
 
     @Override
-    public int update(ctSanPham_DTO t) {
+    public int update(ctSanPhamDTO t) {
         int ketQua = 0;
         try {
             Connection con = JDBCUtil.getConnection();
@@ -68,7 +68,7 @@ public class ctSanPham_DAO implements DAOInterface<ctSanPham_DTO> {
             System.out.println("Đã thay đổi " + ketQua + " dòng");
             JDBCUtil.closeConnection(con);
         } catch (SQLException e) {
-            Logger.getLogger(ctSanPham_DAO.class.getName()).log(Level.SEVERE, null, e);
+            Logger.getLogger(ctSanPhamDAO.class.getName()).log(Level.SEVERE, null, e);
         }
         return ketQua;
     }
@@ -86,14 +86,14 @@ public class ctSanPham_DAO implements DAOInterface<ctSanPham_DTO> {
             System.out.println("Đã thay đổi " + ketQua + " dòng");
             JDBCUtil.closeConnection(con);
         } catch (SQLException e) {
-            Logger.getLogger(ctSanPham_DAO.class.getName()).log(Level.SEVERE, null, e);
+            Logger.getLogger(ctSanPhamDAO.class.getName()).log(Level.SEVERE, null, e);
         }
         return ketQua;
     }
 
     @Override
-    public ArrayList<ctSanPham_DTO> selectAll() {
-        ArrayList<ctSanPham_DTO> ctSanPhamList = new ArrayList<>();
+    public ArrayList<ctSanPhamDTO> selectAll() {
+        ArrayList<ctSanPhamDTO> ctSanPhamList = new ArrayList<>();
         try {
             Connection con = JDBCUtil.getConnection();
             String sql = "SELECT * FROM ctSanPham";
@@ -101,7 +101,7 @@ public class ctSanPham_DAO implements DAOInterface<ctSanPham_DTO> {
             ResultSet rs = stmt.executeQuery(sql);
 
             while (rs.next()) {
-                ctSanPham_DTO ctSanPham = new ctSanPham_DTO();
+                ctSanPhamDTO ctSanPham = new ctSanPhamDTO();
                 ctSanPham.setChip(rs.getString("chip"));
                 ctSanPham.setPin(rs.getString("pin"));
                 ctSanPham.setManHinh(rs.getString("manHinh"));
@@ -115,14 +115,14 @@ public class ctSanPham_DAO implements DAOInterface<ctSanPham_DTO> {
             }
             JDBCUtil.closeConnection(con);
         } catch (SQLException e) {
-            Logger.getLogger(ctSanPham_DAO.class.getName()).log(Level.SEVERE, null, e);
+            Logger.getLogger(ctSanPhamDAO.class.getName()).log(Level.SEVERE, null, e);
         }
         return ctSanPhamList;
     }
 
     @Override
-    public ArrayList<ctSanPham_DTO> selectByCondition(String condition) {
-        ArrayList<ctSanPham_DTO> ctSanPhamList = new ArrayList<>();
+    public ArrayList<ctSanPhamDTO> selectByCondition(String condition) {
+        ArrayList<ctSanPhamDTO> ctSanPhamList = new ArrayList<>();
         try {
             Connection con = JDBCUtil.getConnection();
             String sql = "SELECT * FROM ctsanpham WHERE " + condition;
@@ -130,7 +130,7 @@ public class ctSanPham_DAO implements DAOInterface<ctSanPham_DTO> {
             ResultSet rs = stmt.executeQuery(sql);
 
             while (rs.next()) {
-                ctSanPham_DTO ctSanPham = new ctSanPham_DTO();
+                ctSanPhamDTO ctSanPham = new ctSanPhamDTO();
                 ctSanPham.setChip(rs.getString("chip"));
                 ctSanPham.setPin(rs.getString("pin"));
                 ctSanPham.setManHinh(rs.getString("manHinh"));
@@ -144,14 +144,14 @@ public class ctSanPham_DAO implements DAOInterface<ctSanPham_DTO> {
             }
             JDBCUtil.closeConnection(con);
         } catch (SQLException e) {
-            Logger.getLogger(ctSanPham_DAO.class.getName()).log(Level.SEVERE, null, e);
+            Logger.getLogger(ctSanPhamDAO.class.getName()).log(Level.SEVERE, null, e);
         }
         return ctSanPhamList;
     }
 
     @Override
-    public ctSanPham_DTO selectById(int idsp) {
-        ctSanPham_DTO ctSanPham = null;
+    public ctSanPhamDTO selectById(int idsp) {
+        ctSanPhamDTO ctSanPham = null;
         try {
             Connection con = JDBCUtil.getConnection();
             String sql = "SELECT * FROM ctSanPham WHERE SANPHAM_idSP = ?";
@@ -160,7 +160,7 @@ public class ctSanPham_DAO implements DAOInterface<ctSanPham_DTO> {
             ResultSet rs = pst.executeQuery();
 
             if (rs.next()) {
-                ctSanPham = new ctSanPham_DTO();
+                ctSanPham = new ctSanPhamDTO();
                 ctSanPham.setChip(rs.getString("chip"));
                 ctSanPham.setPin(rs.getString("pin"));
                 ctSanPham.setManHinh(rs.getString("manHinh"));
@@ -172,7 +172,7 @@ public class ctSanPham_DAO implements DAOInterface<ctSanPham_DTO> {
                 ctSanPham.setSANPHAM_idSP(rs.getInt("SANPHAM_idSP")); }
             JDBCUtil.closeConnection(con);
         } catch (SQLException e) {
-            Logger.getLogger(ctSanPham_DAO.class.getName()).log(Level.SEVERE, null, e);
+            Logger.getLogger(ctSanPhamDAO.class.getName()).log(Level.SEVERE, null, e);
         }
         return ctSanPham;
     }

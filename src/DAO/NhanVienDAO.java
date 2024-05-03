@@ -1,6 +1,6 @@
 package DAO;
 
-import DTO.NhanVien_DTO;
+import DTO.NhanVienDTO;
 import config.JDBCUtil;
 
 import java.sql.Connection;
@@ -11,12 +11,12 @@ import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class NhanVien_DAO implements DAOInterface<NhanVien_DTO> {
-    public static NhanVien_DAO getInstance() {
-        return new NhanVien_DAO();
+public class NhanVienDAO implements DAOInterface<NhanVienDTO> {
+    public static NhanVienDAO getInstance() {
+        return new NhanVienDAO();
     }
     @Override
-    public int insert(NhanVien_DTO nhanVienDto) {
+    public int insert(NhanVienDTO nhanVienDto) {
         int ketQua = 0;
         try {
             Connection con = JDBCUtil.getConnection();
@@ -33,13 +33,13 @@ public class NhanVien_DAO implements DAOInterface<NhanVien_DTO> {
             System.out.println("Đã thay đổi " + ketQua + " dòng");
             JDBCUtil.closeConnection(con);
         } catch (SQLException e) {
-            Logger.getLogger(NhanVien_DAO.class.getName()).log(Level.SEVERE, null, e);
+            Logger.getLogger(NhanVienDAO.class.getName()).log(Level.SEVERE, null, e);
         }
         return ketQua;
     }
 
     @Override
-    public int update(NhanVien_DTO nhanVienDto) {
+    public int update(NhanVienDTO nhanVienDto) {
         int ketQua = 0;
         try {
             Connection con = JDBCUtil.getConnection();
@@ -56,7 +56,7 @@ public class NhanVien_DAO implements DAOInterface<NhanVien_DTO> {
             System.out.println("Đã thay đổi " + ketQua + " dòng");
             JDBCUtil.closeConnection(con);
         } catch (SQLException e) {
-            Logger.getLogger(NhanVien_DAO.class.getName()).log(Level.SEVERE, null, e);
+            Logger.getLogger(NhanVienDAO.class.getName()).log(Level.SEVERE, null, e);
         }
         return ketQua;
     }
@@ -76,21 +76,21 @@ public class NhanVien_DAO implements DAOInterface<NhanVien_DTO> {
             System.out.println("Đã thay đổi " + ketQua + " dòng");
             JDBCUtil.closeConnection(con);
         } catch (SQLException e) {
-            Logger.getLogger(SanPham_DAO.class.getName()).log(Level.SEVERE, null, e);
+            Logger.getLogger(SanPhamDAO.class.getName()).log(Level.SEVERE, null, e);
         }
         return ketQua;
     }
 
     @Override
-    public ArrayList<NhanVien_DTO> selectAll() {
-        ArrayList<NhanVien_DTO> nhanViens = new ArrayList<>();
+    public ArrayList<NhanVienDTO> selectAll() {
+        ArrayList<NhanVienDTO> nhanViens = new ArrayList<>();
         try {
             Connection con = JDBCUtil.getConnection();
             String sql = "SELECT * FROM NhanVien WHERE isDelete=0";
             PreparedStatement pst = con.prepareStatement(sql);
             ResultSet rs = pst.executeQuery();
             while (rs.next()) {
-                NhanVien_DTO nhanVien = new NhanVien_DTO(
+                NhanVienDTO nhanVien = new NhanVienDTO(
                         rs.getString("IDNhanVien"),
                         rs.getString("tenNhanVien"),
                         rs.getString("gioiTinh"),
@@ -102,21 +102,21 @@ public class NhanVien_DAO implements DAOInterface<NhanVien_DTO> {
             }
             JDBCUtil.closeConnection(con);
         } catch (SQLException e) {
-            Logger.getLogger(NhanVien_DAO.class.getName()).log(Level.SEVERE, null, e);
+            Logger.getLogger(NhanVienDAO.class.getName()).log(Level.SEVERE, null, e);
         }
         return nhanViens;
     }
 
     @Override
-    public ArrayList<NhanVien_DTO> selectByCondition(String condition) {
-        ArrayList<NhanVien_DTO> nhanViens = new ArrayList<>();
+    public ArrayList<NhanVienDTO> selectByCondition(String condition) {
+        ArrayList<NhanVienDTO> nhanViens = new ArrayList<>();
         try {
             Connection con = JDBCUtil.getConnection();
             String sql = "SELECT * FROM NhanVien WHERE " + condition;
             PreparedStatement pst = con.prepareStatement(sql);
             ResultSet rs = pst.executeQuery();
             while (rs.next()) {
-                NhanVien_DTO nhanVien = new NhanVien_DTO(
+                NhanVienDTO nhanVien = new NhanVienDTO(
                         rs.getString("IDNhanVien"),
                         rs.getString("tenNhanVien"),
                         rs.getString("gioiTinh"),
@@ -128,14 +128,14 @@ public class NhanVien_DAO implements DAOInterface<NhanVien_DTO> {
             }
             JDBCUtil.closeConnection(con);
         } catch (SQLException e) {
-            Logger.getLogger(NhanVien_DAO.class.getName()).log(Level.SEVERE, null, e);
+            Logger.getLogger(NhanVienDAO.class.getName()).log(Level.SEVERE, null, e);
         }
         return nhanViens;
     }
 
     @Override
-    public NhanVien_DTO selectById(int idNhanVien) {
-        NhanVien_DTO nhanVien = null;
+    public NhanVienDTO selectById(int idNhanVien) {
+        NhanVienDTO nhanVien = null;
         try {
             Connection con = JDBCUtil.getConnection();
             String sql = "SELECT * FROM NhanVien WHERE IDNhanVien = ?";
@@ -143,7 +143,7 @@ public class NhanVien_DAO implements DAOInterface<NhanVien_DTO> {
             pst.setInt(1, idNhanVien);
             ResultSet rs = pst.executeQuery();
             if (rs.next()) {
-                nhanVien = new NhanVien_DTO(
+                nhanVien = new NhanVienDTO(
                         rs.getString("IDNhanVien"),
                         rs.getString("tenNhanVien"),
                         rs.getString("gioiTinh"),
@@ -154,7 +154,7 @@ public class NhanVien_DAO implements DAOInterface<NhanVien_DTO> {
             }
             JDBCUtil.closeConnection(con);
         } catch (SQLException e) {
-            Logger.getLogger(NhanVien_DAO.class.getName()).log(Level.SEVERE, null, e);
+            Logger.getLogger(NhanVienDAO.class.getName()).log(Level.SEVERE, null, e);
         }
         return nhanVien;
     }

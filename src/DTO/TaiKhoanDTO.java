@@ -1,13 +1,13 @@
 package DTO;
 
-public class TaiKhoan_DTO {
+public class TaiKhoanDTO {
     private String username;
     private String password;
     private String trangThai;
     private String chucVu;
     private int idNV;
 
-    public TaiKhoan_DTO(String username, String password, String trangThai, String chucVu, int idNV) {
+    public TaiKhoanDTO(String username, String password, String trangThai, String chucVu, int idNV) {
         this.username = username;
         this.password = password;
         this.trangThai = trangThai;
