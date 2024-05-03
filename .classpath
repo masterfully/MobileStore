@@ -9,5 +9,10 @@
 	<classpathentry kind="lib" path="C:/Users/Smile/Downloads/sqljdbc_12.6/enu/jars/mssql-jdbc-12.6.1.jre11.jar"/>
 	<classpathentry kind="lib" path="C:/Users/Smile/Downloads/mysql-connector-j-8.3.0/mysql-connector-j-8.3.0.jar"/>
 	<classpathentry kind="lib" path="C:/Users/Smile/Downloads/ae-database-community-233.15026.9-sources.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Smile/Downloads/jcalendar-1.4/lib/jcalendar-1.4.jar"/>
+	<classpathentry kind="lib" path="com.miglayout.swing_11.3.0.jar"/>
+	<classpathentry kind="lib" path="com.miglayout.core_11.3.0.jar"/>
+	<classpathentry kind="lib" path="com.jgoodies.forms_1.9.0.v20240327-0800.jar"/>
+	<classpathentry kind="lib" path="com.jgoodies.common_1.8.1.v20240327-0800.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

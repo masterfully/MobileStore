@@ -3,17 +3,16 @@ package DTO;
 import java.util.Date;
 
 public class NhanVienDTO {
-	private String IDNhanVien;
-	private String tenNhanVien;
+	private int idNV;
+	private String hoTen;
 	private String gioiTinh;
 	private Date ngaySinh;
-	private String sdt;
-
+	private int sdt;
 	private int isDelete;
 
-	public NhanVienDTO(String iDNhanVien, String tenNhanVien, String gioiTinh, Date ngaySinh, String sdt, int isDelete) {
-		IDNhanVien = iDNhanVien;
-		this.tenNhanVien = tenNhanVien;
+	public NhanVienDTO(int idNV, String hoTen, String gioiTinh, Date ngaySinh, int sdt, int isDelete) {
+		idNV = idNV;
+		this.hoTen = hoTen;
 		this.gioiTinh = gioiTinh;
 		this.ngaySinh = ngaySinh;
 		this.sdt = sdt;
@@ -21,24 +20,24 @@ public class NhanVienDTO {
 	}
 
 	public NhanVienDTO(String t) {
-		this.IDNhanVien = t;
+		this.idNV = t;
 	}
 
 
-    public String getIDNhanVien() {
-		return IDNhanVien;
+    public int getidNV() {
+		return idNV;
 	}
 
-	public void setIDNhanVien(String iDNhanVien) {
-		IDNhanVien = iDNhanVien;
+	public void setidNV(int idNV) {
+		idNV = idNV;
 	}
 
-	public String getTenNhanVien() {
-		return tenNhanVien;
+	public String gethoTen() {
+		return hoTen;
 	}
 
-	public void setTenNhanVien(String tenNhanVien) {
-		this.tenNhanVien = tenNhanVien;
+	public void sethoTen(String hoTen) {
+		this.hoTen = hoTen;
 	}
 
 	public String getGioiTinh() {
@@ -57,11 +56,11 @@ public class NhanVienDTO {
 		this.ngaySinh = ngaySinh;
 	}
 
-	public String getSdt() {
+	public int getSdt() {
 		return sdt;
 	}
 
-	public void setSdt(String sdt) {
+	public void setSdt(int sdt) {
 		this.sdt = sdt;
 	}
 

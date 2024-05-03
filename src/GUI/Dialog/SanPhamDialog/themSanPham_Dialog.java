@@ -1,4 +1,4 @@
-package GUI.Dialog;
+package GUI.Dialog.SanPhamDialog;
 
 import javax.swing.JDialog;
 import javax.swing.JFileChooser;
@@ -209,8 +209,7 @@ public class themSanPham_Dialog extends JDialog{
 		JButton btn_them = new JButton("Thêm");
 		btn_them.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				SanPhamDAO spdao = new SanPhamDAO();
-				int idsp = spdao.getInstance().selectAll().get(spdao.getInstance().selectAll().size()-1).getIdSP() +1;
+				int idsp = SanPhamDAO.getInstance().selectAll().get(SanPhamDAO.getInstance().selectAll().size()-1).getIdSP() +1;
 				String tensp = txt_tensp.getText();
 				int giaNhap = Integer.parseInt(txt_gianhap.getText());
 				int giaBan = Integer.parseInt(txt_giaban.getText());
@@ -232,6 +231,10 @@ public class themSanPham_Dialog extends JDialog{
 				int SANPHAM_idSP = idsp;
 				ctSanPhamDTO ctspdto = new ctSanPhamDTO(chip, pin, manHinh, hdh, cameraSau, cameraTruoc, ram, rom, SANPHAM_idSP);
 				ctSanPhamDAO.getInstance().insert(ctspdto);
+				
+				int maIMEI = IMEIDAO.getInstance().selectAll().get(IMEIDAO.getInstance().selectAll().size()-1).getMaIMEI() +1;
+				IMEIDTO imei = new IMEIDTO(maIMEI, idsp);
+				IMEIDAO.getInstance().insert(imei);
 			}
 		});
 		btn_them.setBounds(469, 400, 129, 23);

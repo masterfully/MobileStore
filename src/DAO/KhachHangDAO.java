@@ -87,17 +87,16 @@ public class KhachHangDAO implements DAOInterface<KhachHangDTO> {
         ArrayList<KhachHangDTO> khachHangList = new ArrayList<>();
         try {
             Connection con = JDBCUtil.getConnection();
-            String sql = "SELECT * FROM KhachHang WHERE isDelete=0";
+            String sql = "SELECT * FROM KhachHang";
             Statement stmt = con.createStatement();
             ResultSet rs = stmt.executeQuery(sql);
 
             while (rs.next()) {
                 KhachHangDTO khachHang = new KhachHangDTO(
-                        rs.getString("IDKhachHang"),
-                        rs.getString("tenKhachHang"),
+                        rs.getInt("idKH"),
+                        rs.getString("tenKH"),
                         rs.getString("diaChi"),
-                        rs.getString("sdt"),
-                        rs.getInt("isDelete")
+                        rs.getInt("sdt")
                 );
                 khachHangList.add(khachHang);
             }
@@ -141,18 +140,17 @@ public class KhachHangDAO implements DAOInterface<KhachHangDTO> {
         KhachHangDTO khachHang = null;
         try {
             Connection con = JDBCUtil.getConnection();
-            String sql = "SELECT * FROM KhachHang WHERE IDKhachHang = ?";
+            String sql = "SELECT * FROM KhachHang WHERE idKH = ?";
             PreparedStatement pst = con.prepareStatement(sql);
             pst.setInt(1, idKhachHang);
             ResultSet rs = pst.executeQuery();
 
             if (rs.next()) {
                 khachHang = new KhachHangDTO(
-                        rs.getString("IDKhachHang"),
-                        rs.getString("tenKhachHang"),
+                        rs.getInt("idKH"),
+                        rs.getString("tenKH"),
                         rs.getString("diaChi"),
-                        rs.getString("sdt"),
-                        rs.getInt("isDelete")
+                        rs.getInt("sdt")
                 );
             }
             JDBCUtil.closeConnection(con);

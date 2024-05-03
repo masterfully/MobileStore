@@ -1,4 +1,4 @@
-package GUI.Dialog;
+package GUI.Dialog.SanPhamDialog;
 
 import javax.swing.JDialog;
 import javax.swing.JFileChooser;

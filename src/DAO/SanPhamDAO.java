@@ -100,7 +100,7 @@ public class SanPhamDAO implements DAOInterface<SanPhamDTO> {
         ArrayList<SanPhamDTO> sanPhamList = new ArrayList<>();
         try {
             Connection con = JDBCUtil.getConnection();
-            String sql = "SELECT * FROM SanPham WHERE isDelete=0";
+            String sql = "SELECT * FROM SanPham";
             Statement stmt = con.createStatement();
             ResultSet rs = stmt.executeQuery(sql);
 
@@ -202,5 +202,5 @@ public class SanPhamDAO implements DAOInterface<SanPhamDTO> {
         return ketQua;
     }
 
-
+    
 }

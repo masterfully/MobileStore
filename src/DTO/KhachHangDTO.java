@@ -1,35 +1,28 @@
 package DTO;
 
 public class KhachHangDTO {
-	    private String IDKhachHang;
-	    private String tenKhachHang;
+	    private int idKH;
+	    private String tenKH;
 	    private String diaChi;
-	    private String sdt;
-
-		private int isDelete;
-		public KhachHangDTO(String iDKhachHang, String tenKhachHang, String diaChi, String sdt, int isDelete) {
-			IDKhachHang = iDKhachHang;
-			this.tenKhachHang = tenKhachHang;
+	    private int sdt;
+		public KhachHangDTO(int idKH, String tenKH, String diaChi, int sdt) {
+			super();
+			this.idKH = idKH;
+			this.tenKH = tenKH;
 			this.diaChi = diaChi;
 			this.sdt = sdt;
-			this.isDelete = isDelete;
 		}
-
-	public KhachHangDTO(String t) {
-			this.IDKhachHang = t;
-	}
-
-	public String getIDKhachHang() {
-			return IDKhachHang;
+		public int getidKH() {
+			return idKH;
 		}
-		public void setIDKhachHang(String iDKhachHang) {
-			IDKhachHang = iDKhachHang;
+		public void setidKH(int idKH) {
+			this.idKH = idKH;
 		}
-		public String getTenKhachHang() {
-			return tenKhachHang;
+		public String gettenKH() {
+			return tenKH;
 		}
-		public void setTenKhachHang(String tenKhachHang) {
-			this.tenKhachHang = tenKhachHang;
+		public void settenKH(String tenKH) {
+			this.tenKH = tenKH;
 		}
 		public String getDiaChi() {
 			return diaChi;
@@ -37,18 +30,13 @@ public class KhachHangDTO {
 		public void setDiaChi(String diaChi) {
 			this.diaChi = diaChi;
 		}
-		public String getSdt() {
+		public int getSdt() {
 			return sdt;
 		}
-		public void setSdt(String sdt) {
+		public void setSdt(int sdt) {
 			this.sdt = sdt;
 		}
 
-	public int getIsDelete() {
-		return isDelete;
-	}
-
-	public void setIsDelete(int isDelete) {
-		this.isDelete = isDelete;
-	}
+	    
+		
 }

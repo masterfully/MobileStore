@@ -51,5 +51,11 @@ public class IMEIDTO {
 		this.SANPHAM_idSP = idSP;
 		this.trangThai = trangThai;
 	}
+	public IMEIDTO(int maIMEI2, int idsp) {
+		this.maIMEI = maIMEI2;
+		this.idPhieuNhap = 5501;
+		this.idPhieuXuat = 11101;
+		this.SANPHAM_idSP = idsp;
+	}
 	
 }

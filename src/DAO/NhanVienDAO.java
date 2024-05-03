@@ -138,17 +138,17 @@ public class NhanVienDAO implements DAOInterface<NhanVienDTO> {
         NhanVienDTO nhanVien = null;
         try {
             Connection con = JDBCUtil.getConnection();
-            String sql = "SELECT * FROM NhanVien WHERE IDNhanVien = ?";
+            String sql = "SELECT * FROM NhanVien WHERE idNV = ?";
             PreparedStatement pst = con.prepareStatement(sql);
             pst.setInt(1, idNhanVien);
             ResultSet rs = pst.executeQuery();
             if (rs.next()) {
                 nhanVien = new NhanVienDTO(
-                        rs.getString("IDNhanVien"),
-                        rs.getString("tenNhanVien"),
+                        rs.getInt("idNV"),
+                        rs.getString("hoTen"),
                         rs.getString("gioiTinh"),
                         rs.getDate("ngaySinh"),
-                        rs.getString("sdt"),
+                        rs.getInt("sdt"),
                         rs.getInt("isDelete")
                 );
             }

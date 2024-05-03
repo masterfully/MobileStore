@@ -19,11 +19,12 @@ import javax.swing.table.DefaultTableModel;
 import BUS.SanPham_BUS;
 import DAO.SanPhamDAO;
 import DTO.SanPhamDTO;
-import GUI.Dialog.suaSanPham_Dialog;
-import GUI.Dialog.themSanPham_Dialog;
-import GUI.Dialog.xemDanhSachImeiSanPham_Dialog;
-import GUI.Dialog.xemthongtinSanPham_Dialog;
-import GUI.Dialog.xoaSanPham_Dialog;
+import GUI.Dialog.SanPhamDialog.suaSanPham_Dialog;
+import GUI.Dialog.SanPhamDialog.themSanPham_Dialog;
+import GUI.Dialog.SanPhamDialog.xemDanhSachImeiSanPham_Dialog;
+import GUI.Dialog.SanPhamDialog.xemthongtinSanPham_Dialog;
+import GUI.Dialog.SanPhamDialog.xoaSanPham_Dialog;
+
 import java.text.Normalizer;
 import javax.swing.JTextField;
 import java.util.regex.Pattern;
@@ -34,8 +35,6 @@ public class SanPhamGUI extends JPanel {
     private JTable table_SP;
     private JTextField textField_timkiem;
     DefaultTableModel tblModel;
-    public SanPham_BUS spBUS = new SanPham_BUS();
-    public ArrayList<SanPhamDTO> listSP = spBUS.getAll();
     public SanPhamDAO spDAO = new SanPhamDAO();
     public themSanPham_Dialog spDialog = new themSanPham_Dialog();
 
@@ -48,7 +47,7 @@ public class SanPhamGUI extends JPanel {
     }
 
     public void loadDataTalbe() {
-        ArrayList<SanPhamDTO> result = spDAO.selectAll();
+        ArrayList<SanPhamDTO> result = spDAO.selectByCondition("isDelete = 0");
         System.out.println("Number of records retrieved: " + result.size());
         tblModel.setRowCount(0); // Clear existing data
         for (SanPhamDTO sp : result) {
@@ -288,7 +287,7 @@ public class SanPhamGUI extends JPanel {
      */
     private void $$$setupUI$$$() {
         final JPanel panel1 = new JPanel();
-        panel1.setLayout(new com.intellij.uiDesigner.core.GridLayoutManager(1, 1, new Insets(0, 0, 0, 0), -1, -1));
+//        panel1.setLayout(new com.intellij.uiDesigner.core.GridLayoutManager(1, 1, new Insets(0, 0, 0, 0), -1, -1));
     }
 
     public void refreshTable() {

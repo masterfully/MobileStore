@@ -28,7 +28,7 @@ public class QuanLyKho extends JFrame {
 	private JPanel panel_16;
 	private TrangChuGUI trangChu;
 	private SanPhamGUI sanPham;
-	private ThuocTinhGUI thuocTinh;
+	private HoaDonGUI thuocTinh;
 	private PhieuNhapGUI phieuNhap;
 	private PhieuXuatGUI phieuXuat;
 	private KhachHangGUI khachHang;
@@ -473,7 +473,7 @@ public class QuanLyKho extends JFrame {
 		revalidate();
         repaint();
 
-        thuocTinh = new ThuocTinhGUI();
+        thuocTinh = new HoaDonGUI();
         thuocTinh.setBounds(0, 0, 958, 763);
 		panel_12.add(thuocTinh);
 		revalidate();
