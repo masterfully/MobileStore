@@ -45,9 +45,8 @@ import java.time.format.DateTimeFormatter;
 import java.awt.event.ActionEvent;
 import javax.swing.DefaultComboBoxModel;
 
-public class themHoaDon_Dialog extends JDialog{
-	private JTextField txt_timkiem;
-	private JTable table;
+public class xemHoaDon_Dialog extends JDialog{
+	private JTable table_SP;
 	DefaultTableModel tblModel;
 	private JTextField txt_maSP;
 	private JTextField txt_tenSP;
@@ -73,50 +72,34 @@ public class themHoaDon_Dialog extends JDialog{
 	}
 
 	
-	public themHoaDon_Dialog() {
+	public xemHoaDon_Dialog(int idHD) {
 		String[] columnNames = {"Mã sản phẩm", "Tên sản phẩm"};
 		tblModel = new DefaultTableModel(columnNames, 0);
 		getContentPane().setLayout(null);
 		loadDataTalbe();
 		
-		
-		
-		txt_timkiem = new JTextField();
-		txt_timkiem.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				String t = txt_timkiem.getText();
-                ArrayList<SanPhamDTO> result = spDAO.selectByCondition("tenSP LIKE '%" + t + "%'");
-                tblModel.setRowCount(0); 
-                for (SanPhamDTO sp : result) {
-                    tblModel.addRow(new Object[]{sp.getIdSP(), sp.getTenSP()});
-                }
-			}
-		});
-		txt_timkiem.setBounds(112, 73, 188, 27);
-		getContentPane().add(txt_timkiem);
-		txt_timkiem.setColumns(10);
-		
-		JButton btn_reloadSP = new JButton("");
-		btn_reloadSP.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				loadDataTalbe();
-				txt_timkiem.setText("");
-			}
-		});
-		btn_reloadSP.setIcon(new ImageIcon(themHoaDon_Dialog.class.getResource("/GUI/JPanel_QuanLyCuaHangDienThoai/Button-Reload-icon.png")));
-		btn_reloadSP.setBounds(323, 73, 28, 27);
-		getContentPane().add(btn_reloadSP);
-		
-		table = new JTable(tblModel);
-		table.setRowSelectionInterval(0, 0);
-		JScrollPane scrollPane = new JScrollPane(table);
-		scrollPane.setBounds(48, 136, 372, 250);
+		table_SP = new JTable(tblModel);
+		ctHoaDonDTO newcthd = ctHoaDonDAO.getInstance().selectById(idHD);
+		int newIDSP = newcthd.getSANPHAM_idSP();
+		int vitri = -1;
+		int rowCount = tblModel.getRowCount();
+		for (int i = 0; i < rowCount; i++) {
+		    int idSP = (int) tblModel.getValueAt(i, 0);
+		    if (idSP == newIDSP) {
+		        vitri = i;
+		        break;
+		    }
+		}
+
+		table_SP.setRowSelectionInterval(vitri, vitri);
+		JScrollPane scrollPane = new JScrollPane(table_SP);
+		scrollPane.setBounds(49, 72, 372, 379);
 		getContentPane().add(scrollPane);
 		
 		
 		
-		int selectedRow = table.getSelectedRow();
-		DefaultTableModel model = (DefaultTableModel) table.getModel();
+		int selectedRow = table_SP.getSelectedRow();
+		DefaultTableModel model = (DefaultTableModel) table_SP.getModel();
         int idSP = (int) model.getValueAt(selectedRow, 0);
 		
 		
@@ -172,28 +155,13 @@ public class themHoaDon_Dialog extends JDialog{
 		txt_mauSac.setBounds(666, 190, 158, 27);
 		getContentPane().add(txt_mauSac);
 		
-//		JLabel lbl_imei = new JLabel("Mã IMEI");
-//		lbl_imei.setFont(new Font("Tahoma", Font.PLAIN, 14));
-//		lbl_imei.setBounds(498, 250, 94, 14);
-//		getContentPane().add(lbl_imei);
-//		
-//		ArrayList<IMEIDTO> imeiList = IMEIDAO.getInstance().selectByCondition("SANPHAM_idSP="+txt_maSP.getText());
-//		JComboBox<String> cbb_IMEI = new JComboBox<>();
-//		DefaultComboBoxModel<String> cbbmodel = new DefaultComboBoxModel<>();
-//		for (IMEIDTO imei : imeiList) {
-//		    cbbmodel.addElement(String.valueOf(imei.getMaIMEI()));
-//		}
-//		cbb_IMEI.setModel(cbbmodel);
-//		cbb_IMEI.setBounds(498, 282, 94, 22);
-//		getContentPane().add(cbb_IMEI);
-		
 		JLabel lbl_maHD = new JLabel("Mã hóa đơn");
 		lbl_maHD.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		lbl_maHD.setBounds(907, 77, 94, 14);
 		getContentPane().add(lbl_maHD);
 		
-		int maHD = HoaDonDAO.getInstance().selectAll().get(HoaDonDAO.getInstance().selectAll().size()-1).getIdHoaDon() +1;
-		txt_maHD = new JTextField(String.valueOf(maHD));
+		txt_maHD = new JTextField(String.valueOf(idHD));
+		txt_maHD.setEditable(false);
 		txt_maHD.setColumns(10);
 		txt_maHD.setBounds(907, 103, 94, 27);
 		getContentPane().add(txt_maHD);
@@ -206,7 +174,8 @@ public class themHoaDon_Dialog extends JDialog{
 		getContentPane().add(lbl_NV);
 		
 		//tên của người đang đăng nhập
-		txt_tenNV = new JTextField("33005");
+		
+		txt_tenNV = new JTextField(String.valueOf(HoaDonDAO.getInstance().selectById(idHD).getNHANVIEN_idNV()));
 		txt_tenNV.setColumns(10);
 		txt_tenNV.setBounds(907, 188, 132, 27);
 		getContentPane().add(txt_tenNV);
@@ -216,7 +185,7 @@ public class themHoaDon_Dialog extends JDialog{
 		lbl_KH.setBounds(907, 250, 94, 14);
 		getContentPane().add(lbl_KH);
 		
-		txt_idKH = new JTextField();
+		txt_idKH = new JTextField(String.valueOf(HoaDonDAO.getInstance().selectById(idHD).getKHACHHANG_idKH()));
 		txt_idKH.setColumns(10);
 		txt_idKH.setBounds(907, 280, 132, 27);
 		getContentPane().add(txt_idKH);
@@ -234,7 +203,7 @@ public class themHoaDon_Dialog extends JDialog{
 		getContentPane().add(txt_tongtien);
 		txt_tongtien.setColumns(10);
 		
-		txt_soluong = new JTextField(String.valueOf(sp.getSoLuong()));
+		txt_soluong = new JTextField(String.valueOf(newcthd.getSoLuong()));
 		
 		
 		
@@ -246,9 +215,9 @@ public class themHoaDon_Dialog extends JDialog{
 				dispose();
 			}
 		});
-		btn_thoat.setIcon(new ImageIcon(themHoaDon_Dialog.class.getResource("/GUI/JFrame_QuanLyCuaHangDienThoai/icon_dangxuat.png")));
+		btn_thoat.setIcon(new ImageIcon(xemHoaDon_Dialog.class.getResource("/GUI/JFrame_QuanLyCuaHangDienThoai/icon_dangxuat.png")));
 		btn_thoat.setFont(new Font("Tahoma", Font.PLAIN, 18));
-		btn_thoat.setBounds(598, 426, 141, 57);
+		btn_thoat.setBounds(498, 429, 141, 57);
 		getContentPane().add(btn_thoat);
 		
 		JButton btn_xemThemNV = new JButton("...");
@@ -273,10 +242,10 @@ public class themHoaDon_Dialog extends JDialog{
 		btn_xemThemKH.setBounds(1041, 279, 28, 29);
 		getContentPane().add(btn_xemThemKH);
 		
-		JLabel lbl_themHD = new JLabel("THÊM HÓA ĐƠN");
+		JLabel lbl_themHD = new JLabel("HÓA ĐƠN "+ String.valueOf(idHD));
 		lbl_themHD.setHorizontalAlignment(SwingConstants.CENTER);
 		lbl_themHD.setFont(new Font("Tahoma", Font.BOLD, 20));
-		lbl_themHD.setBounds(10, 0, 1121, 41);
+		lbl_themHD.setBounds(10, 0, 1099, 41);
 		getContentPane().add(lbl_themHD);
 		
 		JLabel lbl_soluong = new JLabel("Số lượng");
@@ -288,15 +257,7 @@ public class themHoaDon_Dialog extends JDialog{
 		txt_soluong.setColumns(10);
 		txt_soluong.setBounds(498, 280, 94, 27);
 		getContentPane().add(txt_soluong);
-		table.getColumnModel().getColumn(0).setPreferredWidth(95);
-		
-		
-		JButton btn_tao = new JButton("Tạo");
-		
-		btn_tao.setFont(new Font("Tahoma", Font.PLAIN, 18));
-		btn_tao.setIcon(new ImageIcon(themHoaDon_Dialog.class.getResource("/GUI/JPanel_QuanLyCuaHangDienThoai/icon_them.png")));
-		btn_tao.setBounds(404, 426, 150, 57);
-		getContentPane().add(btn_tao);
+		table_SP.getColumnModel().getColumn(0).setPreferredWidth(95);
 		
 		JLabel lbl_baohanh = new JLabel("Bảo hành");
 		lbl_baohanh.setFont(new Font("Tahoma", Font.PLAIN, 14));
@@ -315,6 +276,11 @@ public class themHoaDon_Dialog extends JDialog{
 		cbb_baohanh.setModel(cbbmodel);
 		cbb_baohanh.setBounds(666, 352, 94, 22);
 		getContentPane().add(cbb_baohanh);
+		int maBH = newcthd.getPHIEUBAOHANH_idBaoHanh();
+		String baoHanhDangChon = PhieuBaoHanhDAO.getInstance().selectByIdBH(maBH).getThoiGian();
+		System.out.println(maBH);
+		System.out.println(baoHanhDangChon);
+		cbb_baohanh.setSelectedItem(baoHanhDangChon);
 		
 		JLabel lbl_khuyenmai = new JLabel("Khuyến mãi (%)");
 		lbl_khuyenmai.setFont(new Font("Tahoma", Font.PLAIN, 14));
@@ -332,13 +298,16 @@ public class themHoaDon_Dialog extends JDialog{
 		cbb_khuyenmai.setModel(cbbmodelkm);
 		cbb_khuyenmai.setBounds(666, 282, 158, 22);
 		getContentPane().add(cbb_khuyenmai);
+		int maKM = newcthd.getKHUYENMAI_idKM();
+		int kmDangChon = (int) KhuyenMaiDAO.getInstance().selectByIdKM(maKM).getPhanTram();
+		cbb_khuyenmai.setSelectedItem(kmDangChon);
 		
-		table.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
+		table_SP.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
 		    @Override
 		    public void valueChanged(ListSelectionEvent e) {
-		        int selectedRow = table.getSelectedRow(); // Lấy chỉ số hàng đã chọn
+		        int selectedRow = table_SP.getSelectedRow(); // Lấy chỉ số hàng đã chọn
 		        if (selectedRow != -1) { // Kiểm tra xem có hàng nào được chọn không
-		            DefaultTableModel model = (DefaultTableModel) table.getModel();
+		            DefaultTableModel model = (DefaultTableModel) table_SP.getModel();
 		            int idSP = (int) model.getValueAt(selectedRow, 0);
 		            txt_soluong.setText("0");// Lấy idSP của hàng đã chọn
 		            // Tại đây, bạn có thể sử dụng idSP để cập nhật thông tin sản phẩm khác
@@ -387,36 +356,8 @@ public class themHoaDon_Dialog extends JDialog{
 				txt_tongtien.setText(df.format(tongTien));
 			}
 		});
-		btn_tao.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				int idHD = Integer.parseInt(txt_maHD.getText());
-				String thoiGian = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
-				double tongTien = Double.parseDouble(txt_tongtien.getText());
-				int idNV = Integer.parseInt(txt_tenNV.getText());
-				int idKH = 77001;
-				HoaDonDTO hd = new HoaDonDTO(idHD, java.sql.Date.valueOf(thoiGian), tongTien, idNV, idKH);
-				HoaDonDAO.getInstance().insert(hd);
-				
-				int sl = Integer.parseInt(txt_soluong.getText());
-				float donGia = sp.getGiaBan();
-				double thanhTien = donGia*sl;
-				Object selectedItem = cbb_khuyenmai.getSelectedItem();
-				int km = Integer.parseInt(selectedItem.toString());
-				int idkm = KhuyenMaiDAO.getInstance().selectById(km).getIdKM();
-				
-				Object selected = cbb_baohanh.getSelectedItem();
-				int thangbh = Integer.parseInt(selected.toString());
-				int idbh = PhieuBaoHanhDAO.getInstance().selectById(thangbh).getIdBaoHanh();
-				int idSanPham = Integer.parseInt(txt_maSP.getText());
-				int idHoaDon = Integer.parseInt(txt_maHD.getText());
-				int soluong = Integer.parseInt(txt_soluong.getText());
-						
-				ctHoaDonDTO cthd = new ctHoaDonDTO(soluong, donGia, thanhTien, idkm, idbh, idSanPham, idHoaDon);
-				ctHoaDonDAO.getInstance().insert(cthd);
-				int slTon = SanPhamDAO.getInstance().selectById(idSanPham).getSoLuong();
-				SanPhamDAO.getInstance().updateSoLuongTon(idSanPham, slTon - soluong);
-			}
-		});
 	}
 	
 }
+
+

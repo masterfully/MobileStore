@@ -150,4 +150,28 @@ public class KhuyenMaiDAO implements DAOInterface<KhuyenMaiDTO>{
         }
         return taikhoan;
     }
+    
+    public KhuyenMaiDTO selectByIdKM(int idKM) {
+        KhuyenMaiDTO taikhoan = null;
+        try {
+            Connection con = JDBCUtil.getConnection();
+            String sql = "SELECT * FROM khuyenmai WHERE idKM = ?";
+            PreparedStatement pst = con.prepareStatement(sql);
+            pst.setInt(1, idKM);
+            ResultSet rs = pst.executeQuery();
+            if (rs.next()) {
+                taikhoan = new KhuyenMaiDTO(
+                		rs.getInt("idKM"),
+                        rs.getString("dieuKien"),
+                        rs.getFloat("phanTram"),
+                        rs.getDate("ngayBatDau"),
+                        rs.getDate("ngayKetThuc")
+                );
+            }
+            JDBCUtil.closeConnection(con);
+        } catch (SQLException e) {
+            Logger.getLogger(NhanVienDAO.class.getName()).log(Level.SEVERE, null, e);
+        }
+        return taikhoan;
+    }
 }

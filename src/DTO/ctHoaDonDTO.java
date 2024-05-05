@@ -14,13 +14,16 @@ public class ctHoaDonDTO {
 		this.soLuong = soLuong;
 		this.donGia = donGia;
 		this.thanhTien = thanhTien;
-		KHUYENMAI_idKM = kHUYENMAI_idKM;
-		PHIEUBAOHANH_idBaoHanh = pHIEUBAOHANH_idBaoHanh;
-		SANPHAM_idSP = sANPHAM_idSP;
-		HOADON_idHoaDon = hOADON_idHoaDon;
+		this.KHUYENMAI_idKM = kHUYENMAI_idKM;
+		this.PHIEUBAOHANH_idBaoHanh = pHIEUBAOHANH_idBaoHanh;
+		this.SANPHAM_idSP = sANPHAM_idSP;
+		this.HOADON_idHoaDon = hOADON_idHoaDon;
 	}
 	public int getSoLuong() {
 		return soLuong;
+	}
+	public ctHoaDonDTO() {
+		super();
 	}
 	public void setSoLuong(int soLuong) {
 		this.soLuong = soLuong;

@@ -69,6 +69,7 @@ public class HoaDonDAO implements DAOInterface<HoaDonDTO> {
     public int delete(String idHoaDon) {
         int ketQua = 0;
         try {
+        	ctHoaDonDAO.getInstance().delete(idHoaDon);
             Connection con = JDBCUtil.getConnection();
             String sql = "DELETE FROM HoaDon WHERE idHoaDon = ?";
             PreparedStatement pst = con.prepareStatement(sql);
@@ -137,6 +138,32 @@ public class HoaDonDAO implements DAOInterface<HoaDonDTO> {
         return hoaDonList;
     }
 
+    public ArrayList<HoaDonDTO> selectFromDayToDay(Date startDate, Date endDate) {
+        ArrayList<HoaDonDTO> hoaDonList = new ArrayList<>();
+        try {
+            Connection con = JDBCUtil.getConnection();
+            String sql = "SELECT * FROM HoaDon WHERE thoiGian >= ? AND thoiGian <= ?";
+            PreparedStatement pstmt = con.prepareStatement(sql);
+            pstmt.setDate(1, startDate);
+            pstmt.setDate(2, endDate);
+            ResultSet rs = pstmt.executeQuery();
+
+            while (rs.next()) {
+                HoaDonDTO hoaDon = new HoaDonDTO(
+                        rs.getInt("idHoaDon"),
+                        rs.getDate("thoiGian"),
+                        rs.getDouble("tongTien"),
+                        rs.getInt("NHANVIEN_idNV"),
+                        rs.getInt("KHACHHANG_idKH")
+                );
+                hoaDonList.add(hoaDon);
+            }
+            JDBCUtil.closeConnection(con);
+        } catch (SQLException e) {
+            Logger.getLogger(HoaDonDAO.class.getName()).log(Level.SEVERE, null, e);
+        }
+        return hoaDonList;
+    }
 
     @Override
     public HoaDonDTO selectById(int id) {
@@ -163,6 +190,25 @@ public class HoaDonDAO implements DAOInterface<HoaDonDTO> {
         }
         return hoaDon;
     }
+    
+    public double getMaxTotalAmount() {
+        double maxTotalAmount = 0;
+        try {
+            Connection con = JDBCUtil.getConnection();
+            String sql = "SELECT MAX(tongTien) AS maxTotalAmount FROM HoaDon";
+            Statement stmt = con.createStatement();
+            ResultSet rs = stmt.executeQuery(sql);
+
+            if (rs.next()) {
+                maxTotalAmount = rs.getDouble("maxTotalAmount");
+            }
+            JDBCUtil.closeConnection(con);
+        } catch (SQLException e) {
+            Logger.getLogger(HoaDonDAO.class.getName()).log(Level.SEVERE, null, e);
+        }
+        return maxTotalAmount;
+    }
+
     
     public static void main(String[] args) {
     	System.out.println(HoaDonDAO.getInstance().selectAll());

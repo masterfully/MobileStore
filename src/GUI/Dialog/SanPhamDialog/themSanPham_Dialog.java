@@ -52,7 +52,7 @@ public class themSanPham_Dialog extends JDialog{
 		lbl_hinhAnh.setBounds(60, 89, 240, 272);
 		getContentPane().add(lbl_hinhAnh);
 		JLabel lbl_themsp = new JLabel("THÊM SẢN PHẨM MỚI");
-		lbl_themsp.setBounds(0, 0, 1084, 17);
+		lbl_themsp.setBounds(10, 11, 1170, 17);
 		lbl_themsp.setBackground(new Color(128, 255, 255));
 		lbl_themsp.setHorizontalAlignment(SwingConstants.CENTER);
 		lbl_themsp.setFont(new Font("Tahoma", Font.BOLD, 14));
@@ -237,7 +237,7 @@ public class themSanPham_Dialog extends JDialog{
 				IMEIDAO.getInstance().insert(imei);
 			}
 		});
-		btn_them.setBounds(469, 400, 129, 23);
+		btn_them.setBounds(450, 400, 129, 23);
 		getContentPane().add(btn_them);
 		
 		JButton btn_huybo = new JButton("Hủy bỏ");
@@ -246,7 +246,7 @@ public class themSanPham_Dialog extends JDialog{
 				setVisible(false);
 			}
 		});
-		btn_huybo.setBounds(637, 400, 129, 23);
+		btn_huybo.setBounds(627, 400, 129, 23);
 		getContentPane().add(btn_huybo);
 	}
 	

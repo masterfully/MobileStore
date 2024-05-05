@@ -169,7 +169,8 @@ public class ctSanPhamDAO implements DAOInterface<ctSanPhamDTO> {
                 ctSanPham.setCameraTruoc(rs.getString("cameraTruoc"));
                 ctSanPham.setRam(rs.getString("ram"));
                 ctSanPham.setRom(rs.getString("rom"));
-                ctSanPham.setSANPHAM_idSP(rs.getInt("SANPHAM_idSP")); }
+                ctSanPham.setSANPHAM_idSP(rs.getInt("SANPHAM_idSP")); 
+            }
             JDBCUtil.closeConnection(con);
         } catch (SQLException e) {
             Logger.getLogger(ctSanPhamDAO.class.getName()).log(Level.SEVERE, null, e);

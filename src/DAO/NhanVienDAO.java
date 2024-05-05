@@ -91,11 +91,11 @@ public class NhanVienDAO implements DAOInterface<NhanVienDTO> {
             ResultSet rs = pst.executeQuery();
             while (rs.next()) {
                 NhanVienDTO nhanVien = new NhanVienDTO(
-                        rs.getString("IDNhanVien"),
-                        rs.getString("tenNhanVien"),
+                        rs.getInt("idNV"),
+                        rs.getString("hoTen"),
                         rs.getString("gioiTinh"),
                         rs.getDate("ngaySinh"),
-                        rs.getString("sdt"),
+                        rs.getInt("sdt"),
                         rs.getInt("isDelete")
                 );
                 nhanViens.add(nhanVien);

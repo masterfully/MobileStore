@@ -100,7 +100,7 @@ public class SanPhamDAO implements DAOInterface<SanPhamDTO> {
         ArrayList<SanPhamDTO> sanPhamList = new ArrayList<>();
         try {
             Connection con = JDBCUtil.getConnection();
-            String sql = "SELECT * FROM SanPham";
+            String sql = "SELECT * FROM SanPham where isDelete = 0";
             Statement stmt = con.createStatement();
             ResultSet rs = stmt.executeQuery(sql);
 
@@ -183,14 +183,12 @@ public class SanPhamDAO implements DAOInterface<SanPhamDTO> {
 
 
     public int updateSoLuongTon(int masp, int soluong) {
-        int quantity_current = this.selectById(masp).getSoLuong();
         int ketQua = 0;
-        int quantity_change = quantity_current + soluong;
         try {
             Connection con = JDBCUtil.getConnection();
-            String sql = "UPDATE SanPham SET soLuong = ? WHERE IDSanPham = ?";
+            String sql = "UPDATE SanPham SET soLuong = ? WHERE idSP = ?";
             PreparedStatement pst = con.prepareStatement(sql);
-            pst.setInt(1, quantity_change);
+            pst.setInt(1, soluong);
             pst.setInt(2, masp);
             ketQua = pst.executeUpdate();
             System.out.println("Đã thực thi: " + sql);

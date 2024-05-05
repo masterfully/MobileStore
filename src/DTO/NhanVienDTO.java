@@ -11,7 +11,7 @@ public class NhanVienDTO {
 	private int isDelete;
 
 	public NhanVienDTO(int idNV, String hoTen, String gioiTinh, Date ngaySinh, int sdt, int isDelete) {
-		idNV = idNV;
+		this.idNV = idNV;
 		this.hoTen = hoTen;
 		this.gioiTinh = gioiTinh;
 		this.ngaySinh = ngaySinh;
@@ -19,7 +19,7 @@ public class NhanVienDTO {
 		this.isDelete = isDelete;
 	}
 
-	public NhanVienDTO(String t) {
+	public NhanVienDTO(int t) {
 		this.idNV = t;
 	}
 

@@ -80,7 +80,7 @@ public class SanPhamGUI extends JPanel {
         setLayout(null);
         loadDataTalbe();
         JPanel panel_SanPham = new JPanel();
-        panel_SanPham.setBounds(0, 0, 1027, 587);
+        panel_SanPham.setBounds(0, 0, 987, 595);
         add(panel_SanPham, BorderLayout.NORTH);
         panel_SanPham.setLayout(new FlowLayout(FlowLayout.LEFT, 5, 5));
         add(panel_SanPham);
@@ -99,11 +99,11 @@ public class SanPhamGUI extends JPanel {
                     DefaultTableModel model = (DefaultTableModel) table_SP.getModel();
                     int idSP = (int) model.getValueAt(selectedRow, 0);
                     themSanPham_Dialog spdialog = new themSanPham_Dialog(idSP);
-                    spdialog.setSize(1000, 500);
+                    spdialog.setSize(1200, 500);
                     spdialog.setVisible(true);
                 } else {
                     themSanPham_Dialog spdialog = new themSanPham_Dialog();
-                    spdialog.setSize(1000, 500);
+                    spdialog.setSize(1200, 500);
                     spdialog.setVisible(true);
                 }
 
@@ -128,7 +128,7 @@ public class SanPhamGUI extends JPanel {
                     DefaultTableModel model = (DefaultTableModel) table_SP.getModel();
                     int idSP = (int) model.getValueAt(selectedRow, 0);
                     suaSanPham_Dialog spdialog = new suaSanPham_Dialog(idSP);
-                    spdialog.setSize(650, 500);
+                    spdialog.setSize(1200, 500);
                     spdialog.setVisible(true);
                 } else {
                     JOptionPane.showMessageDialog(null, "Vui lòng chọn sản phẩm cần sửa!", "Cảnh báo", JOptionPane.WARNING_MESSAGE);
@@ -175,7 +175,7 @@ public class SanPhamGUI extends JPanel {
                     DefaultTableModel model = (DefaultTableModel) table_SP.getModel();
                     int idSP = (int) model.getValueAt(selectedRow, 0);
                     xemthongtinSanPham_Dialog spdialog = new xemthongtinSanPham_Dialog(idSP);
-                    spdialog.setSize(650, 500);
+                    spdialog.setSize(1200, 500);
                     spdialog.setVisible(true);
                 } else {
                     JOptionPane.showMessageDialog(null, "Vui lòng chọn sản phẩm cần xem!", "Cảnh báo", JOptionPane.WARNING_MESSAGE);

@@ -138,4 +138,25 @@ public class PhieuBaoHanhDAO implements DAOInterface<PhieuBaoHanhDTO> {
         }
         return baohanh;
 	}
+	
+	public PhieuBaoHanhDTO selectByIdBH(int t) {
+		PhieuBaoHanhDTO baohanh = null;
+        try {
+            Connection con = JDBCUtil.getConnection();
+            String sql = "SELECT * FROM phieubaohanh WHERE idBaoHanh = ?";
+            PreparedStatement pst = con.prepareStatement(sql);
+            pst.setInt(1, t);
+            ResultSet rs = pst.executeQuery();
+            while (rs.next()) {
+                 baohanh = new PhieuBaoHanhDTO(
+                        rs.getInt("idBaoHanh"),
+                        rs.getString("thoiGian")
+                );
+            }
+            JDBCUtil.closeConnection(con);
+        } catch (SQLException e) {
+            Logger.getLogger(PhieuBaoHanhDAO.class.getName()).log(Level.SEVERE, null, e);
+        }
+        return baohanh;
+	}
 }

@@ -49,7 +49,7 @@ public class ctHoaDonDAO implements DAOInterface<ctHoaDonDTO> {
                     "thanhTien = ?, " +
                     "KHUYENMAI_idKM = ?, " +
                     "PHIEUBAOHANH_idBaoHanh = ?, " +
-                    "SANPHAM_idSP = ?, " +
+                    "SANPHAM_idSP = ? " +
                     "WHERE HOADON_idHoaDon = ?";
             PreparedStatement pst = con.prepareStatement(sql);
             pst.setInt(1, t.getSoLuong());
@@ -75,7 +75,7 @@ public class ctHoaDonDAO implements DAOInterface<ctHoaDonDTO> {
         int ketQua = 0;
         try {
             Connection con = JDBCUtil.getConnection();
-            String sql = "DELETE FROM ctHoaDon WHERE id = ?";
+            String sql = "DELETE FROM ctHoaDon WHERE HOADON_idHoaDon = ?";
             PreparedStatement pst = con.prepareStatement(sql);
             pst.setString(1, id);
             ketQua = pst.executeUpdate();
@@ -154,22 +154,20 @@ public class ctHoaDonDAO implements DAOInterface<ctHoaDonDTO> {
         ctHoaDonDTO ctHoaDon = null;
         try {
             Connection con = JDBCUtil.getConnection();
-            String sql = "SELECT * FROM ctHoaDon WHERE id = ?";
+            String sql = "SELECT * FROM cthoadon WHERE HOADON_idHoaDon = ?";
             PreparedStatement pst = con.prepareStatement(sql);
             pst.setInt(1, id);
             ResultSet rs = pst.executeQuery();
 
             if (rs.next()) {
-                ctHoaDon = new ctHoaDonDTO(
-                        rs.getInt("soLuong"),
-                        rs.getFloat("donGia"),
-                        rs.getDouble("thanhTien"),
-                        rs.getInt("KHUYENMAI_idKM"),
-                        rs.getInt("PHIEUBAOHANH_idBaoHanh"),
-                        rs.getInt("SANPHAM_idSP"),
-                        rs.getInt("HOADON_idHoaDon")
-                );
-//                ctHoaDon.setId(rs.getInt("id"));
+                ctHoaDon = new ctHoaDonDTO();
+                ctHoaDon.setSoLuong(rs.getInt("soLuong"));
+                ctHoaDon.setDonGia(rs.getFloat("donGia"));
+                ctHoaDon.setThanhTien(rs.getDouble("thanhTien"));
+                ctHoaDon.setKHUYENMAI_idKM(rs.getInt("KHUYENMAI_idKM"));
+                ctHoaDon.setPHIEUBAOHANH_idBaoHanh(rs.getInt("PHIEUBAOHANH_idBaoHanh"));
+                ctHoaDon.setSANPHAM_idSP(rs.getInt("SANPHAM_idSP"));
+                ctHoaDon.setHOADON_idHoaDon(rs.getInt("HOADON_idHoaDon"));
             }
             JDBCUtil.closeConnection(con);
         } catch (SQLException e) {
