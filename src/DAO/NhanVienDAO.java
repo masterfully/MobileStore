@@ -22,11 +22,11 @@ public class NhanVienDAO implements DAOInterface<NhanVienDTO> {
             Connection con = JDBCUtil.getConnection();
             String sql = "INSERT INTO NhanVien (IDNhanVien, tenNhanVien, gioiTinh, ngaySinh, sdt, isDelete) VALUES (?, ?, ?, ?, ?, ?)";
             PreparedStatement pst = con.prepareStatement(sql);
-            pst.setString(1, nhanVienDto.getIDNhanVien());
-            pst.setString(2, nhanVienDto.getTenNhanVien());
+            pst.setInt(1, nhanVienDto.getidNV());
+            pst.setString(2, nhanVienDto.gethoTen());
             pst.setString(3, nhanVienDto.getGioiTinh());
             pst.setDate(4, nhanVienDto.getNgaySinh());
-            pst.setString(5, nhanVienDto.getSdt());
+            pst.setInt(5, nhanVienDto.getSdt());
             pst.setInt(6, nhanVienDto.getIsDelete());
             ketQua = pst.executeUpdate();
             System.out.println("Đã thực thi: " + sql);
@@ -158,6 +158,24 @@ public class NhanVienDAO implements DAOInterface<NhanVienDTO> {
         }
         return nhanVien;
     }
+    
+    public int getTotalEmployees() {
+        int totalEmployees = 0;
+        try {
+            Connection con = JDBCUtil.getConnection();
+            String sql = "SELECT COUNT(*) AS totalEmployees FROM NhanVien WHERE isDelete=0";
+            PreparedStatement pst = con.prepareStatement(sql);
+            ResultSet rs = pst.executeQuery();
+            if (rs.next()) {
+                totalEmployees = rs.getInt("totalEmployees");
+            }
+            JDBCUtil.closeConnection(con);
+        } catch (SQLException e) {
+            Logger.getLogger(NhanVienDAO.class.getName()).log(Level.SEVERE, null, e);
+        }
+        return totalEmployees;
+    }
+
 }
 
 

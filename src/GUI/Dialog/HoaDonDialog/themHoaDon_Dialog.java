@@ -54,11 +54,12 @@ public class themHoaDon_Dialog extends JDialog{
 	private JTextField txt_rom;
 	private JTextField txt_mauSac;
 	private JTextField txt_maHD;
-	private JTextField txt_tenNV;
+	private JTextField txt_idNV_admin;
 	private JTextField txt_idKH;
 	private JTextField txt_tongtien;
     public SanPhamDAO spDAO = new SanPhamDAO();
     private JTextField txt_soluong;
+    private JTextField txt_donGia;
 	
 	public void loadDataTalbe() {
         ArrayList<SanPhamDTO> result = spDAO.selectAll();
@@ -127,7 +128,6 @@ public class themHoaDon_Dialog extends JDialog{
 		getContentPane().add(lbl_maSP);
 		
 		txt_maSP = new JTextField(String.valueOf(idSP));
-		txt_maSP.setEnabled(false);
 		txt_maSP.setEditable(false);
 		txt_maSP.setBounds(498, 102, 94, 27);
 		getContentPane().add(txt_maSP);
@@ -142,7 +142,6 @@ public class themHoaDon_Dialog extends JDialog{
 		getContentPane().add(lbl_tenSP);
 		
 		txt_tenSP = new JTextField(sp.getTenSP());
-		txt_tenSP.setEnabled(false);
 		txt_tenSP.setEditable(false);
 		txt_tenSP.setColumns(10);
 		txt_tenSP.setBounds(666, 105, 158, 27);
@@ -154,7 +153,6 @@ public class themHoaDon_Dialog extends JDialog{
 		getContentPane().add(lbl_rom);
 		
 		txt_rom = new JTextField(ctsp.getRom());
-		txt_rom.setEnabled(false);
 		txt_rom.setEditable(false);
 		txt_rom.setColumns(10);
 		txt_rom.setBounds(498, 190, 94, 27);
@@ -166,7 +164,6 @@ public class themHoaDon_Dialog extends JDialog{
 		getContentPane().add(lbl_mauSac);
 		
 		txt_mauSac = new JTextField(sp.getMauSac());
-		txt_mauSac.setEnabled(false);
 		txt_mauSac.setEditable(false);
 		txt_mauSac.setColumns(10);
 		txt_mauSac.setBounds(666, 190, 158, 27);
@@ -206,10 +203,10 @@ public class themHoaDon_Dialog extends JDialog{
 		getContentPane().add(lbl_NV);
 		
 		//tên của người đang đăng nhập
-		txt_tenNV = new JTextField("33005");
-		txt_tenNV.setColumns(10);
-		txt_tenNV.setBounds(907, 188, 132, 27);
-		getContentPane().add(txt_tenNV);
+		txt_idNV_admin = new JTextField("33005");
+		txt_idNV_admin.setColumns(10);
+		txt_idNV_admin.setBounds(907, 188, 132, 27);
+		getContentPane().add(txt_idNV_admin);
 		
 		JLabel lbl_KH = new JLabel("Khách hàng");
 		lbl_KH.setFont(new Font("Tahoma", Font.PLAIN, 14));
@@ -333,6 +330,17 @@ public class themHoaDon_Dialog extends JDialog{
 		cbb_khuyenmai.setBounds(666, 282, 158, 22);
 		getContentPane().add(cbb_khuyenmai);
 		
+		JLabel lbl_donGia = new JLabel("Đơn giá");
+		lbl_donGia.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		lbl_donGia.setBounds(498, 329, 94, 14);
+		getContentPane().add(lbl_donGia);
+		
+		txt_donGia = new JTextField();
+		txt_donGia.setEditable(false);
+		txt_donGia.setBounds(498, 353, 96, 20);
+		getContentPane().add(txt_donGia);
+		txt_donGia.setColumns(10);
+		
 		table.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
 		    @Override
 		    public void valueChanged(ListSelectionEvent e) {
@@ -343,12 +351,14 @@ public class themHoaDon_Dialog extends JDialog{
 		            txt_soluong.setText("0");// Lấy idSP của hàng đã chọn
 		            // Tại đây, bạn có thể sử dụng idSP để cập nhật thông tin sản phẩm khác
 		            // Ví dụ:
+					DecimalFormat df = new DecimalFormat("#.##");
 		            SanPhamDTO sp = SanPhamDAO.getInstance().selectById(idSP);
 		            ctSanPhamDTO ctsp = ctSanPhamDAO.getInstance().selectById(idSP);
 		            txt_maSP.setText(String.valueOf(sp.getIdSP()));
 		            txt_tenSP.setText(sp.getTenSP());
 		            txt_rom.setText(ctsp.getRom());
 		            txt_mauSac.setText(sp.getMauSac());
+		            txt_donGia.setText(String.valueOf(df.format(sp.getGiaBan())));
 		            int soluong = Integer.parseInt(txt_soluong.getText());
 					int soluongton = sp.getSoLuong();
 					txt_soluong.setText(String.valueOf(soluongton));
@@ -359,10 +369,9 @@ public class themHoaDon_Dialog extends JDialog{
 					}
 					Object selectedItem = cbb_khuyenmai.getSelectedItem();
 					int km = Integer.parseInt(selectedItem.toString());
-					float gia = sp.getGiaBan();
+					float gia = Integer.parseInt(txt_donGia.getText());
 					int sl = Integer.parseInt(txt_soluong.getText());
 					double tongTien = gia * sl - gia * sl * km / 100;
-					DecimalFormat df = new DecimalFormat("#.##");
 					txt_tongtien.setText(df.format(tongTien));
 		        }
 		    }
@@ -380,7 +389,7 @@ public class themHoaDon_Dialog extends JDialog{
 				}
 				Object selectedItem = cbb_khuyenmai.getSelectedItem();
 				int km = Integer.parseInt(selectedItem.toString());
-				float gia = sp.getGiaBan();
+				float gia =  Integer.parseInt(txt_donGia.getText());
 				int sl = Integer.parseInt(txt_soluong.getText());
 				double tongTien = gia * sl - gia * sl * km / 100;
 				DecimalFormat df = new DecimalFormat("#.##");
@@ -392,7 +401,7 @@ public class themHoaDon_Dialog extends JDialog{
 				int idHD = Integer.parseInt(txt_maHD.getText());
 				String thoiGian = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
 				double tongTien = Double.parseDouble(txt_tongtien.getText());
-				int idNV = Integer.parseInt(txt_tenNV.getText());
+				int idNV = Integer.parseInt(txt_idNV_admin.getText());
 				int idKH = 77001;
 				HoaDonDTO hd = new HoaDonDTO(idHD, java.sql.Date.valueOf(thoiGian), tongTien, idNV, idKH);
 				HoaDonDAO.getInstance().insert(hd);

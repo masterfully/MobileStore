@@ -4,6 +4,8 @@ import javax.swing.JPanel;
 import javax.swing.JLabel;
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
+import java.text.DecimalFormat;
+import java.util.ArrayList;
 import java.awt.FlowLayout;
 import javax.swing.BoxLayout;
 import javax.swing.GroupLayout;
@@ -14,6 +16,15 @@ import java.awt.GridBagConstraints;
 import javax.swing.ImageIcon;
 import java.awt.Font;
 import javax.swing.SwingConstants;
+
+import DAO.HoaDonDAO;
+import DAO.KhachHangDAO;
+import DAO.NhanVienDAO;
+import DAO.SanPhamDAO;
+import DAO.ctHoaDonDAO;
+import DTO.HoaDonDTO;
+import DTO.ctHoaDonDTO;
+
 import java.awt.Color;
 
 public class ThongKeGUI extends JPanel {
@@ -38,23 +49,20 @@ public class ThongKeGUI extends JPanel {
 		gl_panel.setHorizontalGroup(
 			gl_panel.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_panel.createSequentialGroup()
-					.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
-						.addGroup(gl_panel.createSequentialGroup()
-							.addGap(10)
-							.addComponent(panel_top, GroupLayout.PREFERRED_SIZE, 946, GroupLayout.PREFERRED_SIZE))
-						.addGroup(gl_panel.createSequentialGroup()
-							.addContainerGap()
-							.addComponent(panel_bottom, GroupLayout.DEFAULT_SIZE, 946, Short.MAX_VALUE)))
+					.addContainerGap()
+					.addGroup(gl_panel.createParallelGroup(Alignment.TRAILING)
+						.addComponent(panel_bottom, Alignment.LEADING, GroupLayout.PREFERRED_SIZE, 946, Short.MAX_VALUE)
+						.addComponent(panel_top, Alignment.LEADING, GroupLayout.PREFERRED_SIZE, 975, GroupLayout.PREFERRED_SIZE))
 					.addContainerGap())
 		);
 		gl_panel.setVerticalGroup(
 			gl_panel.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_panel.createSequentialGroup()
-					.addGap(11)
+					.addContainerGap()
 					.addComponent(panel_top, GroupLayout.PREFERRED_SIZE, 120, GroupLayout.PREFERRED_SIZE)
 					.addPreferredGap(ComponentPlacement.UNRELATED)
-					.addComponent(panel_bottom, GroupLayout.DEFAULT_SIZE, 345, Short.MAX_VALUE)
-					.addGap(6))
+					.addComponent(panel_bottom, GroupLayout.PREFERRED_SIZE, 492, GroupLayout.PREFERRED_SIZE)
+					.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
 		);
 		
 		JLabel lbl_DoanhThu = new JLabel("Tổng doanh thu");
@@ -63,7 +71,21 @@ public class ThongKeGUI extends JPanel {
 		lbl_DoanhThu.setBounds(0, 11, 946, 86);
 		panel_bottom.add(lbl_DoanhThu);
 		
-		JLabel lbl_tien = new JLabel("100.000.000");
+		DecimalFormat decimalFormat = new DecimalFormat("#,###.##");
+		//xử lí Tổng doanh thu
+		ArrayList<HoaDonDTO> HDlist = HoaDonDAO.getInstance().selectAll();
+		double tongDoanhThu = 0;
+		for (HoaDonDTO HD : HDlist) {
+			ctHoaDonDTO cthd = ctHoaDonDAO.getInstance().selectById(HD.getIdHoaDon());
+			float giaNhap = SanPhamDAO.getInstance().selectById(cthd.getSANPHAM_idSP()).getGiaBan();
+			int soLuong = cthd.getSoLuong();
+			tongDoanhThu += (HD.getTongTien() - soLuong*giaNhap);
+			System.out.println(decimalFormat.format(HD.getTongTien()));
+			System.out.println(decimalFormat.format(soLuong*giaNhap));
+		}
+		
+		String tongDoanhThuFormatted = decimalFormat.format(tongDoanhThu);
+		JLabel lbl_tien = new JLabel(tongDoanhThuFormatted);
 		lbl_tien.setHorizontalAlignment(SwingConstants.CENTER);
 		lbl_tien.setFont(new Font("Tahoma", Font.BOLD, 40));
 		lbl_tien.setBounds(0, 112, 946, 86);
@@ -83,7 +105,9 @@ public class ThongKeGUI extends JPanel {
 		lbl_SP_text.setFont(new Font("Tahoma", Font.BOLD, 18));
 		panel_SP.add(lbl_SP_text, BorderLayout.NORTH);
 		
-		JLabel lbl_SP_num = new JLabel("100");
+		//xử lí số lượng sản phẩm
+		int soLuongTon = SanPhamDAO.getInstance().getTotalQuantity();
+		JLabel lbl_SP_num = new JLabel(String.valueOf(soLuongTon));
 		lbl_SP_num.setHorizontalAlignment(SwingConstants.CENTER);
 		lbl_SP_num.setFont(new Font("Tahoma", Font.BOLD, 30));
 		panel_SP.add(lbl_SP_num, BorderLayout.CENTER);
@@ -103,7 +127,9 @@ public class ThongKeGUI extends JPanel {
 		lbl_KH_icon.setIcon(new ImageIcon(ThongKeGUI.class.getResource("/GUI/JPanel_QuanLyCuaHangDienThoai/KH-icon.png")));
 		panel_KH.add(lbl_KH_icon, BorderLayout.WEST);
 		
-		JLabel lbl_KH_num = new JLabel("100");
+		//Xử lí số khách hàng
+		int soLuongKH = KhachHangDAO.getInstance().getTotalCustomers();
+		JLabel lbl_KH_num = new JLabel(String.valueOf(soLuongKH));
 		lbl_KH_num.setHorizontalAlignment(SwingConstants.CENTER);
 		lbl_KH_num.setFont(new Font("Tahoma", Font.BOLD, 30));
 		panel_KH.add(lbl_KH_num, BorderLayout.CENTER);
@@ -121,7 +147,9 @@ public class ThongKeGUI extends JPanel {
 		lbl_NV_icon.setIcon(new ImageIcon(ThongKeGUI.class.getResource("/GUI/JPanel_QuanLyCuaHangDienThoai/NV-icon.png")));
 		panel_NV.add(lbl_NV_icon, BorderLayout.WEST);
 		
-		JLabel lbl_NV_num = new JLabel("100");
+		//xử lí số lượng Nhân viên
+		int soLuongNV = NhanVienDAO.getInstance().getTotalEmployees();
+		JLabel lbl_NV_num = new JLabel(String.valueOf(soLuongNV));
 		lbl_NV_num.setHorizontalAlignment(SwingConstants.CENTER);
 		lbl_NV_num.setFont(new Font("Tahoma", Font.BOLD, 30));
 		panel_NV.add(lbl_NV_num, BorderLayout.CENTER);

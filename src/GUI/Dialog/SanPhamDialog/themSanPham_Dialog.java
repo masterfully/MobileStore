@@ -42,7 +42,6 @@ public class themSanPham_Dialog extends JDialog{
 	private JTextField txt_camerasau;
 	private JTextField txt_cameratruoc;
 	private String imagePath;
-	private int idSP;
 	
 	public themSanPham_Dialog() {
 		ExtractString extractString = new ExtractString();
@@ -209,7 +208,7 @@ public class themSanPham_Dialog extends JDialog{
 		JButton btn_them = new JButton("Thêm");
 		btn_them.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				int idsp = SanPhamDAO.getInstance().selectAll().get(SanPhamDAO.getInstance().selectAll().size()-1).getIdSP() +1;
+				int idsp = SanPhamDAO.getInstance().selectAll().get(SanPhamDAO.getInstance().selectAllAll().size()-1).getIdSP() +1;
 				String tensp = txt_tensp.getText();
 				int giaNhap = Integer.parseInt(txt_gianhap.getText());
 				int giaBan = Integer.parseInt(txt_giaban.getText());
@@ -293,7 +292,7 @@ public class themSanPham_Dialog extends JDialog{
 		txt_tensp.setBounds(384, 83, 129, 30);
 		getContentPane().add(txt_tensp);
 		txt_tensp.setColumns(10);
-		txt_tensp.setEnabled(false);
+		txt_tensp.setEditable(false);
 		
 		JLabel lbl_gianhap = new JLabel("Giá nhập");
 		lbl_gianhap.setFont(new Font("Tahoma", Font.PLAIN, 12));
@@ -304,7 +303,7 @@ public class themSanPham_Dialog extends JDialog{
 		txt_gianhap.setColumns(10);
 		txt_gianhap.setBounds(384, 166, 129, 30);
 		getContentPane().add(txt_gianhap);
-		txt_gianhap.setEnabled(false);
+		txt_gianhap.setEditable(false);
 		
 		JLabel lbl_giaban = new JLabel("Giá bán");
 		lbl_giaban.setFont(new Font("Tahoma", Font.PLAIN, 12));
@@ -315,7 +314,7 @@ public class themSanPham_Dialog extends JDialog{
 		txt_giaban.setColumns(10);
 		txt_giaban.setBounds(384, 246, 129, 30);
 		getContentPane().add(txt_giaban);
-		txt_giaban.setEnabled(false);
+		txt_giaban.setEditable(false);
 		
 		JLabel lbl_soluong = new JLabel("Số lượng");
 		lbl_soluong.setFont(new Font("Tahoma", Font.PLAIN, 12));
@@ -326,7 +325,7 @@ public class themSanPham_Dialog extends JDialog{
 		txt_soluong.setColumns(10);
 		txt_soluong.setBounds(383, 331, 129, 30);
 		getContentPane().add(txt_soluong);
-		txt_soluong.setEnabled(false);
+		txt_soluong.setEditable(false);
 		
 		JLabel lbl_mausac = new JLabel("Màu sắc");
 		lbl_mausac.setFont(new Font("Tahoma", Font.PLAIN, 12));
@@ -338,7 +337,7 @@ public class themSanPham_Dialog extends JDialog{
 		cbb_mausac.setBounds(607, 83, 93, 30);
 		getContentPane().add(cbb_mausac);
 		cbb_mausac.setSelectedItem(spdto.getMauSac());
-		cbb_mausac.setEnabled(false);
+		cbb_mausac.setEditable(false);
 		JLabel lbl_chip = new JLabel("Chip xử lý");
 		lbl_chip.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		lbl_chip.setBounds(607, 142, 93, 14);
@@ -348,7 +347,7 @@ public class themSanPham_Dialog extends JDialog{
 		txt_chip.setColumns(10);
 		txt_chip.setBounds(607, 166, 129, 30);
 		getContentPane().add(txt_chip);
-		txt_chip.setEnabled(false);
+		txt_chip.setEditable(false);
 		
 		JLabel lbl_pin = new JLabel("Dung lượng pin");
 		lbl_pin.setFont(new Font("Tahoma", Font.PLAIN, 12));
@@ -359,7 +358,7 @@ public class themSanPham_Dialog extends JDialog{
 		txt_pin.setColumns(10);
 		txt_pin.setBounds(607, 246, 129, 30);
 		getContentPane().add(txt_pin);
-		txt_pin.setEnabled(false);
+		txt_pin.setEditable(false);
 		
 		JLabel lbl_manhinh = new JLabel("Kích thước màn hình");
 		lbl_manhinh.setFont(new Font("Tahoma", Font.PLAIN, 12));
@@ -371,7 +370,7 @@ public class themSanPham_Dialog extends JDialog{
 		cbb_manhinh.setBounds(607, 331, 93, 30);
 		getContentPane().add(cbb_manhinh);
 		cbb_manhinh.setSelectedItem(String.valueOf(ctspdto.getManHinh()));
-		cbb_manhinh.setEnabled(false);
+		cbb_manhinh.setEditable(false);
 		
 		JLabel lbl_hdh = new JLabel("Hệ điều hành");
 		lbl_hdh.setFont(new Font("Tahoma", Font.PLAIN, 12));
@@ -382,7 +381,7 @@ public class themSanPham_Dialog extends JDialog{
 		txt_hdh.setColumns(10);
 		txt_hdh.setBounds(828, 83, 129, 30);
 		getContentPane().add(txt_hdh);
-		txt_hdh.setEnabled(false);
+		txt_hdh.setEditable(false);
 		
 		JLabel lbl_camerasau = new JLabel("Camera sau");
 		lbl_camerasau.setFont(new Font("Tahoma", Font.PLAIN, 12));
@@ -393,7 +392,7 @@ public class themSanPham_Dialog extends JDialog{
 		txt_camerasau.setColumns(10);
 		txt_camerasau.setBounds(828, 166, 129, 30);
 		getContentPane().add(txt_camerasau);
-		txt_camerasau.setEnabled(false);
+		txt_camerasau.setEditable(false);
 		
 		JLabel lbl_cameratruoc = new JLabel("Camera trước");
 		lbl_cameratruoc.setFont(new Font("Tahoma", Font.PLAIN, 12));
@@ -404,7 +403,7 @@ public class themSanPham_Dialog extends JDialog{
 		txt_cameratruoc.setColumns(10);
 		txt_cameratruoc.setBounds(828, 246, 129, 30);
 		getContentPane().add(txt_cameratruoc);
-		txt_cameratruoc.setEnabled(false);
+		txt_cameratruoc.setEditable(false);
 		
 		JLabel lbl_ram = new JLabel("Ram");
 		lbl_ram.setFont(new Font("Tahoma", Font.PLAIN, 12));
@@ -421,14 +420,14 @@ public class themSanPham_Dialog extends JDialog{
 		cbb_rom.setBounds(916, 331, 93, 30);
 		getContentPane().add(cbb_rom);
 		cbb_rom.setSelectedItem(String.valueOf(ctspdto.getRom()));
-		cbb_rom.setEnabled(false);
+		cbb_rom.setEditable(false);
 		
 		JComboBox cbb_ram = new JComboBox();
 		cbb_ram.setModel(new DefaultComboBoxModel(new String[] {"2GB", "3GB", "4GB", "6GB"}));
 		cbb_ram.setBounds(765, 331, 93, 30);
 		getContentPane().add(cbb_ram);
 		cbb_ram.setSelectedItem(String.valueOf(ctspdto.getRam()));
-		cbb_ram.setEnabled(false);
+		cbb_ram.setEditable(false);
 		
 		JButton btn_them = new JButton("Thêm");
 		btn_them.addActionListener(new ActionListener() {

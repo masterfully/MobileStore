@@ -19,7 +19,7 @@ public class TaiKhoanDAO implements DAOInterface<TaiKhoanDTO>{
         int ketQua = 0;
         try {
             Connection con = JDBCUtil.getConnection();
-            String sql = "INSERT INTO TaiKhoan (username, password, maNhomQuyen, trangThai, idNV) VALUES (?, ?, ?, ?, ?)";
+            String sql = "INSERT INTO TaiKhoan (userName, matKhau, trangThai, chucVu, NHANVIEN_idNV) VALUES (?, ?, ?, ?, ?)";
             PreparedStatement pst = con.prepareStatement(sql);
             pst.setString(1, taiKhoan_dto.getUsername());
             pst.setString(2, taiKhoan_dto.getPassword());
@@ -83,16 +83,16 @@ public class TaiKhoanDAO implements DAOInterface<TaiKhoanDTO>{
         ArrayList<TaiKhoanDTO> taikhoans = new ArrayList<>();
         try {
             Connection con = JDBCUtil.getConnection();
-            String sql = "SELECT * FROM TaiKhoan WHERE isDelete=0";
+            String sql = "SELECT * FROM TaiKhoan";
             PreparedStatement pst = con.prepareStatement(sql);
             ResultSet rs = pst.executeQuery();
             while (rs.next()) {
                 TaiKhoanDTO taikhoan = new TaiKhoanDTO(
                         rs.getString("username"),
-                        rs.getString("password"),
+                        rs.getString("matKhau"),
                         rs.getString("trangThai"),
                         rs.getString("chucVu"),
-                        rs.getInt("idNV")
+                        rs.getInt("NHANVIEN_idNV")
                 );
                 taikhoans.add(taikhoan);
             }

@@ -159,5 +159,25 @@ public class KhachHangDAO implements DAOInterface<KhachHangDTO> {
         }
         return khachHang;
     }
+    
+    public int getTotalCustomers() {
+        int totalCustomers = 0;
+        try {
+            Connection con = JDBCUtil.getConnection();
+            String sql = "SELECT COUNT(*) AS totalCustomers FROM KhachHang";
+            Statement stmt = con.createStatement();
+            ResultSet rs = stmt.executeQuery(sql);
+
+            if (rs.next()) {
+                totalCustomers = rs.getInt("totalCustomers");
+            }
+
+            JDBCUtil.closeConnection(con);
+        } catch (SQLException e) {
+            Logger.getLogger(KhachHangDAO.class.getName()).log(Level.SEVERE, null, e);
+        }
+        return totalCustomers;
+    }
+
 
 }

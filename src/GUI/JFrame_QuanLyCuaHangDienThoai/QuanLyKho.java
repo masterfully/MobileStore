@@ -215,27 +215,6 @@ public class QuanLyKho extends JFrame {
 		});
 		lbl_PN.setIcon(new ImageIcon(Toolkit.getDefaultToolkit().createImage(QuanLyKho.class.getResource("icon_phieunhap.png"))));
 		
-		JPanel panel_PX = new JPanel();
-		panel_SideMenu.add(panel_PX);
-		panel_PX.setBackground(new Color(255, 255, 255));
-		panel_PX.setLayout(new CardLayout(0, 0));
-		
-		JLabel lbl_PX = new JLabel("Phiếu Xuất");
-		panel_PX.add(lbl_PX, "name_151660227943000");
-		lbl_PX.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				panel_PX.setBackground(Color.GRAY);
-                selectPanel(panel_PX);
-                panel_content.removeAll();
-                panel_content.add(new PhieuXuatGUI());
-                panel_content.revalidate();
-                panel_content.repaint();
-			}
-		});
-		lbl_PX.setBackground(new Color(255, 255, 255));
-		lbl_PX.setIcon(new ImageIcon(Toolkit.getDefaultToolkit().createImage(QuanLyKho.class.getResource("icon_phieuxuat.png"))));
-		
 		JPanel panel_TaiKhoan = new JPanel();
 		panel_SideMenu.add(panel_TaiKhoan);
 		panel_TaiKhoan.setBackground(new Color(255, 255, 255));
@@ -282,6 +261,17 @@ public class QuanLyKho extends JFrame {
 		panel_DangXuat.setLayout(new CardLayout(0, 0));
 		
 		JLabel lbl_DangXuat = new JLabel("Đăng Xuất");
+		lbl_DangXuat.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				dispose();
+				JFrame frame = new JFrame();
+		        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		        frame.setSize(900, 460); 
+		        frame.getContentPane().add(new Login_GUI());
+		        frame.setVisible(true);
+			}
+		});
 		panel_DangXuat.add(lbl_DangXuat, "name_151622081050900");
 		lbl_DangXuat.setIcon(new ImageIcon(Toolkit.getDefaultToolkit().createImage(QuanLyKho.class.getResource("icon_dangxuat.png"))));
 		

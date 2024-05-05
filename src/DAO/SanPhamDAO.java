@@ -123,6 +123,33 @@ public class SanPhamDAO implements DAOInterface<SanPhamDTO> {
         return sanPhamList;
     }
 
+    
+    public ArrayList<SanPhamDTO> selectAllAll() {
+        ArrayList<SanPhamDTO> sanPhamList = new ArrayList<>();
+        try {
+            Connection con = JDBCUtil.getConnection();
+            String sql = "SELECT * FROM SanPham";
+            Statement stmt = con.createStatement();
+            ResultSet rs = stmt.executeQuery(sql);
+
+            while (rs.next()) {
+                SanPhamDTO sanPham = new SanPhamDTO();
+                sanPham.setIdSP(rs.getInt("idSP"));
+                sanPham.setTenSP(rs.getString("tenSP"));
+                sanPham.setGiaBan(rs.getInt("giaNhap"));
+                sanPham.setGiaNhap(rs.getInt("giaBan"));
+                sanPham.setSoLuong(rs.getInt("soLuong"));
+                sanPham.setHinhAnh(rs.getString("hinhAnh"));
+                sanPham.setMauSac(rs.getString("mauSac"));
+                sanPham.setIsDelete(rs.getInt("isDelete"));
+                sanPhamList.add(sanPham);
+            }
+            JDBCUtil.closeConnection(con);
+        } catch (SQLException e) {
+            Logger.getLogger(SanPhamDAO.class.getName()).log(Level.SEVERE, null, e);
+        }
+        return sanPhamList;
+    }
 
     @Override
     public ArrayList<SanPhamDTO> selectByCondition(String condition) {
@@ -198,6 +225,25 @@ public class SanPhamDAO implements DAOInterface<SanPhamDTO> {
             Logger.getLogger(SanPhamDAO.class.getName()).log(Level.SEVERE, null, e);
         }
         return ketQua;
+    }
+
+    public int getTotalQuantity() {
+        int totalQuantity = 0;
+        try {
+            Connection con = JDBCUtil.getConnection();
+            String sql = "SELECT SUM(soLuong) AS totalQuantity FROM SanPham WHERE isDelete = 0";
+            Statement stmt = con.createStatement();
+            ResultSet rs = stmt.executeQuery(sql);
+
+            if (rs.next()) {
+                totalQuantity = rs.getInt("totalQuantity");
+            }
+
+            JDBCUtil.closeConnection(con);
+        } catch (SQLException e) {
+            Logger.getLogger(SanPhamDAO.class.getName()).log(Level.SEVERE, null, e);
+        }
+        return totalQuantity;
     }
 
     
