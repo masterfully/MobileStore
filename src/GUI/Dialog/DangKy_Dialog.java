@@ -43,20 +43,34 @@ public class DangKy_Dialog extends JDialog{
 			public void actionPerformed(ActionEvent e) {
 				int idNV = Integer.parseInt(txt_maNV.getText());
 				ArrayList<NhanVienDTO> nvList = NhanVienDAO.getInstance().selectAll();
-				boolean flag = false;
+				ArrayList<TaiKhoanDTO> tkList = TaiKhoanDAO.getInstance().selectAll();
+				boolean flagNV = false; //NV ko tồn tại trong cửa hàng
+				boolean flagTK = true; //tài khoản chưa có trong bảng Tài khoản
 				for (NhanVienDTO nv : nvList) {
-					if(nv.getidNV() == idNV) {
-						flag = true;
+					if(nv.getIdNV() == idNV) {
+						flagNV = true; //có NV trong bảng NV (NV này là của cửa hàng)
 						break;
 					}
 				}
-				if(!flag) {
-					JOptionPane.showMessageDialog(null, "Mã nhân viên không tồn tại!", "Cảnh báo", JOptionPane.WARNING_MESSAGE);
+				for(TaiKhoanDTO tk : tkList) {
+					if(idNV==tk.getIdNV()) { //Nhân viên này đã có tài khoản
+						flagTK =false;
+						break;
+					}
+				}
+				if(!flagTK) {
+					JOptionPane.showMessageDialog(null, "Nhân viên này đã có tài khoản!", "Cảnh báo", JOptionPane.WARNING_MESSAGE);
 					txt_maNV.requestFocus();
 				}
-				else {
-				txt_username.setEnabled(true);
-				txt_username.setEditable(true);
+				
+				else if(!flagNV) {
+					JOptionPane.showMessageDialog(null, "Mã nhân viên không tồn tại trong cửa hàng!", "Cảnh báo", JOptionPane.WARNING_MESSAGE);
+					txt_maNV.requestFocus();
+				}
+				
+				else if(flagTK && flagNV) {
+					txt_username.setEnabled(true);
+					txt_username.setEditable(true);
 				}
 			}
 		});

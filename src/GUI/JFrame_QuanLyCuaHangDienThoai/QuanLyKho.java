@@ -7,17 +7,13 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
-import javax.swing.GroupLayout;
 import javax.swing.ImageIcon;
-import javax.swing.GroupLayout.Alignment;
-import javax.swing.LayoutStyle.ComponentPlacement;
 import java.awt.Color;
 import javax.swing.JLabel;
 import java.awt.Font;
 import java.awt.Toolkit;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.FlowLayout;
 import java.awt.CardLayout;
 import java.awt.GridLayout;
 
@@ -38,7 +34,7 @@ public class QuanLyKho extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					JFrame frame = new QuanLyKho();
+					JFrame frame = new QuanLyKho(0);
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -50,7 +46,7 @@ public class QuanLyKho extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public QuanLyKho() {
+	public QuanLyKho(int idNVHienTai) {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 1252, 717);
 		setLocationRelativeTo(null);
@@ -77,7 +73,7 @@ public class QuanLyKho extends JFrame {
 		panel_SideMenu.add(panel_admin);
 		panel_admin.setLayout(new CardLayout(0, 0));
 		
-		JLabel lbl_admin = new JLabel("Admin");
+		JLabel lbl_admin = new JLabel("Admin " + String.valueOf(idNVHienTai));
 		panel_admin.add(lbl_admin, "name_151773607921700");
 		lbl_admin.addMouseListener(new MouseAdapter() {
 			@Override
@@ -148,7 +144,7 @@ public class QuanLyKho extends JFrame {
 				panel_HD.setBackground(Color.GRAY);
                 selectPanel(panel_HD);
                 panel_content.removeAll();
-                panel_content.add(new HoaDonGUI());
+                panel_content.add(new HoaDonGUI(idNVHienTai));
                 panel_content.revalidate();
                 panel_content.repaint();
 			}

@@ -68,10 +68,12 @@ public class Login_GUI extends JPanel{
 				ArrayList<TaiKhoanDTO> tkList = TaiKhoanDAO.getInstance().selectAll();
 				boolean flag = false;
 				String password = "";
+				int idNVHienTai = -1;
 				for(TaiKhoanDTO tk : tkList) {
 					if(tk.getUsername().equals(txt_username.getText())) {
 						flag = true;
 						password = tk.getPassword();
+						idNVHienTai = tk.getIdNV();
 						break;
 					}
 				}
@@ -85,7 +87,7 @@ public class Login_GUI extends JPanel{
 						txt_username.requestFocus();
 					}
 				}
-				JFrame frame = new QuanLyKho();
+				JFrame frame = new QuanLyKho(idNVHienTai);
 				frame.setVisible(true);
 			}
 		});
@@ -103,10 +105,12 @@ public class Login_GUI extends JPanel{
 				ArrayList<TaiKhoanDTO> tkList = TaiKhoanDAO.getInstance().selectAll();
 				boolean flag = false;
 				String password = "";
+				int idNVHienTai = -1;
 				for(TaiKhoanDTO tk : tkList) {
 					if(tk.getUsername().equals(txt_username.getText())) {
 						flag = true;
 						password = tk.getPassword();
+						idNVHienTai = tk.getIdNV();
 						break;
 					}
 				}
@@ -120,8 +124,11 @@ public class Login_GUI extends JPanel{
 						txt_username.requestFocus();
 					}
 				}
-				JFrame frame = new QuanLyKho();
+				
+				//đăng nhập thành công
+				JFrame frame = new QuanLyKho(idNVHienTai);
 				frame.setVisible(true);
+				
 			}
 		});
 		panel_1.add(btn_login);

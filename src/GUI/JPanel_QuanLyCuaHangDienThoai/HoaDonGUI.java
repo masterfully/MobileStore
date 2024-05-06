@@ -90,7 +90,7 @@ public class HoaDonGUI extends JPanel {
         System.out.println("Number of records retrieved: " + result.size());
         tblModel.setRowCount(0); // Clear existing data
         for (HoaDonDTO hd : result) {
-        	String tenNV = NhanVienDAO.getInstance().selectById(hd.getNHANVIEN_idNV()).gethoTen();
+        	String tenNV = NhanVienDAO.getInstance().selectById(hd.getNHANVIEN_idNV()).getHoTen();
         	String tenKH = KhachHangDAO.getInstance().selectById(hd.getKHACHHANG_idKH()).gettenKH();
             tblModel.addRow(new Object[]{hd.getIdHoaDon(), hd.getThoiGian(), df.format(hd.getTongTien()), tenNV, tenKH});
         }
@@ -102,7 +102,7 @@ public class HoaDonGUI extends JPanel {
         System.out.println("Number of records retrieved: " + result.size());
         tblModel.setRowCount(0); // Clear existing data
         for (HoaDonDTO hd : result) {
-        	String tenNV = NhanVienDAO.getInstance().selectById(hd.getNHANVIEN_idNV()).gethoTen();
+        	String tenNV = NhanVienDAO.getInstance().selectById(hd.getNHANVIEN_idNV()).getHoTen();
         	String tenKH = KhachHangDAO.getInstance().selectById(hd.getKHACHHANG_idKH()).gettenKH();
             tblModel.addRow(new Object[]{hd.getIdHoaDon(), hd.getThoiGian(), df.format(hd.getTongTien()), tenNV, tenKH});
         }
@@ -117,7 +117,7 @@ public class HoaDonGUI extends JPanel {
         System.out.println("Number of records retrieved: " + result.size());
         tblModel.setRowCount(0); // Clear existing data
         for (HoaDonDTO hd : result) {
-            String tenNV = NhanVienDAO.getInstance().selectById(hd.getNHANVIEN_idNV()).gethoTen();
+            String tenNV = NhanVienDAO.getInstance().selectById(hd.getNHANVIEN_idNV()).getHoTen();
             String tenKH = KhachHangDAO.getInstance().selectById(hd.getKHACHHANG_idKH()).gettenKH();
             tblModel.addRow(new Object[]{hd.getIdHoaDon(), hd.getThoiGian(), df.format(hd.getTongTien()), tenNV, tenKH});
         }
@@ -136,13 +136,13 @@ public class HoaDonGUI extends JPanel {
         ArrayList<NhanVienDTO> danhSachNhanVien = NhanVienDAO.getInstance().selectAll();
         DefaultComboBoxModel<String> model = new DefaultComboBoxModel<>();
         for (NhanVienDTO nv : danhSachNhanVien) {
-            String item = nv.getidNV() + " - " + nv.gethoTen();
+            String item = nv.getIdNV() + " - " + nv.getHoTen();
             model.addElement(item);
         }
         return model;
     }
     
-    public HoaDonGUI() {
+    public HoaDonGUI(int idNVHienTai) {
         String[] columnNames = {"Mã hóa đơn", "Thời gian lập", "Tổng tiền", "Tên nhân viên", "Tên Khách hàng"};
         tblModel = new DefaultTableModel(columnNames, 0);
         loadDataTalbe();
@@ -155,19 +155,9 @@ public class HoaDonGUI extends JPanel {
         JButton btn_them = new JButton("Thêm");
         btn_them.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-//                int selectedRow = table_HD.getSelectedRow();
-//                if (selectedRow != -1) {
-//                    DefaultTableModel model = (DefaultTableModel) table_HD.getModel();
-//                    int idhd = (int) model.getValueAt(selectedRow, 0);
-//                    themSanPham_Dialog hddialog = new themSanPham_Dialog(idhd);
-//                    hddialog.setSize(1000, 500);
-//                    hddialog.setVisible(true);
-//                } else {
-                    themHoaDon_Dialog hddialog = new themHoaDon_Dialog();
+                    themHoaDon_Dialog hddialog = new themHoaDon_Dialog(idNVHienTai);
                     hddialog.setSize(1200, 600);
                     hddialog.setVisible(true);
-//                }
-
             }
         });
         btn_them.setForeground(new Color(0, 0, 0));
@@ -494,7 +484,7 @@ public class HoaDonGUI extends JPanel {
         frame.setSize(1200, 600);
 
         // Tạo một instance của SanPham_GUI
-        HoaDonGUI HoaDonGUI = new HoaDonGUI();
+        HoaDonGUI HoaDonGUI = new HoaDonGUI(0);
 
         // Thêm SanPham_GUI vào JFrame
         frame.getContentPane().add(HoaDonGUI);

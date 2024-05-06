@@ -74,7 +74,7 @@ public class themHoaDon_Dialog extends JDialog{
 	}
 
 	
-	public themHoaDon_Dialog() {
+	public themHoaDon_Dialog(int idNVHienTai) {
 		String[] columnNames = {"Mã sản phẩm", "Tên sản phẩm"};
 		tblModel = new DefaultTableModel(columnNames, 0);
 		getContentPane().setLayout(null);
@@ -203,7 +203,8 @@ public class themHoaDon_Dialog extends JDialog{
 		getContentPane().add(lbl_NV);
 		
 		//tên của người đang đăng nhập
-		txt_idNV_admin = new JTextField("33005");
+		txt_idNV_admin = new JTextField(String.valueOf(idNVHienTai));
+		txt_idNV_admin.setEditable(false);
 		txt_idNV_admin.setColumns(10);
 		txt_idNV_admin.setBounds(907, 188, 132, 27);
 		getContentPane().add(txt_idNV_admin);
