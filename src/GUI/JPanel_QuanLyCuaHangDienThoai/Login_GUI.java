@@ -123,12 +123,10 @@ public class Login_GUI extends JPanel{
 						JOptionPane.showMessageDialog(null, "Sai tên đăng nhập hoặc mật khẩu!", "Cảnh báo", JOptionPane.WARNING_MESSAGE);
 						txt_username.requestFocus();
 					}
+					//đăng nhập thành công
+					JFrame frame = new QuanLyKho(idNVHienTai);
+					frame.setVisible(true);
 				}
-				
-				//đăng nhập thành công
-				JFrame frame = new QuanLyKho(idNVHienTai);
-				frame.setVisible(true);
-				
 			}
 		});
 		panel_1.add(btn_login);

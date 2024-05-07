@@ -5,6 +5,7 @@ import javax.swing.JFileChooser;
 
 import java.awt.BorderLayout;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JFrame;
 import java.awt.Font;
 import javax.swing.SwingConstants;
@@ -28,6 +29,8 @@ import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import java.awt.event.ActionEvent;
 
 public class suaSanPham_Dialog extends JDialog{
@@ -42,6 +45,18 @@ public class suaSanPham_Dialog extends JDialog{
 	private JTextField txt_cameratruoc;
 	private String imagePath = "null";
 	private int idSP;
+	
+	public boolean isNumeric(String str) {
+        if (str == null || str.length() == 0) {
+            return false;
+        }
+        try {
+            Integer.parseInt(str);
+            return true;
+        } catch (NumberFormatException e) {
+            return false;
+        }
+    }
 	
 	public suaSanPham_Dialog(int idSP) {
 		ExtractString extractString = new ExtractString();
@@ -221,6 +236,31 @@ public class suaSanPham_Dialog extends JDialog{
 		getContentPane().add(btn_sua);
 		btn_sua.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				String pattern = "^(iPhone)\\s(X|XS|XR|XS\\sMax)(\\s(Plus|Pro|mini))?(\\s\\(\\d{4}\\))?$";
+
+
+		        // Kiểm tra đầu vào với biểu thức chính quy
+		        Pattern regex = Pattern.compile(pattern);
+		        Matcher matcher = regex.matcher(txt_tensp.getText());
+
+				
+		        if(!matcher.find()) {
+		        	JOptionPane.showMessageDialog(null, "Tên sản phẩm không hợp lệ");
+		        }
+		        
+		        else if(!isNumeric(txt_gianhap.getText())) {
+		        	JOptionPane.showMessageDialog(null, "Giá nhập phải là kiểu số");
+		        }
+		        
+		        else if(!isNumeric(txt_giaban.getText())) {
+		        	JOptionPane.showMessageDialog(null, "Giá bán phải là kiểu số");
+		        }
+		        else if(!isNumeric(txt_soluong.getText())) {
+		        	JOptionPane.showMessageDialog(null, "Số lượng phải là kiểu số");
+		        }
+		        else if(txt_chip.getText().equals("") || txt_pin.getText().equals("") || txt_hdh.getText().equals("") || txt_camerasau.getText().equals("") || txt_cameratruoc.getText().equals("") || imagePath.equals("")) {
+		        	JOptionPane.showMessageDialog(null, "Vui lòng nhập đầy đủ thông tin");
+		        }
 				int idsp = idSP;
 				String tensp = txt_tensp.getText();
 				int giaNhap = Integer.parseInt(txt_gianhap.getText());

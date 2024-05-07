@@ -235,4 +235,21 @@ public class NhanVienDAO implements DAOinterface<NhanVienDTO> {
     }
 
 
+    public int getTotalEmployees() {
+        int totalEmployees = 0;
+        try {
+            Connection con = JDBCUtil.getConnection();
+            String sql = "SELECT COUNT(*) AS total FROM nhanvien WHERE isDelete = 1";
+            PreparedStatement pst = con.prepareStatement(sql);
+            ResultSet rs = pst.executeQuery();
+            if (rs.next()) {
+                totalEmployees = rs.getInt("total");
+            }
+            JDBCUtil.closeConnection(con);
+        } catch (SQLException e) {
+            Logger.getLogger(NhanVienDAO.class.getName()).log(Level.SEVERE, null, e);
+        }
+        return totalEmployees;
+    }
+
 }

@@ -108,7 +108,7 @@ public class ctHoaDonDAO implements DAOInterface<ctHoaDonDTO> {
                         rs.getInt("SANPHAM_idSP"),
                         rs.getInt("HOADON_idHoaDon")
                 );
-                ctHoaDon.setId(rs.getInt("id"));
+//                ctHoaDon.setId(rs.getInt("id"));
                 ctHoaDonList.add(ctHoaDon);
             }
             JDBCUtil.closeConnection(con);
@@ -138,7 +138,7 @@ public class ctHoaDonDAO implements DAOInterface<ctHoaDonDTO> {
                         rs.getInt("SANPHAM_idSP"),
                         rs.getInt("HOADON_idHoaDon")
                 );
-                ctHoaDon.setId(rs.getInt("id"));
+//                ctHoaDon.setId(rs.getInt("id"));
                 ctHoaDonList.add(ctHoaDon);
             }
             JDBCUtil.closeConnection(con);

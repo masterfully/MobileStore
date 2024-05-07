@@ -31,7 +31,7 @@ public class xemDSKH_Dialog extends JDialog {
         ArrayList<KhachHangDTO> result = KhachHangDAO.getInstance().selectAll();
         tblModel.setRowCount(0);
         for (KhachHangDTO kh : result) {
-            tblModel.addRow(new Object[]{kh.getidKH(), kh.gettenKH(), kh.getDiaChi(), kh.getSdt()});
+            tblModel.addRow(new Object[]{kh.getIdKhachHang(), kh.getTenKhachHang(), kh.getDiaChiKhachHang(), kh.getSdtKhachHang()});
         }
     }
 

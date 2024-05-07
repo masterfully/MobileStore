@@ -234,7 +234,7 @@ public class xemHoaDon_Dialog extends JDialog{
                 int selectedCustomerId = dskhdialog.getSelectedCustomerId();
                 System.out.println(selectedCustomerId);
                 if (selectedCustomerId != 0) {
-                    int idKH = KhachHangDAO.getInstance().selectById(selectedCustomerId).getidKH();
+                    int idKH = KhachHangDAO.getInstance().selectById(selectedCustomerId).getIdKhachHang();
                     txt_idKH.setText(String.valueOf(idKH));
                 }
 			}

@@ -73,6 +73,17 @@ public class themHoaDon_Dialog extends JDialog{
 	    txt_idKH.setText(String.valueOf(selectedCustomerId));
 	}
 
+	public boolean isNumeric(String str) {
+        if (str == null || str.length() == 0) {
+            return false;
+        }
+        try {
+            Integer.parseInt(str);
+            return true;
+        } catch (NumberFormatException e) {
+            return false;
+        }
+    }
 	
 	public themHoaDon_Dialog(int idNVHienTai) {
 		String[] columnNames = {"Mã sản phẩm", "Tên sản phẩm"};
@@ -263,7 +274,7 @@ public class themHoaDon_Dialog extends JDialog{
                 int selectedCustomerId = dskhdialog.getSelectedCustomerId();
                 System.out.println(selectedCustomerId);
                 if (selectedCustomerId != 0) {
-                    int idKH = KhachHangDAO.getInstance().selectById(selectedCustomerId).getidKH();
+                    int idKH = KhachHangDAO.getInstance().selectById(selectedCustomerId).getIdKhachHang();
                     txt_idKH.setText(String.valueOf(idKH));
                 }
 			}
@@ -399,6 +410,9 @@ public class themHoaDon_Dialog extends JDialog{
 		});
 		btn_tao.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				if(!isNumeric(txt_soluong.getText())) {
+		        	JOptionPane.showMessageDialog(null, "Số lượng phải là số");
+		        }
 				int idHD = Integer.parseInt(txt_maHD.getText());
 				String thoiGian = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
 				double tongTien = Double.parseDouble(txt_tongtien.getText());

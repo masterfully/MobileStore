@@ -5,6 +5,7 @@ import javax.swing.JFileChooser;
 
 import java.awt.BorderLayout;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JFrame;
 import java.awt.Font;
 import javax.swing.SwingConstants;
@@ -29,6 +30,8 @@ import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import java.awt.event.ActionEvent;
 
 public class themSanPham_Dialog extends JDialog{
@@ -42,6 +45,19 @@ public class themSanPham_Dialog extends JDialog{
 	private JTextField txt_camerasau;
 	private JTextField txt_cameratruoc;
 	private String imagePath;
+	
+	
+	public boolean isNumeric(String str) {
+        if (str == null || str.length() == 0) {
+            return false;
+        }
+        try {
+            Integer.parseInt(str);
+            return true;
+        } catch (NumberFormatException e) {
+            return false;
+        }
+    }
 	
 	public themSanPham_Dialog() {
 		ExtractString extractString = new ExtractString();
@@ -208,13 +224,38 @@ public class themSanPham_Dialog extends JDialog{
 		JButton btn_them = new JButton("Thêm");
 		btn_them.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				int idsp = SanPhamDAO.getInstance().selectAll().get(SanPhamDAO.getInstance().selectAllAll().size()-1).getIdSP() +1;
+				// Định nghĩa biểu thức chính quy cho các dạng sản phẩm
+				String pattern = "^(iPhone)\\s(X|XS|XR|XS\\sMax)(\\s(Plus|Pro|mini))?(\\s\\(\\d{4}\\))?$";
+
+		        // Kiểm tra đầu vào với biểu thức chính quy
+		        Pattern regex = Pattern.compile(pattern);
+		        Matcher matcher = regex.matcher(txt_tensp.getText());
+
+				
+		        if(!matcher.find()) {
+		        	JOptionPane.showMessageDialog(null, "Tên sản phẩm không hợp lệ");
+		        }
+		        
+		        else if(!isNumeric(txt_gianhap.getText())) {
+		        	JOptionPane.showMessageDialog(null, "Giá nhập phải là số");
+		        }
+		        
+		        else if(!isNumeric(txt_giaban.getText())) {
+		        	JOptionPane.showMessageDialog(null, "Giá bán phải là số");
+		        }
+		        else if(!isNumeric(txt_soluong.getText())) {
+		        	JOptionPane.showMessageDialog(null, "Số lượng phải là số");
+		        }
+		        else if(txt_chip.getText().equals("") || txt_pin.getText().equals("") || txt_hdh.getText().equals("") || txt_camerasau.getText().equals("") || txt_cameratruoc.getText().equals("") || imagePath.equals("")) {
+		        	JOptionPane.showMessageDialog(null, "Vui lòng nhập đầy đủ thông tin");
+		        }
+				int idsp = SanPhamDAO.getInstance().selectAllAll().get(SanPhamDAO.getInstance().selectAllAll().size()-1).getIdSP() +1;
 				String tensp = txt_tensp.getText();
 				int giaNhap = Integer.parseInt(txt_gianhap.getText());
 				int giaBan = Integer.parseInt(txt_giaban.getText());
 				int soLuong = Integer.parseInt(txt_soluong.getText());
-				String hinhAnh =  extractString.catLinkAnh(imagePath);
 				String mauSac = (String) cbb_mausac.getSelectedItem();
+				String hinhAnh =  extractString.catLinkAnh(imagePath);
 				SanPhamDTO spdto = new SanPhamDTO(idsp, tensp, giaNhap, giaBan, soLuong, hinhAnh, mauSac, 0);
 				SanPhamDAO.getInstance().insert(spdto);
 				

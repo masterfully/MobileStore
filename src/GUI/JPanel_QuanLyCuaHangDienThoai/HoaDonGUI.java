@@ -91,7 +91,7 @@ public class HoaDonGUI extends JPanel {
         tblModel.setRowCount(0); // Clear existing data
         for (HoaDonDTO hd : result) {
         	String tenNV = NhanVienDAO.getInstance().selectById(hd.getNHANVIEN_idNV()).getHoTen();
-        	String tenKH = KhachHangDAO.getInstance().selectById(hd.getKHACHHANG_idKH()).gettenKH();
+        	String tenKH = KhachHangDAO.getInstance().selectById(hd.getKHACHHANG_idKH()).getTenKhachHang();
             tblModel.addRow(new Object[]{hd.getIdHoaDon(), hd.getThoiGian(), df.format(hd.getTongTien()), tenNV, tenKH});
         }
     }
@@ -103,7 +103,7 @@ public class HoaDonGUI extends JPanel {
         tblModel.setRowCount(0); // Clear existing data
         for (HoaDonDTO hd : result) {
         	String tenNV = NhanVienDAO.getInstance().selectById(hd.getNHANVIEN_idNV()).getHoTen();
-        	String tenKH = KhachHangDAO.getInstance().selectById(hd.getKHACHHANG_idKH()).gettenKH();
+        	String tenKH = KhachHangDAO.getInstance().selectById(hd.getKHACHHANG_idKH()).getTenKhachHang();
             tblModel.addRow(new Object[]{hd.getIdHoaDon(), hd.getThoiGian(), df.format(hd.getTongTien()), tenNV, tenKH});
         }
     }
@@ -118,7 +118,7 @@ public class HoaDonGUI extends JPanel {
         tblModel.setRowCount(0); // Clear existing data
         for (HoaDonDTO hd : result) {
             String tenNV = NhanVienDAO.getInstance().selectById(hd.getNHANVIEN_idNV()).getHoTen();
-            String tenKH = KhachHangDAO.getInstance().selectById(hd.getKHACHHANG_idKH()).gettenKH();
+            String tenKH = KhachHangDAO.getInstance().selectById(hd.getKHACHHANG_idKH()).getTenKhachHang();
             tblModel.addRow(new Object[]{hd.getIdHoaDon(), hd.getThoiGian(), df.format(hd.getTongTien()), tenNV, tenKH});
         }
     }
@@ -126,7 +126,7 @@ public class HoaDonGUI extends JPanel {
         ArrayList<KhachHangDTO> danhSachKhachHang = KhachHangDAO.getInstance().selectAll();
         DefaultComboBoxModel<String> model = new DefaultComboBoxModel<>();
         for (KhachHangDTO kh : danhSachKhachHang) {
-            String item = kh.getidKH() + " - " + kh.gettenKH();
+            String item = kh.getIdKhachHang() + " - " + kh.getTenKhachHang();
             model.addElement(item);
         }
         return model;

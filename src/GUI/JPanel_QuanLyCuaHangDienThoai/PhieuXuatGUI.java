@@ -90,8 +90,8 @@ public class PhieuXuatGUI extends JPanel {
         System.out.println("Number of records retrieved: " + result.size());
         tblModel.setRowCount(0); // Clear existing data
         for (HoaDonDTO hd : result) {
-        	String tenNV = NhanVienDAO.getInstance().selectById(hd.getNHANVIEN_idNV()).gethoTen();
-        	String tenKH = KhachHangDAO.getInstance().selectById(hd.getKHACHHANG_idKH()).gettenKH();
+        	String tenNV = NhanVienDAO.getInstance().selectById(hd.getNHANVIEN_idNV()).getHoTen();
+        	String tenKH = KhachHangDAO.getInstance().selectById(hd.getKHACHHANG_idKH()).getTenKhachHang();
             tblModel.addRow(new Object[]{hd.getIdHoaDon(), hd.getThoiGian(), df.format(hd.getTongTien()), tenNV, tenKH});
         }
     }
@@ -102,8 +102,8 @@ public class PhieuXuatGUI extends JPanel {
         System.out.println("Number of records retrieved: " + result.size());
         tblModel.setRowCount(0); // Clear existing data
         for (HoaDonDTO hd : result) {
-        	String tenNV = NhanVienDAO.getInstance().selectById(hd.getNHANVIEN_idNV()).gethoTen();
-        	String tenKH = KhachHangDAO.getInstance().selectById(hd.getKHACHHANG_idKH()).gettenKH();
+        	String tenNV = NhanVienDAO.getInstance().selectById(hd.getNHANVIEN_idNV()).getHoTen();
+        	String tenKH = KhachHangDAO.getInstance().selectById(hd.getKHACHHANG_idKH()).getTenKhachHang();
             tblModel.addRow(new Object[]{hd.getIdHoaDon(), hd.getThoiGian(), df.format(hd.getTongTien()), tenNV, tenKH});
         }
     }
@@ -117,8 +117,8 @@ public class PhieuXuatGUI extends JPanel {
         System.out.println("Number of records retrieved: " + result.size());
         tblModel.setRowCount(0); // Clear existing data
         for (HoaDonDTO hd : result) {
-            String tenNV = NhanVienDAO.getInstance().selectById(hd.getNHANVIEN_idNV()).gethoTen();
-            String tenKH = KhachHangDAO.getInstance().selectById(hd.getKHACHHANG_idKH()).gettenKH();
+            String tenNV = NhanVienDAO.getInstance().selectById(hd.getNHANVIEN_idNV()).getHoTen();
+            String tenKH = KhachHangDAO.getInstance().selectById(hd.getKHACHHANG_idKH()).getTenKhachHang();
             tblModel.addRow(new Object[]{hd.getIdHoaDon(), hd.getThoiGian(), df.format(hd.getTongTien()), tenNV, tenKH});
         }
     }
@@ -126,7 +126,7 @@ public class PhieuXuatGUI extends JPanel {
         ArrayList<KhachHangDTO> danhSachKhachHang = KhachHangDAO.getInstance().selectAll();
         DefaultComboBoxModel<String> model = new DefaultComboBoxModel<>();
         for (KhachHangDTO kh : danhSachKhachHang) {
-            String item = kh.getidKH() + " - " + kh.gettenKH();
+            String item = kh.getIdKhachHang() + " - " + kh.getTenKhachHang();
             model.addElement(item);
         }
         return model;
@@ -136,7 +136,7 @@ public class PhieuXuatGUI extends JPanel {
         ArrayList<NhanVienDTO> danhSachNhanVien = NhanVienDAO.getInstance().selectAll();
         DefaultComboBoxModel<String> model = new DefaultComboBoxModel<>();
         for (NhanVienDTO nv : danhSachNhanVien) {
-            String item = nv.getidNV() + " - " + nv.gethoTen();
+            String item = nv.getIdNV() + " - " + nv.getHoTen();
             model.addElement(item);
         }
         return model;
@@ -153,23 +153,23 @@ public class PhieuXuatGUI extends JPanel {
         add(panel_HoaDon);
 
         JButton btn_them = new JButton("Thêm");
-        btn_them.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-//                int selectedRow = table_HD.getSelectedRow();
-//                if (selectedRow != -1) {
-//                    DefaultTableModel model = (DefaultTableModel) table_HD.getModel();
-//                    int idhd = (int) model.getValueAt(selectedRow, 0);
-//                    themSanPham_Dialog hddialog = new themSanPham_Dialog(idhd);
-//                    hddialog.setSize(1000, 500);
+//        btn_them.addActionListener(new ActionListener() {
+//            public void actionPerformed(ActionEvent e) {
+////                int selectedRow = table_HD.getSelectedRow();
+////                if (selectedRow != -1) {
+////                    DefaultTableModel model = (DefaultTableModel) table_HD.getModel();
+////                    int idhd = (int) model.getValueAt(selectedRow, 0);
+////                    themSanPham_Dialog hddialog = new themSanPham_Dialog(idhd);
+////                    hddialog.setSize(1000, 500);
+////                    hddialog.setVisible(true);
+////                } else {
+//                    themHoaDon_Dialog hddialog = new themHoaDon_Dialog();
+//                    hddialog.setSize(1200, 600);
 //                    hddialog.setVisible(true);
-//                } else {
-                    themHoaDon_Dialog hddialog = new themHoaDon_Dialog();
-                    hddialog.setSize(1200, 600);
-                    hddialog.setVisible(true);
-//                }
-
-            }
-        });
+////                }
+//
+//            }
+//        });
         btn_them.setForeground(new Color(0, 0, 0));
         btn_them.setBackground(new Color(255, 255, 255));
         GridBagConstraints gbc_btn_them = new GridBagConstraints();
