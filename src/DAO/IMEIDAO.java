@@ -19,13 +19,12 @@ public class IMEIDAO implements DAOInterface<IMEIDTO> {
         int ketQua = 0;
         try {
             Connection con = JDBCUtil.getConnection();
-            String sql = "INSERT INTO IMEI (maIMEI, SANPHAM_idSP, idPhieuNhap, idPhieuXuat, trangThai) VALUES (?,?,?,?,?)";
+            String sql = "INSERT INTO IMEI (maIMEI, SANPHAM_idSP, idPhieuNhap, trangThai) VALUES (?,?,?,?)";
             PreparedStatement pst = con.prepareStatement(sql);
             pst.setInt(1, t.getMaIMEI());
             pst.setInt(2, t.getSANPHAM_idSP());
             pst.setInt(3, 5501);
-            pst.setInt(4, 11101);
-            pst.setInt(5, t.getTrangThai());
+            pst.setInt(4, t.getTrangThai());
             ketQua = pst.executeUpdate();
             System.out.println("Đã thực thi: " + sql);
             System.out.println("Đã thay đổi " + ketQua + " dòng");
@@ -45,15 +44,13 @@ public class IMEIDAO implements DAOInterface<IMEIDTO> {
             String sql = "UPDATE IMEI " +
                     "SET SANPHAM_idSP = ?, " +
                     "idPhieuNhap = ?, " +
-                    "idPhieuXuat = ?, " +
                     "trangThai = ?, " +
                     "WHERE maIMEI = ?";
             PreparedStatement pst = con.prepareStatement(sql);
             pst.setInt(1, t.getMaIMEI());
             pst.setInt(2, t.getSANPHAM_idSP());
             pst.setInt(3, t.getIdPhieuNhap());
-            pst.setInt(4, t.getIdPhieuXuat());
-            pst.setInt(5, t.getTrangThai());
+            pst.setInt(4, t.getTrangThai());
             ketQua = pst.executeUpdate();
             System.out.println("Đã thực thi: " + sql);
             System.out.println("Đã thay đổi " + ketQua + " dòng");
@@ -100,7 +97,6 @@ public class IMEIDAO implements DAOInterface<IMEIDTO> {
                 sanPham.setMaIMEI(rs.getInt("maIMEI"));
                 sanPham.setSANPHAM_idSP(rs.getInt("SANPHAM_idSP"));
                 sanPham.setIdPhieuNhap(rs.getInt("idPhieuNhap"));
-                sanPham.setIdPhieuXuat(rs.getInt("idPhieuXuat"));
                 sanPham.setTrangThai(rs.getInt("trangThai"));
                 ctsanPhamList.add(sanPham);
             }
@@ -126,7 +122,6 @@ public class IMEIDAO implements DAOInterface<IMEIDTO> {
                 sanPham.setMaIMEI(rs.getInt("maIMEI"));
                 sanPham.setSANPHAM_idSP(rs.getInt("SANPHAM_idSP"));
                 sanPham.setIdPhieuNhap(rs.getInt("idPhieuNhap"));
-                sanPham.setIdPhieuXuat(rs.getInt("idPhieuXuat"));
                 sanPham.setTrangThai(rs.getInt("trangThai"));
                 ctsanPhamList.add(sanPham);
             }
@@ -153,7 +148,6 @@ public class IMEIDAO implements DAOInterface<IMEIDTO> {
                 sanPham.setMaIMEI(rs.getInt("maIMEI"));
                 sanPham.setSANPHAM_idSP(rs.getInt("SANPHAM_idSP"));
                 sanPham.setIdPhieuNhap(rs.getInt("idPhieuNhap"));
-                sanPham.setIdPhieuXuat(rs.getInt("idPhieuXuat"));
                 sanPham.setTrangThai(rs.getInt("trangThai"));
             }
             JDBCUtil.closeConnection(con);

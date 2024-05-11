@@ -31,6 +31,10 @@ public class KhachHangBUS {
             }
             return -1;
     }
+    public ArrayList<KhachHangDTO> loadDataFromDatabase() {
+        return khDAO.selectAllActive();
+    }
+
     // thêm khách hàng
     public boolean add(KhachHangDTO kh) {
         try {
@@ -56,10 +60,10 @@ public class KhachHangBUS {
 
 
     // xóa một khách hàng
-    public boolean delete(KhachHangDTO kh) {
-        int index = getIndexByMaDV(kh.getIdKhachHang());
+    public boolean delete(int idKhachHang) {
+        int index = getIndexByMaDV(idKhachHang);
         if (index != -1) {
-            boolean check = khDAO.delete(kh.getIdKhachHang()) != 0;
+            boolean check = khDAO.delete(String.valueOf(idKhachHang)) != 0;
             if (check) {
                 this.listKhachHang.remove(index);
             }
@@ -67,18 +71,9 @@ public class KhachHangBUS {
         }
         return false;
     }
+
     // cập nhâp lại
-//    public boolean update(KhachHangDTO kh) {
-//        int index = getIndexByMaDV(kh.getIdKhachHang());
-//        if (index != -1) {
-//            boolean check = khDAO.update(kh) != 0;
-//            if (check) {
-//                this.listKhachHang.set(index, kh);
-//            }
-//            return check;
-//        }
-//        return false;
-//    }
+
     public boolean update(KhachHangDTO kh) {
         if(kh.getIsDelete() == 1) {
             boolean check = khDAO.update(kh) != 0;
@@ -105,5 +100,8 @@ public class KhachHangBUS {
         return khDAO.selectById(Integer.parseInt(idKH+ ""));
     }
 
+    public ArrayList<KhachHangDTO> search(String keyword) {
+        return khDAO.search(keyword);
+    }
 
 }

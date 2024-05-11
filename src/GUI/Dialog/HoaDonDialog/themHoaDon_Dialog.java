@@ -3,6 +3,13 @@ package GUI.Dialog.HoaDonDialog;
 import javax.swing.JDialog;
 import com.toedter.calendar.demo.DateChooserPanel;
 
+import BUS.HoaDonBUS;
+import BUS.KhachHangBUS;
+import BUS.KhuyenMaiBUS;
+import BUS.PhieuBaoHanhBUS;
+import BUS.SanPhamBUS;
+import BUS.ctHoaDonBUS;
+import BUS.ctSanPhamBUS;
 import DAO.HoaDonDAO;
 import DAO.ctHoaDonDAO;
 import DAO.IMEIDAO;
@@ -57,12 +64,18 @@ public class themHoaDon_Dialog extends JDialog{
 	private JTextField txt_idNV_admin;
 	private JTextField txt_idKH;
 	private JTextField txt_tongtien;
-    public SanPhamDAO spDAO = new SanPhamDAO();
+	 public SanPhamBUS spBUS = new SanPhamBUS();
+	 public ctSanPhamBUS ctspBUS = new ctSanPhamBUS();
+	    public HoaDonBUS hoaDonBUS = new HoaDonBUS();
+	    public ctHoaDonBUS ctHoaDonBUS = new ctHoaDonBUS();
+	    public KhuyenMaiBUS kmBUS = new KhuyenMaiBUS();
+	    public PhieuBaoHanhBUS bhBUS = new PhieuBaoHanhBUS();
+	    public KhachHangBUS khBUS = new KhachHangBUS();
     private JTextField txt_soluong;
     private JTextField txt_donGia;
 	
 	public void loadDataTalbe() {
-        ArrayList<SanPhamDTO> result = spDAO.selectAll();
+        ArrayList<SanPhamDTO> result = spBUS.layDanhSachSanPham();
         tblModel.setRowCount(0); 
         for (SanPhamDTO sp : result) {
             tblModel.addRow(new Object[]{sp.getIdSP(), sp.getTenSP()});
@@ -97,7 +110,7 @@ public class themHoaDon_Dialog extends JDialog{
 		txt_timkiem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String t = txt_timkiem.getText();
-                ArrayList<SanPhamDTO> result = spDAO.selectByCondition("tenSP LIKE '%" + t + "%'");
+                ArrayList<SanPhamDTO> result = spBUS.timKiemSanPhamTheoDieuKien("tenSP LIKE '%" + t + "%'");
                 tblModel.setRowCount(0); 
                 for (SanPhamDTO sp : result) {
                     tblModel.addRow(new Object[]{sp.getIdSP(), sp.getTenSP()});
@@ -144,8 +157,8 @@ public class themHoaDon_Dialog extends JDialog{
 		getContentPane().add(txt_maSP);
 		txt_maSP.setColumns(10);
 
-		SanPhamDTO sp = SanPhamDAO.getInstance().selectById(Integer.parseInt(txt_maSP.getText()));
-		ctSanPhamDTO ctsp = ctSanPhamDAO.getInstance().selectById(Integer.parseInt(txt_maSP.getText()));
+		SanPhamDTO sp = spBUS.laySanPhamTheoId(Integer.parseInt(txt_maSP.getText()));
+		ctSanPhamDTO ctsp = ctspBUS.timctSanPhamTheoId(Integer.parseInt(txt_maSP.getText()));
 		
 		JLabel lbl_tenSP = new JLabel("Tên sản phẩm");
 		lbl_tenSP.setFont(new Font("Tahoma", Font.PLAIN, 14));
@@ -180,27 +193,12 @@ public class themHoaDon_Dialog extends JDialog{
 		txt_mauSac.setBounds(666, 190, 158, 27);
 		getContentPane().add(txt_mauSac);
 		
-//		JLabel lbl_imei = new JLabel("Mã IMEI");
-//		lbl_imei.setFont(new Font("Tahoma", Font.PLAIN, 14));
-//		lbl_imei.setBounds(498, 250, 94, 14);
-//		getContentPane().add(lbl_imei);
-//		
-//		ArrayList<IMEIDTO> imeiList = IMEIDAO.getInstance().selectByCondition("SANPHAM_idSP="+txt_maSP.getText());
-//		JComboBox<String> cbb_IMEI = new JComboBox<>();
-//		DefaultComboBoxModel<String> cbbmodel = new DefaultComboBoxModel<>();
-//		for (IMEIDTO imei : imeiList) {
-//		    cbbmodel.addElement(String.valueOf(imei.getMaIMEI()));
-//		}
-//		cbb_IMEI.setModel(cbbmodel);
-//		cbb_IMEI.setBounds(498, 282, 94, 22);
-//		getContentPane().add(cbb_IMEI);
-		
 		JLabel lbl_maHD = new JLabel("Mã hóa đơn");
 		lbl_maHD.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		lbl_maHD.setBounds(907, 77, 94, 14);
 		getContentPane().add(lbl_maHD);
 		
-		int maHD = HoaDonDAO.getInstance().selectAll().get(HoaDonDAO.getInstance().selectAll().size()-1).getIdHoaDon() +1;
+		int maHD = hoaDonBUS.getAllHoaDon().get(hoaDonBUS.getAllHoaDon().size()-1).getIdHoaDon() +1;
 		txt_maHD = new JTextField(String.valueOf(maHD));
 		txt_maHD.setColumns(10);
 		txt_maHD.setBounds(907, 103, 94, 27);
@@ -274,7 +272,7 @@ public class themHoaDon_Dialog extends JDialog{
                 int selectedCustomerId = dskhdialog.getSelectedCustomerId();
                 System.out.println(selectedCustomerId);
                 if (selectedCustomerId != 0) {
-                    int idKH = KhachHangDAO.getInstance().selectById(selectedCustomerId).getIdKhachHang();
+                    int idKH = khBUS.selectKh(selectedCustomerId).getIdKhachHang();
                     txt_idKH.setText(String.valueOf(idKH));
                 }
 			}
@@ -316,8 +314,7 @@ public class themHoaDon_Dialog extends JDialog{
 		
 		JComboBox cbb_baohanh = new JComboBox();
 		DefaultComboBoxModel<String> cbbmodel = new DefaultComboBoxModel<>();
-		PhieuBaoHanhDAO phieuBaoHanhDAO = PhieuBaoHanhDAO.getInstance();
-		ArrayList<PhieuBaoHanhDTO> dsPhieuBH = phieuBaoHanhDAO.selectAll();
+		ArrayList<PhieuBaoHanhDTO> dsPhieuBH = bhBUS.getAllPhieuBaoHanh();
 		for (PhieuBaoHanhDTO phieuBH : dsPhieuBH) {
 		    cbbmodel.addElement(phieuBH.getThoiGian());
 		}
@@ -333,8 +330,7 @@ public class themHoaDon_Dialog extends JDialog{
 		JComboBox cbb_khuyenmai = new JComboBox();
 		
 		DefaultComboBoxModel<Integer> cbbmodelkm = new DefaultComboBoxModel<>();
-		KhuyenMaiDAO kmDAO = KhuyenMaiDAO.getInstance();
-		ArrayList<KhuyenMaiDTO> dskm = kmDAO.selectAll();
+		ArrayList<KhuyenMaiDTO> dskm = kmBUS.getAllKhuyenMai();
 		for (KhuyenMaiDTO km : dskm) {
 			cbbmodelkm.addElement((int) km.getPhanTram());
 		}
@@ -364,8 +360,8 @@ public class themHoaDon_Dialog extends JDialog{
 		            // Tại đây, bạn có thể sử dụng idSP để cập nhật thông tin sản phẩm khác
 		            // Ví dụ:
 					DecimalFormat df = new DecimalFormat("#.##");
-		            SanPhamDTO sp = SanPhamDAO.getInstance().selectById(idSP);
-		            ctSanPhamDTO ctsp = ctSanPhamDAO.getInstance().selectById(idSP);
+		            SanPhamDTO sp = spBUS.laySanPhamTheoId(idSP);
+		            ctSanPhamDTO ctsp = ctspBUS.timctSanPhamTheoId(idSP);
 		            txt_maSP.setText(String.valueOf(sp.getIdSP()));
 		            txt_tenSP.setText(sp.getTenSP());
 		            txt_rom.setText(ctsp.getRom());
@@ -392,8 +388,8 @@ public class themHoaDon_Dialog extends JDialog{
 		txt_soluong.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				int soluong = Integer.parseInt(txt_soluong.getText());
-				int maSanPhamDangHien = SanPhamDAO.getInstance().selectById(Integer.parseInt(txt_maSP.getText())).getIdSP();
-				int soluongton = SanPhamDAO.getInstance().selectById(maSanPhamDangHien).getSoLuong();
+				int maSanPhamDangHien = spBUS.laySanPhamTheoId(Integer.parseInt(txt_maSP.getText())).getIdSP();
+				int soluongton = spBUS.laySanPhamTheoId(maSanPhamDangHien).getSoLuong();
 				if (soluong > soluongton) {
 					JOptionPane.showMessageDialog(null, "Vui lòng nhập số lượng hợp lệ", "Lỗi", JOptionPane.ERROR_MESSAGE);
 		            txt_soluong.setText("0"); // Clear the invalid input
@@ -419,26 +415,26 @@ public class themHoaDon_Dialog extends JDialog{
 				int idNV = Integer.parseInt(txt_idNV_admin.getText());
 				int idKH = 77001;
 				HoaDonDTO hd = new HoaDonDTO(idHD, java.sql.Date.valueOf(thoiGian), tongTien, idNV, idKH);
-				HoaDonDAO.getInstance().insert(hd);
+				hoaDonBUS.insertHoaDon(hd);
 				
 				int sl = Integer.parseInt(txt_soluong.getText());
 				float donGia = sp.getGiaBan();
 				double thanhTien = donGia*sl;
 				Object selectedItem = cbb_khuyenmai.getSelectedItem();
 				int km = Integer.parseInt(selectedItem.toString());
-				int idkm = KhuyenMaiDAO.getInstance().selectById(km).getIdKM();
+				int idkm = kmBUS.getKhuyenMaiById(km).getIdKM();
 				
 				Object selected = cbb_baohanh.getSelectedItem();
 				int thangbh = Integer.parseInt(selected.toString());
-				int idbh = PhieuBaoHanhDAO.getInstance().selectById(thangbh).getIdBaoHanh();
+				int idbh = bhBUS.getPhieuBaoHanhById(thangbh).getIdBaoHanh();
 				int idSanPham = Integer.parseInt(txt_maSP.getText());
 				int idHoaDon = Integer.parseInt(txt_maHD.getText());
 				int soluong = Integer.parseInt(txt_soluong.getText());
 						
 				ctHoaDonDTO cthd = new ctHoaDonDTO(soluong, donGia, thanhTien, idkm, idbh, idSanPham, idHoaDon);
-				ctHoaDonDAO.getInstance().insert(cthd);
-				int slTon = SanPhamDAO.getInstance().selectById(idSanPham).getSoLuong();
-				SanPhamDAO.getInstance().updateSoLuongTon(idSanPham, slTon - soluong);
+				ctHoaDonBUS.insertCTHoaDon(cthd);
+				int slTon = spBUS.laySanPhamTheoId(idSanPham).getSoLuong();
+				spBUS.capNhatSoLuongTon(idSanPham, slTon - soluong);
 			}
 		});
 	}

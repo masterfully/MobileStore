@@ -3,6 +3,12 @@ package GUI.Dialog.HoaDonDialog;
 import javax.swing.JDialog;
 import com.toedter.calendar.demo.DateChooserPanel;
 
+import BUS.HoaDonBUS;
+import BUS.KhachHangBUS;
+import BUS.PhieuBaoHanhBUS;
+import BUS.SanPhamBUS;
+import BUS.ctHoaDonBUS;
+import BUS.ctSanPhamBUS;
 import DAO.HoaDonDAO;
 import DAO.ctHoaDonDAO;
 import DAO.IMEIDAO;
@@ -56,11 +62,15 @@ public class xemHoaDon_Dialog extends JDialog{
 	private JTextField txt_tenNV;
 	private JTextField txt_idKH;
 	private JTextField txt_tongtien;
-    public SanPhamDAO spDAO = new SanPhamDAO();
+    public SanPhamBUS spBUS = new SanPhamBUS();
+    public ctSanPhamBUS ctspBUS = new ctSanPhamBUS();
+    public ctHoaDonBUS cthdBUS = new ctHoaDonBUS();
+    public HoaDonBUS hdBUS = new HoaDonBUS();
+    public KhachHangBUS khBUS = new KhachHangBUS();
     private JTextField txt_soluong;
 	
 	public void loadDataTalbe() {
-        ArrayList<SanPhamDTO> result = spDAO.selectAll();
+        ArrayList<SanPhamDTO> result = spBUS.layDanhSachSanPham();
         tblModel.setRowCount(0); 
         for (SanPhamDTO sp : result) {
             tblModel.addRow(new Object[]{sp.getIdSP(), sp.getTenSP()});
@@ -79,7 +89,7 @@ public class xemHoaDon_Dialog extends JDialog{
 		loadDataTalbe();
 		
 		table_SP = new JTable(tblModel);
-		ctHoaDonDTO newcthd = ctHoaDonDAO.getInstance().selectById(idHD);
+		ctHoaDonDTO newcthd = cthdBUS.getCTHoaDonById(idHD);
 		int newIDSP = newcthd.getSANPHAM_idSP();
 		int vitri = -1;
 		int rowCount = tblModel.getRowCount();
@@ -116,8 +126,8 @@ public class xemHoaDon_Dialog extends JDialog{
 		getContentPane().add(txt_maSP);
 		txt_maSP.setColumns(10);
 
-		SanPhamDTO sp = SanPhamDAO.getInstance().selectById(Integer.parseInt(txt_maSP.getText()));
-		ctSanPhamDTO ctsp = ctSanPhamDAO.getInstance().selectById(Integer.parseInt(txt_maSP.getText()));
+		SanPhamDTO sp = spBUS.laySanPhamTheoId(Integer.parseInt(txt_maSP.getText()));
+		ctSanPhamDTO ctsp = ctspBUS.timctSanPhamTheoId(Integer.parseInt(txt_maSP.getText()));
 		
 		JLabel lbl_tenSP = new JLabel("Tên sản phẩm");
 		lbl_tenSP.setFont(new Font("Tahoma", Font.PLAIN, 14));
@@ -175,7 +185,7 @@ public class xemHoaDon_Dialog extends JDialog{
 		
 		//tên của người đang đăng nhập
 		
-		txt_tenNV = new JTextField(String.valueOf(HoaDonDAO.getInstance().selectById(idHD).getNHANVIEN_idNV()));
+		txt_tenNV = new JTextField(String.valueOf(hdBUS.getHoaDonById(idHD).getNHANVIEN_idNV()));
 		txt_tenNV.setColumns(10);
 		txt_tenNV.setBounds(907, 188, 132, 27);
 		getContentPane().add(txt_tenNV);
@@ -185,7 +195,7 @@ public class xemHoaDon_Dialog extends JDialog{
 		lbl_KH.setBounds(907, 250, 94, 14);
 		getContentPane().add(lbl_KH);
 		
-		txt_idKH = new JTextField(String.valueOf(HoaDonDAO.getInstance().selectById(idHD).getKHACHHANG_idKH()));
+		txt_idKH = new JTextField(String.valueOf(hdBUS.getHoaDonById(idHD).getKHACHHANG_idKH()));
 		txt_idKH.setColumns(10);
 		txt_idKH.setBounds(907, 280, 132, 27);
 		getContentPane().add(txt_idKH);
@@ -234,7 +244,7 @@ public class xemHoaDon_Dialog extends JDialog{
                 int selectedCustomerId = dskhdialog.getSelectedCustomerId();
                 System.out.println(selectedCustomerId);
                 if (selectedCustomerId != 0) {
-                    int idKH = KhachHangDAO.getInstance().selectById(selectedCustomerId).getIdKhachHang();
+                    int idKH = khBUS.selectKh(selectedCustomerId).getIdKhachHang();
                     txt_idKH.setText(String.valueOf(idKH));
                 }
 			}
@@ -268,8 +278,8 @@ public class xemHoaDon_Dialog extends JDialog{
 		
 		JComboBox cbb_baohanh = new JComboBox();
 		DefaultComboBoxModel<String> cbbmodel = new DefaultComboBoxModel<>();
-		PhieuBaoHanhDAO phieuBaoHanhDAO = PhieuBaoHanhDAO.getInstance();
-		ArrayList<PhieuBaoHanhDTO> dsPhieuBH = phieuBaoHanhDAO.selectAll();
+		PhieuBaoHanhBUS phieuBaoHanhBUS = new PhieuBaoHanhBUS();
+		ArrayList<PhieuBaoHanhDTO> dsPhieuBH = phieuBaoHanhBUS.getAllPhieuBaoHanh();
 		for (PhieuBaoHanhDTO phieuBH : dsPhieuBH) {
 		    cbbmodel.addElement(phieuBH.getThoiGian());
 		}

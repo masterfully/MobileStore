@@ -16,7 +16,7 @@ import javax.swing.JTable;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.table.DefaultTableModel;
 
-import BUS.SanPham_BUS;
+import BUS.SanPhamBUS;
 import DAO.SanPhamDAO;
 import DTO.SanPhamDTO;
 import GUI.Dialog.SanPhamDialog.suaSanPham_Dialog;
@@ -37,7 +37,7 @@ public class SanPhamGUI extends JPanel {
     DefaultTableModel tblModel;
     public SanPhamDAO spDAO = new SanPhamDAO();
     public themSanPham_Dialog spDialog = new themSanPham_Dialog();
-
+    public SanPhamBUS spBUS = new SanPhamBUS();
 
     public static String removeDiacriticsAndSpaces(String str) {
         str = Normalizer.normalize(str, Normalizer.Form.NFD);
@@ -47,7 +47,7 @@ public class SanPhamGUI extends JPanel {
     }
 
     public void loadDataTalbe() {
-        ArrayList<SanPhamDTO> result = spDAO.selectByCondition("isDelete = 0");
+        ArrayList<SanPhamDTO> result = spBUS.layDanhSachSanPham();
         System.out.println("Number of records retrieved: " + result.size());
         tblModel.setRowCount(0); // Clear existing data
         for (SanPhamDTO sp : result) {
@@ -58,14 +58,14 @@ public class SanPhamGUI extends JPanel {
     public void loadDataTalbe(String t) {
         String str = removeDiacriticsAndSpaces(t.toLowerCase());
         if (str.equalsIgnoreCase("tatca")) {
-            ArrayList<SanPhamDTO> result = spDAO.selectByCondition("tenSP LIKE '%%'");
+            ArrayList<SanPhamDTO> result = spBUS.timKiemSanPhamTheoDieuKien("tenSP LIKE '%%'");
             System.out.println("Number of records retrieved: " + result.size());
             tblModel.setRowCount(0); // Clear existing data
             for (SanPhamDTO sp : result) {
                 tblModel.addRow(new Object[]{sp.getIdSP(), sp.getTenSP(), sp.getSoLuong(), sp.getMauSac()});
             }
         }
-        ArrayList<SanPhamDTO> result = spDAO.selectByCondition("tenSP = '" + t + "'");
+        ArrayList<SanPhamDTO> result = spBUS.timKiemSanPhamTheoDieuKien("tenSP = '" + t + "'");
         System.out.println("Number of records retrieved: " + result.size());
         tblModel.setRowCount(0); // Clear existing data
         for (SanPhamDTO sp : result) {
@@ -232,7 +232,7 @@ public class SanPhamGUI extends JPanel {
         textField_timkiem.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 String t = textField_timkiem.getText();
-                ArrayList<SanPhamDTO> result = spDAO.selectByCondition("tenSP LIKE '%" + t + "%'");
+                ArrayList<SanPhamDTO> result = spBUS.timKiemSanPhamTheoDieuKien("tenSP LIKE '%" + t + "%'");
                 System.out.println("Number of records retrieved: " + result.size());
                 tblModel.setRowCount(0); // Clear existing data
                 for (SanPhamDTO sp : result) {

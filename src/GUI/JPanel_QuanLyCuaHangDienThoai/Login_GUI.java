@@ -73,7 +73,7 @@ public class Login_GUI extends JPanel{
 					if(tk.getUsername().equals(txt_username.getText())) {
 						flag = true;
 						password = tk.getPassword();
-						idNVHienTai = tk.getIdNV();
+						idNVHienTai = tk.getNHANVIEN_idNV();
 						break;
 					}
 				}
@@ -110,7 +110,7 @@ public class Login_GUI extends JPanel{
 					if(tk.getUsername().equals(txt_username.getText())) {
 						flag = true;
 						password = tk.getPassword();
-						idNVHienTai = tk.getIdNV();
+						idNVHienTai = tk.getNHANVIEN_idNV();
 						break;
 					}
 				}

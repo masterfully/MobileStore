@@ -12,6 +12,9 @@ import javax.swing.SwingConstants;
 import javax.swing.SwingUtilities;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
+import BUS.IMEIBUS;
+import BUS.SanPhamBUS;
+import BUS.ctSanPhamBUS;
 import DAO.IMEIDAO;
 import DAO.SanPhamDAO;
 import DAO.ctSanPhamDAO;
@@ -45,8 +48,9 @@ public class themSanPham_Dialog extends JDialog{
 	private JTextField txt_camerasau;
 	private JTextField txt_cameratruoc;
 	private String imagePath;
-	
-	
+	public SanPhamBUS spBUS = new SanPhamBUS();
+	public ctSanPhamBUS ctspBUS = new ctSanPhamBUS();
+	public IMEIBUS imeiBUS = new IMEIBUS();
 	public boolean isNumeric(String str) {
         if (str == null || str.length() == 0) {
             return false;
@@ -225,7 +229,7 @@ public class themSanPham_Dialog extends JDialog{
 		btn_them.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				// Định nghĩa biểu thức chính quy cho các dạng sản phẩm
-				String pattern = "^(iPhone)\\s(X|XS|XR|XS\\sMax)(\\s(Plus|Pro|mini))?(\\s\\(\\d{4}\\))?$";
+				String pattern = "^(iPhone)\\s(11|12|13|14|15|X|XS|XR|XS\\sMax)(\\s(Plus|Pro|mini))?(\\s\\(\\d{4}\\))?$";
 
 		        // Kiểm tra đầu vào với biểu thức chính quy
 		        Pattern regex = Pattern.compile(pattern);
@@ -249,6 +253,7 @@ public class themSanPham_Dialog extends JDialog{
 		        else if(txt_chip.getText().equals("") || txt_pin.getText().equals("") || txt_hdh.getText().equals("") || txt_camerasau.getText().equals("") || txt_cameratruoc.getText().equals("") || imagePath.equals("")) {
 		        	JOptionPane.showMessageDialog(null, "Vui lòng nhập đầy đủ thông tin");
 		        }
+		        else {
 				int idsp = SanPhamDAO.getInstance().selectAllAll().get(SanPhamDAO.getInstance().selectAllAll().size()-1).getIdSP() +1;
 				String tensp = txt_tensp.getText();
 				int giaNhap = Integer.parseInt(txt_gianhap.getText());
@@ -257,7 +262,7 @@ public class themSanPham_Dialog extends JDialog{
 				String mauSac = (String) cbb_mausac.getSelectedItem();
 				String hinhAnh =  extractString.catLinkAnh(imagePath);
 				SanPhamDTO spdto = new SanPhamDTO(idsp, tensp, giaNhap, giaBan, soLuong, hinhAnh, mauSac, 0);
-				SanPhamDAO.getInstance().insert(spdto);
+				spBUS.themSanPham(spdto);
 				
 				
 				String chip = txt_chip.getText();
@@ -270,11 +275,12 @@ public class themSanPham_Dialog extends JDialog{
 				String rom = (String) cbb_rom.getSelectedItem();
 				int SANPHAM_idSP = idsp;
 				ctSanPhamDTO ctspdto = new ctSanPhamDTO(chip, pin, manHinh, hdh, cameraSau, cameraTruoc, ram, rom, SANPHAM_idSP);
-				ctSanPhamDAO.getInstance().insert(ctspdto);
+				ctspBUS.themctSanPham(ctspdto);
 				
 				int maIMEI = IMEIDAO.getInstance().selectAll().get(IMEIDAO.getInstance().selectAll().size()-1).getMaIMEI() +1;
 				IMEIDTO imei = new IMEIDTO(maIMEI, idsp);
-				IMEIDAO.getInstance().insert(imei);
+				imeiBUS.themIMEI(imei);
+		        }
 			}
 		});
 		btn_them.setBounds(450, 400, 129, 23);
@@ -290,10 +296,11 @@ public class themSanPham_Dialog extends JDialog{
 		getContentPane().add(btn_huybo);
 	}
 	
+
 	
 	public themSanPham_Dialog(int idSP) {
-		SanPhamDTO spdto = SanPhamDAO.getInstance().selectById(idSP);
-		ctSanPhamDTO ctspdto = ctSanPhamDAO.getInstance().selectById(idSP);
+		SanPhamDTO spdto = spBUS.laySanPhamTheoId(idSP);
+		ctSanPhamDTO ctspdto = ctspBUS.timctSanPhamTheoId(idSP);
 		getContentPane().setLayout(null);
 		JLabel lbl_hinhAnh = new JLabel("");
 		lbl_hinhAnh.setIcon(new ImageIcon("C:\\Users\\Smile\\eclipse-workspace\\MobileStore\\" + spdto.getHinhAnh()));
@@ -473,11 +480,10 @@ public class themSanPham_Dialog extends JDialog{
 		JButton btn_them = new JButton("Thêm");
 		btn_them.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-//				thêm mới vô bảng IMEI
-				IMEIDAO IMEIDAO = new IMEIDAO();
-				int maIMEI = IMEIDAO.getInstance().selectAll().get(IMEIDAO.getInstance().selectAll().size()-1).getMaIMEI() +1;
+				// Thêm mới vào bảng IMEI
+				int maIMEI = imeiBUS.layDanhSachIMEI().get(imeiBUS.layDanhSachIMEI().size() - 1).getMaIMEI() + 1;
 				IMEIDTO IMEI = new IMEIDTO(maIMEI, idSP, 0);
-				IMEIDAO.getInstance().insert(IMEI);
+				imeiBUS.themIMEI(IMEI);
 			}
 		});
 		btn_them.setBounds(469, 400, 129, 23);
@@ -492,7 +498,7 @@ public class themSanPham_Dialog extends JDialog{
 		btn_huybo.setBounds(637, 400, 129, 23);
 		getContentPane().add(btn_huybo);
 	}
-	
+
 	public static void main(String[] args) {
         // Tạo một JFrame để chứa JDialog
         JFrame frame = new JFrame();

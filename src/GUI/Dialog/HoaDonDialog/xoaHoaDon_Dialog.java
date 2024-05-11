@@ -12,6 +12,7 @@ import javax.swing.SwingUtilities;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.DefaultTableModel;
 
+import BUS.HoaDonBUS;
 import DAO.HoaDonDAO;
 import DAO.SanPhamDAO;
 import DAO.ctSanPhamDAO;
@@ -31,9 +32,9 @@ import java.util.ArrayList;
 import java.awt.event.ActionEvent;
 
 public class xoaHoaDon_Dialog extends JDialog{
+	public HoaDonBUS hdBUS = new HoaDonBUS();
 	
 	public xoaHoaDon_Dialog(int idHD) {
-		HoaDonDTO spdto = HoaDonDAO.getInstance().selectById(idHD);
 		getContentPane().setLayout(null);
 		JLabel lbl_suasp = new JLabel("XÓA HÓA ĐƠN " + String.valueOf(idHD));
 		lbl_suasp.setBounds(0, 0, 446, 17);
@@ -47,7 +48,7 @@ public class xoaHoaDon_Dialog extends JDialog{
 		getContentPane().add(btn_xoa);
 		btn_xoa.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				HoaDonDAO.getInstance().delete(Integer.toString(idHD));
+				hdBUS.deleteHoaDon(Integer.toString(idHD));
 			}
 		});
 		

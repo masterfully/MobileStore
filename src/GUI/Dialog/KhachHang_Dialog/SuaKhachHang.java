@@ -1,5 +1,6 @@
 package GUI.Dialog.KhachHang_Dialog;
 
+import BUS.KhachHangBUS;
 import DAO.KhachHangDAO;
 import DTO.KhachHangDTO;
 
@@ -14,8 +15,6 @@ public class SuaKhachHang extends JDialog {
     private JTextField text_TenKH;
     private JTextField text_diaChi;
     private JTextField text_sdt;
-
-    private KhachHangDTO khachHang;
 
     private int idKH;
     private JPanel contentPane;
@@ -106,11 +105,11 @@ public class SuaKhachHang extends JDialog {
                     khachHangMoi.setSdtKhachHang(Integer.parseInt(sdt));
                     khachHangMoi.setIsDelete(1);
 
-                    // Gọi phương thức cập nhật từ BUS
-                    int ketQua = KhachHangDAO.getInstance().update(khachHangMoi);
+                    KhachHangBUS khachHangBUS = new KhachHangBUS();
+                    boolean ketQua = khachHangBUS.update(khachHangMoi);
 
                     // Hiển thị thông báo kết quả
-                    if (ketQua > 0) {
+                    if (ketQua) {
                         JOptionPane.showMessageDialog(null, "Sửa thông tin khách hàng thành công!");
                         setVisible(false);
                     } else {

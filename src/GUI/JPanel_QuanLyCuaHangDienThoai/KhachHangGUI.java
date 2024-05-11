@@ -1,8 +1,10 @@
 package GUI.JPanel_QuanLyCuaHangDienThoai;
 
+import BUS.KhachHangBUS;
 import DAO.KhachHangDAO;
 import DTO.KhachHangDTO;
-import GUI.Dialog.KhachHang_Dialog.*;
+import GUI.Dialog.KhachHang_Dialog.SuaKhachHang;
+import GUI.Dialog.KhachHang_Dialog.ThemKhachHang;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -53,17 +55,6 @@ public class KhachHangGUI extends JPanel {
                     // Lấy thông tin của khách hàng được chọn
                     DefaultTableModel model = (DefaultTableModel) table_KH.getModel();
                     int idKH = (int) model.getValueAt(selectedRow, 0);
-
-                    // Tạo dialog sửa và truyền thông tin của khách hàng vào
-//                    KhachHangDTO khachHang_moi = new KhachHangDTO();
-//                    khachHang_moi.setIdKhachHang(idKhachHang);
-//                    khachHang_moi.setTenKhachHang(tenKhachHang);
-//                    khachHang_moi.setDiaChiKhachHang(diaChi);
-//                    khachHang_moi.setSdtKhachHang(sdtKhachHang);
-
-                    // Tạo một JDialog để chứa SuaKhachHang_Dialog
-
-
                     // Thêm panel SuaKhachHang_Dialog vào dialog
                     SuaKhachHang suaKhachHang = new SuaKhachHang(idKH);
                     // Hiển thị JDialog
@@ -84,15 +75,20 @@ public class KhachHangGUI extends JPanel {
                     int idKhachHang = (int) tblModel.getValueAt(selectedRow, 0);
                     int confirm = JOptionPane.showConfirmDialog(null, "Bạn chắc chắn muốn xóa khách hàng có ID: " + idKhachHang + "?", "Xác nhận xóa", JOptionPane.YES_NO_OPTION);
                     if (confirm == JOptionPane.YES_OPTION) {
-                        khachHangDAO.delete(idKhachHang);
-                        loadDataTalbe();
+                        KhachHangBUS khachHangBUS = new KhachHangBUS();
+                        boolean result = khachHangBUS.delete(idKhachHang);
+                        if (result) {
+                            loadDataTalbe();
+                        } else {
+                            JOptionPane.showMessageDialog(null, "Đã xảy ra lỗi khi xóa khách hàng!");
+                        }
                     }
-
                 } else {
                     JOptionPane.showMessageDialog(null, "Vui lòng chọn khách hàng cần xóa!");
                 }
             }
         });
+
         panel.add(btn_xoaKH);
 
         JButton btnRefresh = new JButton("Tải lại");
@@ -127,7 +123,7 @@ public class KhachHangGUI extends JPanel {
     }
 
     public void loadDataTalbe() {
-        ArrayList<KhachHangDTO> khachHangList = khachHangDAO.selectAllActive();
+        ArrayList<KhachHangDTO> khachHangList = new KhachHangBUS().loadDataFromDatabase();
         tblModel.setRowCount(0);
         for (KhachHangDTO khachHang : khachHangList) {
             tblModel.addRow(new Object[]{
@@ -135,12 +131,13 @@ public class KhachHangGUI extends JPanel {
         }
     }
 
+
     public void timKiemKhachHang() {
         String keyword = txtTimKiem.getText().trim();
         if (keyword.isEmpty()) {
             loadDataTalbe(); // hiển thị tất cả khách hàng nếu không có từ khóa tìm kiếm
         } else {
-            ArrayList<KhachHangDTO> khachHangList = khachHangDAO.search(keyword);
+            ArrayList<KhachHangDTO> khachHangList = new KhachHangBUS().search(keyword);
             tblModel.setRowCount(0);
             for (KhachHangDTO khachHang : khachHangList) {
                 tblModel.addRow(new Object[]{khachHang.getIdKhachHang(), khachHang.getTenKhachHang(), khachHang.getDiaChiKhachHang(), khachHang.getSdtKhachHang()});
@@ -148,16 +145,6 @@ public class KhachHangGUI extends JPanel {
         }
     }
 
-    public static void main(String[] args) {
-        SwingUtilities.invokeLater(() -> {
-            JFrame frame = new JFrame("Quản lý khách hàng");
-            frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-            frame.setSize(600, 400);
 
-            KhachHangGUI khachHangGUI = new KhachHangGUI();
-
-            frame.getContentPane().add(khachHangGUI);
-            frame.setVisible(true);
-        });
-    }
+    
 }

@@ -91,7 +91,7 @@ public class DangKy_Dialog extends JDialog{
 					}
 				}
 				for(TaiKhoanDTO tk : tkList) {
-					if(idNV==tk.getIdNV()) { //Nhân viên này đã có tài khoản
+					if(idNV==tk.getNHANVIEN_idNV()) { //Nhân viên này đã có tài khoản
 						flagTK =false;
 						break;
 					}
@@ -119,7 +119,7 @@ public class DangKy_Dialog extends JDialog{
 				else if(flagUsername && flagTK && flagNV) {
 					String userName = txt_username.getText();
 					String password = passwordField.getText();
-					String trangThai = "Hoạt động";
+					int trangThai = 1;
 					String chucVu = "Nhân viên quản lí";
 					TaiKhoanDTO tk = new TaiKhoanDTO(userName, password, trangThai, chucVu, idNV);
 					TaiKhoanDAO.getInstance().insert(tk);

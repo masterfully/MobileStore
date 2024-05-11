@@ -236,7 +236,7 @@ public class suaSanPham_Dialog extends JDialog{
 		getContentPane().add(btn_sua);
 		btn_sua.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				String pattern = "^(iPhone)\\s(X|XS|XR|XS\\sMax)(\\s(Plus|Pro|mini))?(\\s\\(\\d{4}\\))?$";
+				String pattern = "^(iPhone)\\s(11|12|13|14|15|X|XS|XR|XS\\sMax)(\\s(Plus|Pro|mini))?(\\s\\(\\d{4}\\))?$";
 
 
 		        // Kiểm tra đầu vào với biểu thức chính quy
@@ -261,6 +261,7 @@ public class suaSanPham_Dialog extends JDialog{
 		        else if(txt_chip.getText().equals("") || txt_pin.getText().equals("") || txt_hdh.getText().equals("") || txt_camerasau.getText().equals("") || txt_cameratruoc.getText().equals("") || imagePath.equals("")) {
 		        	JOptionPane.showMessageDialog(null, "Vui lòng nhập đầy đủ thông tin");
 		        }
+		        else {
 				int idsp = idSP;
 				String tensp = txt_tensp.getText();
 				int giaNhap = Integer.parseInt(txt_gianhap.getText());
@@ -287,6 +288,7 @@ public class suaSanPham_Dialog extends JDialog{
 				String rom = (String) cbb_rom.getSelectedItem();
 				ctSanPhamDTO ctsp = new ctSanPhamDTO(chip, pin, manHinh, hdh, sau, truoc, ram, rom, idsp);
 				ctSanPhamDAO.getInstance().update(ctsp);
+		        }
 			}
 		});
 		

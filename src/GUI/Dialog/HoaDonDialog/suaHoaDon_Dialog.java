@@ -1,7 +1,7 @@
 package GUI.Dialog.HoaDonDialog;
 
 import javax.swing.JDialog;
-import com.toedter.calendar.demo.DateChooserPanel;
+//import com.toedter.calendar.demo.DateChooserPanel;
 
 import DAO.HoaDonDAO;
 import DAO.ctHoaDonDAO;
@@ -22,6 +22,13 @@ import DTO.ctSanPhamDTO;
 import com.toedter.calendar.JDateChooser;
 import java.awt.BorderLayout;
 import com.toedter.calendar.JDayChooser;
+
+import BUS.HoaDonBUS;
+import BUS.KhuyenMaiBUS;
+import BUS.PhieuBaoHanhBUS;
+import BUS.SanPhamBUS;
+import BUS.ctHoaDonBUS;
+
 import javax.swing.JTextField;
 import javax.swing.JButton;
 import javax.swing.ImageIcon;
@@ -57,8 +64,13 @@ public class suaHoaDon_Dialog extends JDialog{
 	private JTextField txt_tenNV;
 	private JTextField txt_idKH;
 	private JTextField txt_tongtien;
-    public SanPhamDAO spDAO = new SanPhamDAO();
+    public SanPhamBUS spBUS = new SanPhamBUS();
+    public HoaDonBUS hoaDonBUS = new HoaDonBUS();
+    public ctHoaDonBUS ctHoaDonBUS = new ctHoaDonBUS();
+    public KhuyenMaiBUS kmBUS = new KhuyenMaiBUS();
+    public PhieuBaoHanhBUS bhBUS = new PhieuBaoHanhBUS();
     private JTextField txt_soluong;
+    private JTextField txt_donGia;
 	
     public boolean isNumeric(String str) {
         if (str == null || str.length() == 0) {
@@ -73,7 +85,7 @@ public class suaHoaDon_Dialog extends JDialog{
     }
     
 	public void loadDataTalbe() {
-        ArrayList<SanPhamDTO> result = spDAO.selectAll();
+        ArrayList<SanPhamDTO> result = spBUS.layDanhSachSanPham();
         tblModel.setRowCount(0); 
         for (SanPhamDTO sp : result) {
             tblModel.addRow(new Object[]{sp.getIdSP(), sp.getTenSP()});
@@ -97,7 +109,7 @@ public class suaHoaDon_Dialog extends JDialog{
 		txt_timkiem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String t = txt_timkiem.getText();
-                ArrayList<SanPhamDTO> result = spDAO.selectByCondition("tenSP LIKE '%" + t + "%'");
+                ArrayList<SanPhamDTO> result = spBUS.timKiemSanPhamTheoDieuKien("tenSP LIKE '%" + t + "%'");
                 tblModel.setRowCount(0); 
                 for (SanPhamDTO sp : result) {
                     tblModel.addRow(new Object[]{sp.getIdSP(), sp.getTenSP()});
@@ -367,6 +379,17 @@ public class suaHoaDon_Dialog extends JDialog{
 		int kmDangChon = (int) KhuyenMaiDAO.getInstance().selectByIdKM(maKM).getPhanTram();
 		cbb_khuyenmai.setSelectedItem(kmDangChon);
 		
+		JLabel lbl_donGia = new JLabel("Đơn giá");
+		lbl_donGia.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		lbl_donGia.setBounds(498, 329, 94, 14);
+		getContentPane().add(lbl_donGia);
+		
+		txt_donGia = new JTextField();
+		txt_donGia.setEditable(false);
+		txt_donGia.setColumns(10);
+		txt_donGia.setBounds(498, 353, 96, 20);
+		getContentPane().add(txt_donGia);
+		
 		table_SP.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
 		    @Override
 		    public void valueChanged(ListSelectionEvent e) {
@@ -377,12 +400,14 @@ public class suaHoaDon_Dialog extends JDialog{
 		            txt_soluong.setText("0");// Lấy idSP của hàng đã chọn
 		            // Tại đây, bạn có thể sử dụng idSP để cập nhật thông tin sản phẩm khác
 		            // Ví dụ:
+		            DecimalFormat df = new DecimalFormat("#.##");
 		            SanPhamDTO sp = SanPhamDAO.getInstance().selectById(idSP);
 		            ctSanPhamDTO ctsp = ctSanPhamDAO.getInstance().selectById(idSP);
 		            txt_maSP.setText(String.valueOf(sp.getIdSP()));
 		            txt_tenSP.setText(sp.getTenSP());
 		            txt_rom.setText(ctsp.getRom());
 		            txt_mauSac.setText(sp.getMauSac());
+		            txt_donGia.setText(String.valueOf(df.format(sp.getGiaBan())));
 		            int soluong = Integer.parseInt(txt_soluong.getText());
 					int soluongton = sp.getSoLuong();
 					txt_soluong.setText(String.valueOf(soluongton));
@@ -396,7 +421,6 @@ public class suaHoaDon_Dialog extends JDialog{
 					float gia = sp.getGiaBan();
 					int sl = Integer.parseInt(txt_soluong.getText());
 					double tongTien = gia * sl - gia * sl * km / 100;
-					DecimalFormat df = new DecimalFormat("#.##");
 					txt_tongtien.setText(df.format(tongTien));
 		        }
 		    }
@@ -405,8 +429,8 @@ public class suaHoaDon_Dialog extends JDialog{
 		txt_soluong.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				int soluong = Integer.parseInt(txt_soluong.getText());
-				int maSanPhamDangHien = SanPhamDAO.getInstance().selectById(Integer.parseInt(txt_maSP.getText())).getIdSP();
-				int soluongton = SanPhamDAO.getInstance().selectById(maSanPhamDangHien).getSoLuong();
+				int maSanPhamDangHien = spBUS.laySanPhamTheoId(Integer.parseInt(txt_maSP.getText())).getIdSP();
+				int soluongton = spBUS.laySanPhamTheoId(maSanPhamDangHien).getSoLuong();
 				if (soluong > soluongton) {
 					JOptionPane.showMessageDialog(null, "Vui lòng nhập số lượng hợp lệ", "Lỗi", JOptionPane.ERROR_MESSAGE);
 		            txt_soluong.setText("0"); // Clear the invalid input
@@ -432,29 +456,28 @@ public class suaHoaDon_Dialog extends JDialog{
 				int idNV = Integer.parseInt(txt_tenNV.getText());
 				int idKH = Integer.parseInt(txt_idKH.getText());
 				HoaDonDTO hd = new HoaDonDTO(idHD, java.sql.Date.valueOf(thoiGian), tongTien, idNV, idKH);
-				HoaDonDAO.getInstance().update(hd);
+				hoaDonBUS.updateHoaDon(hd);
 				
 				int sl = Integer.parseInt(txt_soluong.getText());
 				float donGia = sp.getGiaBan();
 				double thanhTien = donGia*sl;
 				Object selectedItem = cbb_khuyenmai.getSelectedItem();
 				int km = Integer.parseInt(selectedItem.toString());
-				int idkm = KhuyenMaiDAO.getInstance().selectById(km).getIdKM();
+				int idkm = kmBUS.getKhuyenMaiById(km).getIdKM();
 				
 				Object selected = cbb_baohanh.getSelectedItem();
 				int thangbh = Integer.parseInt(selected.toString());
-				int idbh = PhieuBaoHanhDAO.getInstance().selectById(thangbh).getIdBaoHanh();
+				int idbh = bhBUS.getPhieuBaoHanhById(thangbh).getIdBaoHanh();
 				int idSanPham = Integer.parseInt(txt_maSP.getText());
 				int idHoaDon = idHD;
 				int soluong = Integer.parseInt(txt_soluong.getText());
 						
 				ctHoaDonDTO cthd = new ctHoaDonDTO(soluong, donGia, thanhTien, idkm, idbh, idSanPham, idHoaDon);
-				ctHoaDonDAO.getInstance().update(cthd);
-				int slTon = SanPhamDAO.getInstance().selectById(idSanPham).getSoLuong();
-				SanPhamDAO.getInstance().updateSoLuongTon(idSanPham, slTon + newcthd.getSoLuong() - soluong);
+				ctHoaDonBUS.updateCTHoaDon(cthd);
+				int slTon = spBUS.laySanPhamTheoId(idSanPham).getSoLuong();
+				spBUS.capNhatSoLuongTon(idSanPham, slTon + newcthd.getSoLuong() - soluong);
 			}
 		});
 	}
-	
 }
 

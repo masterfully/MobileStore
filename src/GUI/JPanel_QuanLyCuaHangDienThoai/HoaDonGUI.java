@@ -19,7 +19,10 @@ import javax.swing.JTable;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.table.DefaultTableModel;
 
-import BUS.SanPham_BUS;
+import BUS.HoaDonBUS;
+import BUS.KhachHangBUS;
+import BUS.NhanVienBUS;
+import BUS.SanPhamBUS;
 import DAO.HoaDonDAO;
 import DAO.KhachHangDAO;
 import DAO.NhanVienDAO;
@@ -59,6 +62,9 @@ public class HoaDonGUI extends JPanel {
     public themSanPham_Dialog hdDialog = new themSanPham_Dialog();
     private JTextField txt_tuTien;
     private JTextField txt_denTien;
+    public HoaDonBUS hoaDonBUS = new HoaDonBUS();
+    public KhachHangBUS khachHangBUS = new KhachHangBUS();
+    public NhanVienBUS nhanVienBUS = new NhanVienBUS();
 
     public static String convertDateFormat(String dateString) {
         // Định dạng của ngày ban đầu
@@ -86,7 +92,7 @@ public class HoaDonGUI extends JPanel {
 
     public void loadDataTalbe() {
     	DecimalFormat df = new DecimalFormat("#,###.##");
-        ArrayList<HoaDonDTO> result = hdDAO.selectAll();
+        ArrayList<HoaDonDTO> result = hoaDonBUS.getAllHoaDon();
         System.out.println("Number of records retrieved: " + result.size());
         tblModel.setRowCount(0); // Clear existing data
         for (HoaDonDTO hd : result) {
@@ -98,7 +104,7 @@ public class HoaDonGUI extends JPanel {
 
     public void loadDataTalbeByCondition(String t) {
     	DecimalFormat df = new DecimalFormat("#,###.##");//where
-        ArrayList<HoaDonDTO> result = hdDAO.selectByCondition(t);
+        ArrayList<HoaDonDTO> result = hoaDonBUS.getHoaDonByCondition(t);
         System.out.println("Number of records retrieved: " + result.size());
         tblModel.setRowCount(0); // Clear existing data
         for (HoaDonDTO hd : result) {
@@ -113,7 +119,7 @@ public class HoaDonGUI extends JPanel {
         java.sql.Date sqlEndDate = new java.sql.Date(end.getTime());
 
         DecimalFormat df = new DecimalFormat("#,###.##");
-        ArrayList<HoaDonDTO> result = hdDAO.selectFromDayToDay(sqlStartDate, sqlEndDate);
+        ArrayList<HoaDonDTO> result = hoaDonBUS.getHoaDonFromDayToDay(sqlStartDate, sqlEndDate);
         System.out.println("Number of records retrieved: " + result.size());
         tblModel.setRowCount(0); // Clear existing data
         for (HoaDonDTO hd : result) {
@@ -123,7 +129,7 @@ public class HoaDonGUI extends JPanel {
         }
     }
     private DefaultComboBoxModel<String> loadKhachHangData() {
-        ArrayList<KhachHangDTO> danhSachKhachHang = KhachHangDAO.getInstance().selectAll();
+        ArrayList<KhachHangDTO> danhSachKhachHang = khachHangBUS.getAll();
         DefaultComboBoxModel<String> model = new DefaultComboBoxModel<>();
         for (KhachHangDTO kh : danhSachKhachHang) {
             String item = kh.getIdKhachHang() + " - " + kh.getTenKhachHang();
@@ -133,7 +139,7 @@ public class HoaDonGUI extends JPanel {
     }
     
     private DefaultComboBoxModel<String> loadNhanVienData() {
-        ArrayList<NhanVienDTO> danhSachNhanVien = NhanVienDAO.getInstance().selectAll();
+        ArrayList<NhanVienDTO> danhSachNhanVien = nhanVienBUS.getAll();
         DefaultComboBoxModel<String> model = new DefaultComboBoxModel<>();
         for (NhanVienDTO nv : danhSachNhanVien) {
             String item = nv.getIdNV() + " - " + nv.getHoTen();

@@ -3,7 +3,7 @@ package DTO;
 import java.util.Objects;
 
 public class KhachHangDTO {
-	private int idKhachHang;
+    private int idKhachHang;
     private String tenKhachHang;
     private String diaChiKhachHang;
     private int sdtKhachHang;
@@ -17,15 +17,7 @@ public class KhachHangDTO {
         this.isDelete = isDelete;
     }
 
-    
-	public KhachHangDTO(int idKhachHang, String tenKhachHang, String diaChiKhachHang, int sdtKhachHang) {
-		super();
-		this.idKhachHang = idKhachHang;
-		this.tenKhachHang = tenKhachHang;
-		this.diaChiKhachHang = diaChiKhachHang;
-		this.sdtKhachHang = sdtKhachHang;
-	}
-	public void setIdKhachHang(int idKhachHang) {
+    public void setIdKhachHang(int idKhachHang) {
         this.idKhachHang = idKhachHang;
     }
 
@@ -87,7 +79,4 @@ public class KhachHangDTO {
     public int hashCode() {
         return Objects.hash(getIdKhachHang(), getTenKhachHang(), getDiaChiKhachHang(), getSdtKhachHang(), getIsDelete());
     }
-
-	    
-		
 }

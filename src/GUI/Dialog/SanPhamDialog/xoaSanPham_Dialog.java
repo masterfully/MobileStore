@@ -12,6 +12,7 @@ import javax.swing.SwingUtilities;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.DefaultTableModel;
 
+import BUS.SanPhamBUS;
 import DAO.SanPhamDAO;
 import DAO.ctSanPhamDAO;
 import DTO.SanPhamDTO;
@@ -31,6 +32,7 @@ import java.awt.event.ActionEvent;
 public class xoaSanPham_Dialog extends JDialog{
 	private String imagePath;
 	private int idSP;
+	public SanPhamBUS spBUS = new SanPhamBUS();
 	
 	public xoaSanPham_Dialog(int idSP) {
 		SanPhamDTO spdto = SanPhamDAO.getInstance().selectById(idSP);
@@ -47,7 +49,7 @@ public class xoaSanPham_Dialog extends JDialog{
 		getContentPane().add(btn_xoa);
 		btn_xoa.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				SanPhamDAO.getInstance().delete(Integer.toString(idSP));
+				spBUS.xoaSanPham(Integer.toString(idSP));
 			}
 		});
 		

@@ -1,216 +1,24 @@
 package DAO;
 
 import DTO.KhachHangDTO;
-import config.JDBCUtil;
+import config.*;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-//
-//public class KhachHangDAO implements DAOInterface<KhachHangDTO> {
-//
-//    public static KhachHangDAO getInstance() {
-//        return new KhachHangDAO();
-//    }
-//
-//    private KhachHangDAO() {
-//    }
-//
-//
-//    @Override
-//    public int insert(KhachHangDTO khachHangDto) {
-//        int ketQua = 0;
-//        try {
-//            Connection con = JDBCUtil.getConnection();
-//            String sql = "INSERT INTO KhachHang (IDKhachHang, tenKhachHang, diaChi, sdt, isDelete) VALUES (?, ?, ?, ?, ?)";
-//            PreparedStatement pst = con.prepareStatement(sql);
-//            pst.setString(1, khachHangDto.getIDKhachHang());
-//            pst.setString(2, khachHangDto.getTenKhachHang());
-//            pst.setString(3, khachHangDto.getDiaChi());
-//            pst.setString(4, khachHangDto.getSdt());
-//            pst.setInt(5, khachHangDto.getIsDelete());
-//            ketQua = pst.executeUpdate();
-//            System.out.println("Đã thực thi: " + sql);
-//            System.out.println("Đã thay đổi " + ketQua + " dòng");
-//            JDBCUtil.closeConnection(con);
-//        } catch (SQLException e) {
-//            Logger.getLogger(KhachHangDAO.class.getName()).log(Level.SEVERE, null, e);
-//        }
-//        return ketQua;
-//    }
-//
-//    @Override
-//    public int update(KhachHangDTO khachHangDto) {
-//        int ketQua = 0;
-//        try {
-//            Connection con = JDBCUtil.getConnection();
-//            String sql = "UPDATE KhachHang SET tenKhachHang = ?, diaChi = ?, sdt = ?, isDelete = ? WHERE IDKhachHang = ?";
-//            PreparedStatement pst = con.prepareStatement(sql);
-//            pst.setString(1, khachHangDto.getTenKhachHang());
-//            pst.setString(2, khachHangDto.getDiaChi());
-//            pst.setString(3, khachHangDto.getSdt());
-//            pst.setInt(4, khachHangDto.getIsDelete());
-//            pst.setString(5, khachHangDto.getIDKhachHang());
-//            ketQua = pst.executeUpdate();
-//            System.out.println("Đã thực thi: " + sql);
-//            System.out.println("Đã thay đổi " + ketQua + " dòng");
-//            JDBCUtil.closeConnection(con);
-//        } catch (SQLException e) {
-//            Logger.getLogger(KhachHangDAO.class.getName()).log(Level.SEVERE, null, e);
-//        }
-//        return ketQua;
-//    }
-//
-//
-//    @Override
-//    public int delete(String idKhachHang) {
-//        int ketQua = 0;
-//        try {
-//            Connection con = JDBCUtil.getConnection();
-//            String sql = "UPDATE KhachHang SET isDelete = 1 WHERE IDKhachHang = ?";
-//            PreparedStatement pst = con.prepareStatement(sql);
-//            pst.setString(1, idKhachHang);
-//            ketQua = pst.executeUpdate();
-//            System.out.println("Đã thực thi: " + sql);
-//            System.out.println("Đã thay đổi " + ketQua + " dòng");
-//            JDBCUtil.closeConnection(con);
-//        } catch (SQLException e) {
-//            Logger.getLogger(KhachHangDAO.class.getName()).log(Level.SEVERE, null, e);
-//        }
-//        return ketQua;
-//    }
-//
-//
-//    @Override
-//    public ArrayList<KhachHangDTO> selectAll() {
-//        ArrayList<KhachHangDTO> khachHangList = new ArrayList<>();
-//        try {
-//            Connection con = JDBCUtil.getConnection();
-//            String sql = "SELECT * FROM KhachHang";
-//            Statement stmt = con.createStatement();
-//            ResultSet rs = stmt.executeQuery(sql);
-//
-//            while (rs.next()) {
-//                KhachHangDTO khachHang = new KhachHangDTO(
-//                        rs.getInt("idKH"),
-//                        rs.getString("tenKH"),
-//                        rs.getString("diaChi"),
-//                        rs.getInt("sdt")
-//                );
-//                khachHangList.add(khachHang);
-//            }
-//            JDBCUtil.closeConnection(con);
-//        } catch (SQLException e) {
-//            Logger.getLogger(KhachHangDAO.class.getName()).log(Level.SEVERE, null, e);
-//        }
-//        return khachHangList;
-//    }
-//
-//
-//    @Override
-//    public ArrayList<KhachHangDTO> selectByCondition(String condition) {
-//        ArrayList<KhachHangDTO> khachHangList = new ArrayList<>();
-//        try {
-//            Connection con = JDBCUtil.getConnection();
-//            String sql = "SELECT * FROM KhachHang WHERE " + condition;
-//            Statement stmt = con.createStatement();
-//            ResultSet rs = stmt.executeQuery(sql);
-//
-//            while (rs.next()) {
-//                KhachHangDTO khachHang = new KhachHangDTO(
-//                        rs.getString("IDKhachHang"),
-//                        rs.getString("tenKhachHang"),
-//                        rs.getString("diaChi"),
-//                        rs.getString("sdt"),
-//                        rs.getInt("isDelete")
-//                );
-//                khachHangList.add(khachHang);
-//            }
-//            JDBCUtil.closeConnection(con);
-//        } catch (SQLException e) {
-//            Logger.getLogger(KhachHangDAO.class.getName()).log(Level.SEVERE, null, e);
-//        }
-//        return khachHangList;
-//    }
-//
-//
-//    @Override
-//    public KhachHangDTO selectById(int idKhachHang) {
-//        KhachHangDTO khachHang = null;
-//        try {
-//            Connection con = JDBCUtil.getConnection();
-//            String sql = "SELECT * FROM KhachHang WHERE idKH = ?";
-//            PreparedStatement pst = con.prepareStatement(sql);
-//            pst.setInt(1, idKhachHang);
-//            ResultSet rs = pst.executeQuery();
-//
-//            if (rs.next()) {
-//                khachHang = new KhachHangDTO(
-//                        rs.getInt("idKH"),
-//                        rs.getString("tenKH"),
-//                        rs.getString("diaChi"),
-//                        rs.getInt("sdt")
-//                );
-//            }
-//            JDBCUtil.closeConnection(con);
-//        } catch (SQLException e) {
-//            Logger.getLogger(KhachHangDAO.class.getName()).log(Level.SEVERE, null, e);
-//        }
-//        return khachHang;
-//    }
-//    
-//    public int getTotalCustomers() {
-//        int totalCustomers = 0;
-//        try {
-//            Connection con = JDBCUtil.getConnection();
-//            String sql = "SELECT COUNT(*) AS totalCustomers FROM KhachHang";
-//            Statement stmt = con.createStatement();
-//            ResultSet rs = stmt.executeQuery(sql);
-//
-//            if (rs.next()) {
-//                totalCustomers = rs.getInt("totalCustomers");
-//            }
-//
-//            JDBCUtil.closeConnection(con);
-//        } catch (SQLException e) {
-//            Logger.getLogger(KhachHangDAO.class.getName()).log(Level.SEVERE, null, e);
-//        }
-//        return totalCustomers;
-//    }
-//
-//
-//}
-
 
 public class KhachHangDAO implements DAOInterface<KhachHangDTO> {
 
     public static KhachHangDAO getInstance() {
         return new KhachHangDAO();
     }
-    public int getTotalCustomers() {
-        int totalCustomers = 0;
-        try {
-            Connection con = JDBCUtil.getConnection();
-            String sql = "SELECT COUNT(*) AS totalCustomers FROM khachhang";
-            Statement stmt = con.createStatement();
-            ResultSet rs = stmt.executeQuery(sql);
-            if (rs.next()) {
-                totalCustomers = rs.getInt("totalCustomers");
-            }
-            JDBCUtil.closeConnection(con);
-        } catch (SQLException e) {
-            Logger.getLogger(KhachHangDAO.class.getName()).log(Level.SEVERE, null, e);
-        }
-        return totalCustomers;
-    }
-
     @Override
     public int insert(KhachHangDTO t){
         int ketqua = 0;
         try {
             Connection con = JDBCUtil.getConnection();
-            String sql = "INSERT INTO khachhang(idKH, tenKH , diaChi, sdt) VALUES(?,?,?,?)";
+            String sql = "INSERT INTO khachhang(idKH, tenKH , diaChi, sdt, isDelete) VALUES(?,?,?,?,1)";
             PreparedStatement pst = con.prepareStatement(sql);
             pst.setInt(1, t.getIdKhachHang());
             pst.setString(2, t.getTenKhachHang());
@@ -236,19 +44,20 @@ public class KhachHangDAO implements DAOInterface<KhachHangDTO> {
             pst.setInt(4, t.getIdKhachHang());
 
             ketqua = pst.executeUpdate();
-//            JDBCUtil.closeConnection(con);
+            JDBCUtil.closeConnection(con);
         } catch (SQLException e) {
             Logger.getLogger(KhachHangDAO.class.getName()).log(Level.SEVERE, null, e);
         }
         return ketqua;
     }
-    public int delete(int idKhachHang) {
+    @Override
+    public int delete(String idKhachHang) {
         int ketqua = 0;
         try {
             Connection con = JDBCUtil.getConnection();
-            String sql = "delete from khachhang WHERE idKH = ?";
+            String sql = "UPDATE khachhang SET isDelete = 0 WHERE idKH = ?";
             PreparedStatement pst = con.prepareStatement(sql);
-            pst.setInt(1, idKhachHang);
+            pst.setString(1, idKhachHang);
             ketqua = pst.executeUpdate();
             JDBCUtil.closeConnection(con);
         } catch (SQLException e) {
@@ -261,7 +70,7 @@ public class KhachHangDAO implements DAOInterface<KhachHangDTO> {
         ArrayList<KhachHangDTO> khachHangList = new ArrayList<>();
         try {
             Connection con = JDBCUtil.getConnection();
-            String sql = "SELECT * FROM khachhang";
+            String sql = "SELECT * FROM khachhang WHERE isDelete = 1";
             Statement stmt = con.createStatement();
             ResultSet rs = stmt.executeQuery(sql);
 
@@ -270,7 +79,8 @@ public class KhachHangDAO implements DAOInterface<KhachHangDTO> {
                         rs.getInt("idKH"),
                         rs.getString("tenKH"),
                         rs.getString("diaChi"),
-                        rs.getInt("sdt")
+                        rs.getInt("sdt"),
+                        rs.getInt("isDelete")
                 );
                 khachHangList.add(khachHang);
             }
@@ -320,7 +130,8 @@ public class KhachHangDAO implements DAOInterface<KhachHangDTO> {
                         rs.getInt("idKH"),
                         rs.getString("tenKH"),
                         rs.getString("diaChi"),
-                        rs.getInt("sdt")
+                        rs.getInt("sdt"),
+                        rs.getInt("isDelete")
                 );
             }
             JDBCUtil.closeConnection(con);
@@ -353,7 +164,7 @@ public class KhachHangDAO implements DAOInterface<KhachHangDTO> {
         ArrayList<KhachHangDTO> khachHangList = new ArrayList<>();
         try {
             Connection con = JDBCUtil.getConnection();
-            String sql = "SELECT * FROM khachhang WHERE tenKH LIKE ?";
+            String sql = "SELECT * FROM khachhang WHERE isDelete = 1 AND tenKH LIKE ?";
             PreparedStatement pst = con.prepareStatement(sql);
             pst.setString(1, "%" + keyword + "%");
             ResultSet rs = pst.executeQuery();
@@ -362,7 +173,8 @@ public class KhachHangDAO implements DAOInterface<KhachHangDTO> {
                         rs.getInt("idKH"),
                         rs.getString("tenKH"),
                         rs.getString("diaChi"),
-                        rs.getInt("sdt")
+                        rs.getInt("sdt"),
+                        rs.getInt("isDelete")
                 );
                 khachHangList.add(khachHang);
             }
@@ -376,7 +188,7 @@ public class KhachHangDAO implements DAOInterface<KhachHangDTO> {
         ArrayList<KhachHangDTO> khachHangList = new ArrayList<>();
         try {
             Connection con = JDBCUtil.getConnection();
-            String sql = "SELECT * FROM khachhang"; //đã xóa trường isDelete
+            String sql = "SELECT * FROM khachhang WHERE isDelete = 1";
             Statement stmt = con.createStatement();
             ResultSet rs = stmt.executeQuery(sql);
 
@@ -385,8 +197,8 @@ public class KhachHangDAO implements DAOInterface<KhachHangDTO> {
                         rs.getInt("idKH"),
                         rs.getString("tenKH"),
                         rs.getString("diaChi"),
-                        rs.getInt("sdt")
-//                        rs.getInt("isDelete")
+                        rs.getInt("sdt"),
+                        rs.getInt("isDelete")
                 );
                 khachHangList.add(khachHang);
             }
@@ -396,10 +208,23 @@ public class KhachHangDAO implements DAOInterface<KhachHangDTO> {
         }
         return khachHangList;
     }
-	@Override
-	public int delete(String t) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
+    
+    public int getTotalCustomers() {
+      int totalCustomers = 0;
+      try {
+          Connection con = JDBCUtil.getConnection();
+          String sql = "SELECT COUNT(*) AS totalCustomers FROM khachhang";
+          Statement stmt = con.createStatement();
+          ResultSet rs = stmt.executeQuery(sql);
+          if (rs.next()) {
+              totalCustomers = rs.getInt("totalCustomers");
+          }
+          JDBCUtil.closeConnection(con);
+      } catch (SQLException e) {
+          Logger.getLogger(KhachHangDAO.class.getName()).log(Level.SEVERE, null, e);
+      }
+      return totalCustomers;
+  }
 
 }
+
