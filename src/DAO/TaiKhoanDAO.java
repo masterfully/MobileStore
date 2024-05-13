@@ -197,4 +197,19 @@ public class TaiKhoanDAO implements DAOInterface<TaiKhoanDTO> {
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+	public int delete(int idNv) {
+		int kq = 0;
+        try{
+            Connection con = JDBCUtil.getConnection();
+            String sql = "update taikhoan set trangThai = 0 where NHANVIEN_idNV = ?";
+            PreparedStatement ps =  con.prepareStatement(sql);
+            ps.setInt(1, idNv);
+            kq = ps.executeUpdate();
+            JDBCUtil.closeConnection(con);
+        }catch (SQLException e){
+            Logger.getLogger(TaiKhoanDAO.class.getName()).log(Level.SEVERE, null, e);
+        }
+        return kq;
+	}
 }

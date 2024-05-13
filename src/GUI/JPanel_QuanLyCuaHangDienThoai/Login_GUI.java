@@ -7,7 +7,7 @@ import javax.swing.JOptionPane;
 import javax.swing.ImageIcon;
 import javax.swing.border.LineBorder;
 
-import DAO.TaiKhoanDAO;
+import BUS.TaiKhoanBUS;
 import DTO.TaiKhoanDTO;
 import GUI.Dialog.DangKy_Dialog;
 import GUI.JFrame_QuanLyCuaHangDienThoai.QuanLyKho;
@@ -31,6 +31,7 @@ import java.awt.FlowLayout;
 public class Login_GUI extends JPanel{
 	private JTextField txt_username;
 	private JPasswordField passwordField;
+	public TaiKhoanBUS tkBUS = new TaiKhoanBUS();
 	public Login_GUI() {
 		setBorder(new LineBorder(new Color(0, 255, 255), 14, true));
 		setLayout(new CardLayout(0, 0));
@@ -65,7 +66,7 @@ public class Login_GUI extends JPanel{
 		passwordField = new JPasswordField();
 		passwordField.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				ArrayList<TaiKhoanDTO> tkList = TaiKhoanDAO.getInstance().selectAll();
+				ArrayList<TaiKhoanDTO> tkList = tkBUS.selectAll();
 				boolean flag = false;
 				String password = "";
 				int idNVHienTai = -1;
@@ -102,7 +103,7 @@ public class Login_GUI extends JPanel{
 		JButton btn_login = new JButton("Đăng nhập");
 		btn_login.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				ArrayList<TaiKhoanDTO> tkList = TaiKhoanDAO.getInstance().selectAll();
+				ArrayList<TaiKhoanDTO> tkList = tkBUS.selectAll();
 				boolean flag = false;
 				String password = "";
 				int idNVHienTai = -1;
@@ -118,12 +119,12 @@ public class Login_GUI extends JPanel{
 					JOptionPane.showMessageDialog(null, "Sai tên đăng nhập hoặc mật khẩu!", "Cảnh báo", JOptionPane.WARNING_MESSAGE);
 					txt_username.requestFocus();
 				}
-				else {
-					if(!passwordField.getText().equals(password)) {
+				else if(!passwordField.getText().equals(password)) {
 						JOptionPane.showMessageDialog(null, "Sai tên đăng nhập hoặc mật khẩu!", "Cảnh báo", JOptionPane.WARNING_MESSAGE);
 						txt_username.requestFocus();
 					}
 					//đăng nhập thành công
+				else{
 					JFrame frame = new QuanLyKho(idNVHienTai);
 					frame.setVisible(true);
 				}

@@ -1,40 +1,19 @@
 package GUI.Dialog.SanPhamDialog;
 
-import javax.swing.JDialog;
-import javax.swing.JFileChooser;
-
-import java.awt.BorderLayout;
-import javax.swing.JLabel;
-import javax.swing.JFrame;
-import java.awt.Font;
-import javax.swing.SwingConstants;
-import javax.swing.SwingUtilities;
-import javax.swing.filechooser.FileNameExtensionFilter;
-import javax.swing.table.DefaultTableModel;
-
-import DAO.IMEIDAO;
-import DAO.SanPhamDAO;
-import DAO.ctSanPhamDAO;
 import DTO.IMEIDTO;
-import DTO.SanPhamDTO;
-import DTO.ctSanPhamDTO;
-import GUI.JPanel_QuanLyCuaHangDienThoai.SanPhamGUI;
 
-import java.awt.Color;
-import javax.swing.JButton;
-import javax.swing.ImageIcon;
-import javax.swing.JTextField;
-import javax.swing.JPanel;
-import javax.swing.JComboBox;
-import javax.swing.DefaultComboBoxModel;
-import java.awt.event.ActionListener;
-import java.util.ArrayList;
+import javax.swing.*;
+
+import BUS.IMEIBUS;
+
+import java.awt.*;
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class xoaCTSP_Dialog extends JDialog{
+	public IMEIBUS imeiBUS = new IMEIBUS();
 	
 	public xoaCTSP_Dialog(int maIMEI) {
-		IMEIDTO ctspdto = IMEIDAO.getInstance().selectById(maIMEI);
 		getContentPane().setLayout(null);
 		JLabel lbl_suasp = new JLabel("XÓA IMEI " + String.valueOf(maIMEI));
 		lbl_suasp.setBounds(0, 0, 468, 17);
@@ -42,16 +21,18 @@ public class xoaCTSP_Dialog extends JDialog{
 		lbl_suasp.setHorizontalAlignment(SwingConstants.CENTER);
 		lbl_suasp.setFont(new Font("Tahoma", Font.BOLD, 14));
 		getContentPane().add(lbl_suasp);
-		
+
 		JButton btn_xoa = new JButton("Xóa");
 		btn_xoa.setBounds(80, 135, 129, 23);
 		getContentPane().add(btn_xoa);
 		btn_xoa.addActionListener(new ActionListener() {
+			// Sửa phần này nha tú.ơ..................................................................................
+
 			public void actionPerformed(ActionEvent e) {
-				IMEIDAO.getInstance().delete(Integer.toString(maIMEI));
+				imeiBUS.xoaIMEI(Integer.toString(maIMEI));
 			}
 		});
-		
+
 		JButton btn_huybo = new JButton("Hủy bỏ");
 		btn_huybo.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -60,14 +41,14 @@ public class xoaCTSP_Dialog extends JDialog{
 		});
 		btn_huybo.setBounds(260, 135, 129, 23);
 		getContentPane().add(btn_huybo);
-		
+
 		JLabel lbl_thongbao = new JLabel("Bạn có muốn xóa IMEI sản phẩm ?");
 		lbl_thongbao.setHorizontalAlignment(SwingConstants.CENTER);
 		lbl_thongbao.setBounds(120, 68, 240, 14);
 		getContentPane().add(lbl_thongbao);
 	}
-	
-	
+
+
 
 }
 

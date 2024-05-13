@@ -1,33 +1,16 @@
 package GUI.JPanel_QuanLyCuaHangDienThoai;
 
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JButton;
-import java.awt.*;
-import java.awt.GridLayout;
-import javax.swing.ImageIcon;
-import java.awt.event.ActionListener;
-import java.util.ArrayList;
-import java.awt.event.ActionEvent;
-import javax.swing.JComboBox;
-import javax.swing.JFrame;
-import javax.swing.JOptionPane;
-import javax.swing.JTable;
-import javax.swing.DefaultComboBoxModel;
-import javax.swing.table.DefaultTableModel;
-
 import BUS.SanPhamBUS;
-import DAO.SanPhamDAO;
 import DTO.SanPhamDTO;
-import GUI.Dialog.SanPhamDialog.suaSanPham_Dialog;
-import GUI.Dialog.SanPhamDialog.themSanPham_Dialog;
-import GUI.Dialog.SanPhamDialog.xemDanhSachImeiSanPham_Dialog;
-import GUI.Dialog.SanPhamDialog.xemthongtinSanPham_Dialog;
-import GUI.Dialog.SanPhamDialog.xoaSanPham_Dialog;
+import GUI.Dialog.SanPhamDialog.*;
 
+import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.text.Normalizer;
-import javax.swing.JTextField;
-import java.util.regex.Pattern;
+import java.util.ArrayList;
 
 public class SanPhamGUI extends JPanel {
 
@@ -35,8 +18,6 @@ public class SanPhamGUI extends JPanel {
     private JTable table_SP;
     private JTextField textField_timkiem;
     DefaultTableModel tblModel;
-    public SanPhamDAO spDAO = new SanPhamDAO();
-    public themSanPham_Dialog spDialog = new themSanPham_Dialog();
     public SanPhamBUS spBUS = new SanPhamBUS();
 
     public static String removeDiacriticsAndSpaces(String str) {

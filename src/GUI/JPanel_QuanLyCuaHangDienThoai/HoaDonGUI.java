@@ -1,31 +1,8 @@
 package GUI.JPanel_QuanLyCuaHangDienThoai;
 
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JButton;
-import java.awt.*;
-import java.awt.GridLayout;
-import javax.swing.ImageIcon;
-import java.awt.event.ActionListener;
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
-import java.util.ArrayList;
-import java.util.Date;
-import java.awt.event.ActionEvent;
-import javax.swing.JComboBox;
-import javax.swing.JFrame;
-import javax.swing.JOptionPane;
-import javax.swing.JTable;
-import javax.swing.DefaultComboBoxModel;
-import javax.swing.table.DefaultTableModel;
-
 import BUS.HoaDonBUS;
 import BUS.KhachHangBUS;
 import BUS.NhanVienBUS;
-import BUS.SanPhamBUS;
-import DAO.HoaDonDAO;
-import DAO.KhachHangDAO;
-import DAO.NhanVienDAO;
 import DTO.HoaDonDTO;
 import DTO.KhachHangDTO;
 import DTO.NhanVienDTO;
@@ -33,32 +10,31 @@ import GUI.Dialog.HoaDonDialog.suaHoaDon_Dialog;
 import GUI.Dialog.HoaDonDialog.themHoaDon_Dialog;
 import GUI.Dialog.HoaDonDialog.xemHoaDon_Dialog;
 import GUI.Dialog.HoaDonDialog.xoaHoaDon_Dialog;
-import GUI.Dialog.SanPhamDialog.suaSanPham_Dialog;
 import GUI.Dialog.SanPhamDialog.themSanPham_Dialog;
-import GUI.Dialog.SanPhamDialog.xemDanhSachImeiSanPham_Dialog;
-import GUI.Dialog.SanPhamDialog.xemthongtinSanPham_Dialog;
-import GUI.Dialog.SanPhamDialog.xoaSanPham_Dialog;
+import com.toedter.calendar.JDateChooser;
 
+import javax.swing.*;
+import javax.swing.GroupLayout.Alignment;
+import javax.swing.LayoutStyle.ComponentPlacement;
+import javax.swing.table.DefaultTableModel;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.text.DecimalFormat;
 import java.text.Normalizer;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-
-import javax.swing.JTextField;
-import java.util.regex.Pattern;
-import javax.swing.JLabel;
-import com.toedter.calendar.JDateChooser;
-import javax.swing.GroupLayout;
-import javax.swing.GroupLayout.Alignment;
-import javax.swing.LayoutStyle.ComponentPlacement;
+import java.util.ArrayList;
+import java.util.Date;
 
 public class HoaDonGUI extends JPanel {
 
     private static final long serialVersionUID = 1L;
     private JTable table_HD;
     DefaultTableModel tblModel;
-    public HoaDonDAO hdDAO = new HoaDonDAO();
     public themSanPham_Dialog hdDialog = new themSanPham_Dialog();
     private JTextField txt_tuTien;
     private JTextField txt_denTien;
@@ -82,7 +58,7 @@ public class HoaDonGUI extends JPanel {
         // Trả về chuỗi ngày sau khi chuyển đổi
         return formattedDate;
     }
-    
+
     public static String removeDiacriticsAndhdaces(String str) {
         str = Normalizer.normalize(str, Normalizer.Form.NFD);
         str = str.replaceAll("\\p{InCombiningDiacriticalMarks}+", "");
@@ -91,31 +67,35 @@ public class HoaDonGUI extends JPanel {
     }
 
     public void loadDataTalbe() {
-    	DecimalFormat df = new DecimalFormat("#,###.##");
+        DecimalFormat df = new DecimalFormat("#,###.##");
         ArrayList<HoaDonDTO> result = hoaDonBUS.getAllHoaDon();
         System.out.println("Number of records retrieved: " + result.size());
         tblModel.setRowCount(0); // Clear existing data
         for (HoaDonDTO hd : result) {
-        	String tenNV = NhanVienDAO.getInstance().selectById(hd.getNHANVIEN_idNV()).getHoTen();
-        	String tenKH = KhachHangDAO.getInstance().selectById(hd.getKHACHHANG_idKH()).getTenKhachHang();
+            ////Sửa chỗ này///////////////////////////////////////////////////////////////////////////////////////////////
+
+            String tenNV = nhanVienBUS.selectnv(hd.getNHANVIEN_idNV()).getHoTen();
+            String tenKH = khachHangBUS.selectKh(hd.getKHACHHANG_idKH()).getTenKhachHang();
             tblModel.addRow(new Object[]{hd.getIdHoaDon(), hd.getThoiGian(), df.format(hd.getTongTien()), tenNV, tenKH});
         }
     }
 
     public void loadDataTalbeByCondition(String t) {
-    	DecimalFormat df = new DecimalFormat("#,###.##");//where
+        DecimalFormat df = new DecimalFormat("#,###.##");//where
         ArrayList<HoaDonDTO> result = hoaDonBUS.getHoaDonByCondition(t);
         System.out.println("Number of records retrieved: " + result.size());
         tblModel.setRowCount(0); // Clear existing data
         for (HoaDonDTO hd : result) {
-        	String tenNV = NhanVienDAO.getInstance().selectById(hd.getNHANVIEN_idNV()).getHoTen();
-        	String tenKH = KhachHangDAO.getInstance().selectById(hd.getKHACHHANG_idKH()).getTenKhachHang();
+            ////Sửa chỗ này///////////////////////////////////////////////////////////////////////////////////////////////
+
+            String tenNV = nhanVienBUS.selectnv(hd.getNHANVIEN_idNV()).getHoTen();
+            String tenKH = khachHangBUS.selectKh(hd.getKHACHHANG_idKH()).getTenKhachHang();
             tblModel.addRow(new Object[]{hd.getIdHoaDon(), hd.getThoiGian(), df.format(hd.getTongTien()), tenNV, tenKH});
         }
     }
-    
+
     public void loadDataTalbeFromDateToDate(Date start, Date end) {
-    	java.sql.Date sqlStartDate = new java.sql.Date(start.getTime());
+        java.sql.Date sqlStartDate = new java.sql.Date(start.getTime());
         java.sql.Date sqlEndDate = new java.sql.Date(end.getTime());
 
         DecimalFormat df = new DecimalFormat("#,###.##");
@@ -123,8 +103,10 @@ public class HoaDonGUI extends JPanel {
         System.out.println("Number of records retrieved: " + result.size());
         tblModel.setRowCount(0); // Clear existing data
         for (HoaDonDTO hd : result) {
-            String tenNV = NhanVienDAO.getInstance().selectById(hd.getNHANVIEN_idNV()).getHoTen();
-            String tenKH = KhachHangDAO.getInstance().selectById(hd.getKHACHHANG_idKH()).getTenKhachHang();
+            ////Sửa chỗ này///////////////////////////////////////////////////////////////////////////////////////////////
+
+            String tenNV = nhanVienBUS.selectnv(hd.getNHANVIEN_idNV()).getHoTen();
+            String tenKH = khachHangBUS.selectKh(hd.getKHACHHANG_idKH()).getTenKhachHang();
             tblModel.addRow(new Object[]{hd.getIdHoaDon(), hd.getThoiGian(), df.format(hd.getTongTien()), tenNV, tenKH});
         }
     }
@@ -137,7 +119,7 @@ public class HoaDonGUI extends JPanel {
         }
         return model;
     }
-    
+
     private DefaultComboBoxModel<String> loadNhanVienData() {
         ArrayList<NhanVienDTO> danhSachNhanVien = nhanVienBUS.getAll();
         DefaultComboBoxModel<String> model = new DefaultComboBoxModel<>();
@@ -147,7 +129,7 @@ public class HoaDonGUI extends JPanel {
         }
         return model;
     }
-    
+
     public HoaDonGUI(int idNVHienTai) {
         String[] columnNames = {"Mã hóa đơn", "Thời gian lập", "Tổng tiền", "Tên nhân viên", "Tên Khách hàng"};
         tblModel = new DefaultTableModel(columnNames, 0);
@@ -161,9 +143,9 @@ public class HoaDonGUI extends JPanel {
         JButton btn_them = new JButton("Thêm");
         btn_them.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                    themHoaDon_Dialog hddialog = new themHoaDon_Dialog(idNVHienTai);
-                    hddialog.setSize(1200, 600);
-                    hddialog.setVisible(true);
+                themHoaDon_Dialog hddialog = new themHoaDon_Dialog(idNVHienTai);
+                hddialog.setSize(1200, 600);
+                hddialog.setVisible(true);
             }
         });
         btn_them.setForeground(new Color(0, 0, 0));
@@ -179,7 +161,7 @@ public class HoaDonGUI extends JPanel {
         JButton btn_sua = new JButton("Sửa");
         btn_sua.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-            	int selectedRow = table_HD.getSelectedRow();
+                int selectedRow = table_HD.getSelectedRow();
                 if (selectedRow != -1) {
                     DefaultTableModel model = (DefaultTableModel) table_HD.getModel();
                     int idHD = (int) model.getValueAt(selectedRow, 0);
@@ -227,11 +209,11 @@ public class HoaDonGUI extends JPanel {
         gbc_btn_chitiet.gridy = 0;
 
         table_HD = new JTable(new DefaultTableModel(
-        	new Object[][] {
-        	},
-        	new String[] {
-        		"M\u00E3 h\u00F3a \u0111\u01A1n", "Th\u1EDDi gian l\u1EADp", "T\u1ED5ng ti\u1EC1n", "T\u00EAn nh\u00E2n vi\u00EAn", "T\u00EAn kh\u00E1ch h\u00E0ng"
-        	}
+                new Object[][] {
+                },
+                new String[] {
+                        "M\u00E3 h\u00F3a \u0111\u01A1n", "Th\u1EDDi gian l\u1EADp", "T\u1ED5ng ti\u1EC1n", "T\u00EAn nh\u00E2n vi\u00EAn", "T\u00EAn kh\u00E1ch h\u00E0ng"
+                }
         ));
         table_HD = new JTable(tblModel);
         JScrollPane scrollPane = new JScrollPane(table_HD); // Tạo JScrollPane và đặt table_hd vào đó
@@ -251,61 +233,61 @@ public class HoaDonGUI extends JPanel {
             }
         });
         scrollPane.setRowHeaderView(btn_tailai);
-        
-                JButton btn_chitiet = new JButton("Chi tiết");
-                btn_chitiet.addActionListener(new ActionListener() {
-                    public void actionPerformed(ActionEvent e) {
-                        int selectedRow = table_HD.getSelectedRow();
-                        if (selectedRow != -1) {
-                            DefaultTableModel model = (DefaultTableModel) table_HD.getModel();
-                            int idhd = (int) model.getValueAt(selectedRow, 0);
-                            xemHoaDon_Dialog hddialog = new xemHoaDon_Dialog(idhd);
-                            hddialog.setSize(1200, 600);
-                            hddialog.setVisible(true);
-                        } else {
-                            JOptionPane.showMessageDialog(null, "Vui lòng chọn hóa đơn cần xem!", "Cảnh báo", JOptionPane.WARNING_MESSAGE);
-                        }
-                    }
-                });
-                btn_chitiet.setIcon(new ImageIcon(HoaDonGUI.class.getResource("/GUI/JPanel_QuanLyCuaHangDienThoai/icon_info.png")));
+
+        JButton btn_chitiet = new JButton("Chi tiết");
+        btn_chitiet.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                int selectedRow = table_HD.getSelectedRow();
+                if (selectedRow != -1) {
+                    DefaultTableModel model = (DefaultTableModel) table_HD.getModel();
+                    int idhd = (int) model.getValueAt(selectedRow, 0);
+                    xemHoaDon_Dialog hddialog = new xemHoaDon_Dialog(idhd);
+                    hddialog.setSize(1200, 600);
+                    hddialog.setVisible(true);
+                } else {
+                    JOptionPane.showMessageDialog(null, "Vui lòng chọn hóa đơn cần xem!", "Cảnh báo", JOptionPane.WARNING_MESSAGE);
+                }
+            }
+        });
+        btn_chitiet.setIcon(new ImageIcon(HoaDonGUI.class.getResource("/GUI/JPanel_QuanLyCuaHangDienThoai/icon_info.png")));
         GroupLayout gl_panel_HoaDon = new GroupLayout(panel_HoaDon);
         gl_panel_HoaDon.setHorizontalGroup(
-        	gl_panel_HoaDon.createParallelGroup(Alignment.LEADING)
-        		.addGroup(gl_panel_HoaDon.createSequentialGroup()
-        			.addComponent(btn_them)
-        			.addGap(39)
-        			.addComponent(btn_sua)
-        			.addGap(37)
-        			.addComponent(btn_xoa)
-        			.addGap(39)
-        			.addComponent(btn_chitiet)
-        			.addContainerGap(237, Short.MAX_VALUE))
-        		.addComponent(scrollPane, GroupLayout.DEFAULT_SIZE, 790, Short.MAX_VALUE)
+                gl_panel_HoaDon.createParallelGroup(Alignment.LEADING)
+                        .addGroup(gl_panel_HoaDon.createSequentialGroup()
+                                .addComponent(btn_them)
+                                .addGap(39)
+                                .addComponent(btn_sua)
+                                .addGap(37)
+                                .addComponent(btn_xoa)
+                                .addGap(39)
+                                .addComponent(btn_chitiet)
+                                .addContainerGap(237, Short.MAX_VALUE))
+                        .addComponent(scrollPane, GroupLayout.DEFAULT_SIZE, 790, Short.MAX_VALUE)
         );
         gl_panel_HoaDon.setVerticalGroup(
-        	gl_panel_HoaDon.createParallelGroup(Alignment.LEADING)
-        		.addGroup(gl_panel_HoaDon.createSequentialGroup()
-        			.addGap(1)
-        			.addGroup(gl_panel_HoaDon.createParallelGroup(Alignment.BASELINE)
-        				.addComponent(btn_them)
-        				.addComponent(btn_sua)
-        				.addComponent(btn_xoa)
-        				.addComponent(btn_chitiet))
-        			.addPreferredGap(ComponentPlacement.RELATED)
-        			.addComponent(scrollPane, GroupLayout.DEFAULT_SIZE, 493, Short.MAX_VALUE))
+                gl_panel_HoaDon.createParallelGroup(Alignment.LEADING)
+                        .addGroup(gl_panel_HoaDon.createSequentialGroup()
+                                .addGap(1)
+                                .addGroup(gl_panel_HoaDon.createParallelGroup(Alignment.BASELINE)
+                                        .addComponent(btn_them)
+                                        .addComponent(btn_sua)
+                                        .addComponent(btn_xoa)
+                                        .addComponent(btn_chitiet))
+                                .addPreferredGap(ComponentPlacement.RELATED)
+                                .addComponent(scrollPane, GroupLayout.DEFAULT_SIZE, 493, Short.MAX_VALUE))
         );
         panel_HoaDon.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
         panel_HoaDon.setLayout(gl_panel_HoaDon);
-        
+
         JLabel lbl_hk = new JLabel("Khách hàng");
         lbl_hk.setFont(new Font("Tahoma", Font.PLAIN, 14));
         lbl_hk.setBounds(828, 11, 101, 32);
         add(lbl_hk);
-        
+
         JComboBox cbb_kh = new JComboBox();
         cbb_kh.addActionListener(new ActionListener() {
-        	public void actionPerformed(ActionEvent e) {
-        		 // Lấy đối tượng đã chọn trong combobox
+            public void actionPerformed(ActionEvent e) {
+                // Lấy đối tượng đã chọn trong combobox
                 Object selected = cbb_kh.getSelectedItem();
                 if (selected != null) {
                     // Chuyển đối tượng đã chọn thành chuỗi
@@ -314,21 +296,21 @@ public class HoaDonGUI extends JPanel {
                     String maKH = selectedItem.split(" - ")[0];
                     loadDataTalbeByCondition("KHACHHANG_idKH = " +maKH);
                 }
-        	}
+            }
         });
         cbb_kh.setBounds(828, 48, 166, 22);
         add(cbb_kh);
         cbb_kh.setModel(loadKhachHangData());
-        
+
         JLabel lbl_nv = new JLabel("Nhân viên");
         lbl_nv.setFont(new Font("Tahoma", Font.PLAIN, 14));
         lbl_nv.setBounds(828, 86, 101, 32);
         add(lbl_nv);
-        
+
         JComboBox cbb_nv = new JComboBox();
         cbb_nv.addActionListener(new ActionListener() {
-        	public void actionPerformed(ActionEvent e) {
-        		 // Lấy đối tượng đã chọn trong combobox
+            public void actionPerformed(ActionEvent e) {
+                // Lấy đối tượng đã chọn trong combobox
                 Object selected = cbb_nv.getSelectedItem();
                 if (selected != null) {
                     // Chuyển đối tượng đã chọn thành chuỗi
@@ -337,35 +319,35 @@ public class HoaDonGUI extends JPanel {
                     String maNV = selectedItem.split(" - ")[0];
                     loadDataTalbeByCondition("NHANVIEN_idNV = " + maNV);
                 }
-        	}
+            }
         });
         cbb_nv.setBounds(828, 122, 166, 22);
         add(cbb_nv);
         cbb_nv.setModel(loadNhanVienData());
-        
+
         JLabel lbl_ngaybatdau = new JLabel("Từ ngày");
         lbl_ngaybatdau.setFont(new Font("Tahoma", Font.PLAIN, 14));
         lbl_ngaybatdau.setBounds(828, 163, 101, 32);
         add(lbl_ngaybatdau);
-        
+
         JDateChooser dateChooser_ngaybatdau = new JDateChooser();
         dateChooser_ngaybatdau.setBounds(828, 206, 109, 22);
         add(dateChooser_ngaybatdau);
         JDateChooser dateChooser_ngayketthuc = new JDateChooser();
-        
+
         dateChooser_ngaybatdau.getDateEditor().addPropertyChangeListener("date", (PropertyChangeListener) new PropertyChangeListener() {
             @Override
             public void propertyChange(PropertyChangeEvent evt) {
-            	if ("date".equals(evt.getPropertyName())) {
+                if ("date".equals(evt.getPropertyName())) {
                     // Lấy ngày mới từ sự kiện
-                    java.util.Date startDate = dateChooser_ngaybatdau.getDate();
+                    Date startDate = dateChooser_ngaybatdau.getDate();
                     // Chuyển đổi java.util.Date thành java.sql.Date
                     java.sql.Date sqlStartDate = new java.sql.Date(startDate.getTime());
 
                     // Kiểm tra xem ngày kết thúc đã được chọn hay chưa
                     if (dateChooser_ngayketthuc.getDate() != null) {
                         // Nếu đã chọn ngày kết thúc
-                        java.util.Date endDate = dateChooser_ngayketthuc.getDate();
+                        Date endDate = dateChooser_ngayketthuc.getDate();
                         // Chuyển đổi java.util.Date thành java.sql.Date
                         java.sql.Date sqlEndDate = new java.sql.Date(endDate.getTime());
                         // Gọi phương thức để tải dữ liệu từ ngày bắt đầu đến ngày kết thúc
@@ -379,26 +361,26 @@ public class HoaDonGUI extends JPanel {
                 }
             }
         });
-        
-        
+
+
         JLabel lbl_ngayketthuc = new JLabel("Đến ngày");
         lbl_ngayketthuc.setFont(new Font("Tahoma", Font.PLAIN, 14));
         lbl_ngayketthuc.setBounds(828, 249, 101, 32);
         add(lbl_ngayketthuc);
-        
+
         dateChooser_ngayketthuc.setBounds(828, 292, 109, 22);
         add(dateChooser_ngayketthuc);
-        
+
         dateChooser_ngayketthuc.getDateEditor().addPropertyChangeListener("date", (PropertyChangeListener) new PropertyChangeListener() {
             @Override
             public void propertyChange(PropertyChangeEvent evt) {
-            	if ("date".equals(evt.getPropertyName())) {
+                if ("date".equals(evt.getPropertyName())) {
                     // Lấy ngày mới từ sự kiện
-                    java.util.Date startDate = dateChooser_ngaybatdau.getDate();
+                    Date startDate = dateChooser_ngaybatdau.getDate();
                     // Chuyển đổi java.util.Date thành java.sql.Date
                     java.sql.Date sqlStartDate = new java.sql.Date(startDate.getTime());
                     // Lấy ngày hiện tại
-                    java.util.Date endDate = dateChooser_ngayketthuc.getDate();
+                    Date endDate = dateChooser_ngayketthuc.getDate();
                     // Chuyển đổi java.util.Date thành java.sql.Date
                     java.sql.Date sqlEndDate = new java.sql.Date(endDate.getTime());
                     // Gọi phương thức để tải dữ liệu từ ngày được chọn đến ngày hiện tại
@@ -406,16 +388,18 @@ public class HoaDonGUI extends JPanel {
                 }
             }
         });
-        
+
         JLabel lbl_tuTien = new JLabel("Từ số tiền (VNĐ)");
         lbl_tuTien.setFont(new Font("Tahoma", Font.PLAIN, 14));
         lbl_tuTien.setBounds(828, 344, 123, 32);
         add(lbl_tuTien);
-        double maxTongTien = hdDAO.getMaxTotalAmount();
+        double maxTongTien = hoaDonBUS.getMaxTotalAmount();
+        ////Sửa chỗ này///////////////////////////////////////////////////////////////////////////////////////////////
+
         txt_tuTien = new JTextField();
         txt_tuTien.addActionListener(new ActionListener() {
-        	public void actionPerformed(ActionEvent e) {
-        		// Lấy giá trị từ ô txt_denTien
+            public void actionPerformed(ActionEvent e) {
+                // Lấy giá trị từ ô txt_denTien
                 String denTienText = txt_denTien.getText();
                 // Kiểm tra nếu ô không rỗng
                 if (!denTienText.isEmpty()) {
@@ -425,34 +409,33 @@ public class HoaDonGUI extends JPanel {
                     loadDataTalbeByCondition("tongTien <= " + denTien);
                 } else {
                     // Nếu ô rỗng, tìm giá trị tối đa của cột "Tổng tiền" trong bảng "HoaDon"
-                     // Giả sử đã có phương thức này trong HoaDonDAO
                     // Gọi phương thức để tải lại dữ liệu với điều kiện giá tiền từ giá tiền từ ô txt_tuTien đến maxTongTien
                     loadDataTalbeByCondition("tongTien >= " + txt_tuTien.getText() + " AND tongTien <= " + maxTongTien);
                 }
-        	}
+            }
         });
         txt_tuTien.setBounds(828, 387, 104, 32);
         add(txt_tuTien);
         txt_tuTien.setColumns(10);
-        
+
         JLabel lbl_denTien = new JLabel("Đến số tiền (VNĐ)");
         lbl_denTien.setFont(new Font("Tahoma", Font.PLAIN, 14));
         lbl_denTien.setBounds(828, 440, 123, 32);
         add(lbl_denTien);
-        
+
         txt_denTien = new JTextField();
         txt_denTien.addActionListener(new ActionListener() {
-        	public void actionPerformed(ActionEvent e) {
-        		String denTienText = txt_denTien.getText();
+            public void actionPerformed(ActionEvent e) {
+                String denTienText = txt_denTien.getText();
                 // Kiểm tra nếu ô không rỗng
                 if (!denTienText.isEmpty()) {
                     // Chuyển đổi giá trị từ chuỗi sang số
                     double denTien = Double.parseDouble(denTienText);
                     loadDataTalbeByCondition("tongTien >= " + txt_tuTien.getText() + " AND tongTien <= " + denTien);
                 } else {
-                	loadDataTalbeByCondition("tongTien >= " + txt_tuTien.getText() + " AND tongTien <= " + maxTongTien);
+                    loadDataTalbeByCondition("tongTien >= " + txt_tuTien.getText() + " AND tongTien <= " + maxTongTien);
                 }
-        	}
+            }
         });
         txt_denTien.setColumns(10);
         txt_denTien.setBounds(828, 483, 104, 32);

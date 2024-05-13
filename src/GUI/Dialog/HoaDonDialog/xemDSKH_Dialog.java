@@ -1,34 +1,28 @@
 package GUI.Dialog.HoaDonDialog;
 
-import javax.swing.JDialog;
-import javax.swing.JTextField;
-import javax.swing.JButton;
-import javax.swing.JLabel;
-import java.awt.Font;
-import java.util.ArrayList;
-
-import javax.swing.JScrollPane;
-import javax.swing.JTable;
-import javax.swing.table.DefaultTableModel;
-
-import DAO.KhachHangDAO;
+import BUS.KhachHangBUS;
 import DTO.KhachHangDTO;
-import DTO.SanPhamDTO;
-import java.awt.event.ActionListener;
+
+import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
+import java.awt.*;
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 public class xemDSKH_Dialog extends JDialog {
     private JTextField txt_timKiemKH;
     private JTable table_KH;
     DefaultTableModel tblModel;
     private int selectedCustomerId;
+    private KhachHangBUS khBUS = new KhachHangBUS();
 
     public int getSelectedCustomerId() {
         return selectedCustomerId;
     }
 
     public void loadDataTalbe() {
-        ArrayList<KhachHangDTO> result = KhachHangDAO.getInstance().selectAll();
+        ArrayList<KhachHangDTO> result = khBUS.getAll();
         tblModel.setRowCount(0);
         for (KhachHangDTO kh : result) {
             tblModel.addRow(new Object[]{kh.getIdKhachHang(), kh.getTenKhachHang(), kh.getDiaChiKhachHang(), kh.getSdtKhachHang()});
@@ -36,7 +30,7 @@ public class xemDSKH_Dialog extends JDialog {
     }
 
     public xemDSKH_Dialog() {
-    	
+
         String[] columnNames = {"Mã khách hàng", "Tên khách hàng", "Địa chỉ", "Số điện thoại"};
         tblModel = new DefaultTableModel(columnNames, 0);
         getContentPane().setLayout(null);

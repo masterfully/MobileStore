@@ -12,8 +12,8 @@ import javax.swing.JButton;
 import java.awt.Font;
 import javax.swing.SwingConstants;
 
-import DAO.NhanVienDAO;
-import DAO.TaiKhoanDAO;
+import BUS.NhanVienBUS;
+import BUS.TaiKhoanBUS;
 import DTO.NhanVienDTO;
 import DTO.TaiKhoanDTO;
 
@@ -28,6 +28,8 @@ public class DangKy_Dialog extends JDialog{
 	private JTextField txt_username;
 	private JPasswordField passwordField;
 	private JPasswordField rePasswordField;
+	public NhanVienBUS nvBUS = new NhanVienBUS();
+	public TaiKhoanBUS tkBUS = new TaiKhoanBUS();
 	public DangKy_Dialog() {
 		getContentPane().setLayout(new GridLayout(0, 1, 0, 0));
 		
@@ -70,8 +72,8 @@ public class DangKy_Dialog extends JDialog{
 		btn_dangKy.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				int idNV = Integer.parseInt(txt_maNV.getText());
-				ArrayList<NhanVienDTO> nvList = NhanVienDAO.getInstance().selectAll();
-				ArrayList<TaiKhoanDTO> tkList = TaiKhoanDAO.getInstance().selectAll();
+				ArrayList<NhanVienDTO> nvList = nvBUS.getAll();
+				ArrayList<TaiKhoanDTO> tkList = tkBUS.selectAll();
 				boolean flagNV = false; //NV ko tồn tại trong cửa hàng
 				boolean flagTK = true; //tài khoản chưa có trong bảng Tài khoản
 				boolean flagUsername = true;
@@ -122,7 +124,7 @@ public class DangKy_Dialog extends JDialog{
 					int trangThai = 1;
 					String chucVu = "Nhân viên quản lí";
 					TaiKhoanDTO tk = new TaiKhoanDTO(userName, password, trangThai, chucVu, idNV);
-					TaiKhoanDAO.getInstance().insert(tk);
+					tkBUS.insert(tk);
 					JOptionPane.showMessageDialog(null, "Đăng ký thành công!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
 				}
 				
